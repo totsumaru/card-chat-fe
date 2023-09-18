@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 export default function Chat() {
@@ -46,8 +46,25 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-none bg-blue-500 text-white p-3">
-        Chat Room
+
+      {/* ヘッダー */}
+      <div className="flex justify-between items-center bg-blue-500 text-white p-3">
+        {/* 左側 */}
+        <div className="flex items-center">
+          <AvatarImg href={`#`}/>
+          <p className="">戸塚翔太</p>
+        </div>
+        {/* 右側 */}
+        <div>
+          <button
+            type="button"
+            className="flex rounded-md bg-white px-3 py-2 text-sm text-gray-700
+             shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            <BellIcon className="w-5 h-5 mr-1"/>
+            <p className="">通知を受け取る</p>
+          </button>
+        </div>
       </div>
 
       {/* メッセージエリア */}
@@ -87,11 +104,9 @@ export default function Chat() {
             <PaperAirplaneIcon className="h-5 w-5"/>
           </button>
         </div>
-        <div className="mx-1 mt-1 mb-2 w-fit">
-          <Link href={`#`} className="flex">
-            <BellIcon className="w-5 h-5 text-blue-600"/>
-            <p className="text-sm text-blue-600">メールアドレスを登録して、受信通知を受け取る</p>
-          </Link>
+        <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
+          <BellIcon className="w-4 h-4 text-gray-600"/>
+          <p className="text-sm text-gray-600">メールアドレスを登録すると、受信通知を受け取れます。</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export default function Chat() {
@@ -60,10 +60,10 @@ export default function Chat() {
             {/* 相手のアバター */}
             {message.sender !== 'me' && <AvatarImg href={`#`}/>}
 
-            <div className={`rounded-3xl px-4 py-3 mb-2 inline-block ${message.sender === "me"
+            <div className={`rounded-3xl px-4 py-3 mb-2 inline-block whitespace-pre-line ${message.sender === "me"
               ? "bg-lime-200 ml-5 md:ml-8 md:max-w-[60%]"
-              : "bg-gray-100 mr-5 md:mr-8 md:max-w-[60%]"}`}
-            >
+              : "bg-gray-100 mr-5 md:mr-8 md:max-w-[60%]"}`
+            }>
               {message.text}
             </div>
 
@@ -76,16 +76,22 @@ export default function Chat() {
       {/* 入力エリア */}
       <div className="flex-none bg-gray-200 p-2">
         <div className="flex">
-        <textarea
-          className="w-full rounded p-2 resize-none"
-          placeholder="メッセージを入力"
-          value={newMessage}
-          onChange={handleInputChange}
-          rows={3}
-        />
+          <textarea
+            className="w-full rounded p-2 resize-none"
+            placeholder="返信を入力しよう"
+            value={newMessage}
+            onChange={handleInputChange}
+            rows={3}
+          />
           <button className="ml-2 bg-blue-500 text-white p-5 rounded" onClick={handleSend}>
             <PaperAirplaneIcon className="h-5 w-5"/>
           </button>
+        </div>
+        <div className="mx-1 mt-1 mb-2 w-fit">
+          <Link href={`#`} className="flex">
+            <BellIcon className="w-5 h-5 text-blue-600"/>
+            <p className="text-sm text-blue-600">メールアドレスを登録して、受信通知を受け取る</p>
+          </Link>
         </div>
       </div>
     </div>

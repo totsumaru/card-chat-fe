@@ -2,6 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function Chat() {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
@@ -57,7 +58,7 @@ export default function Chat() {
           >
 
             {/* 相手のアバター */}
-            {message.sender !== 'me' && <AvatarImg/>}
+            {message.sender !== 'me' && <AvatarImg href={`#`}/>}
 
             <div className={`rounded-3xl px-4 py-3 mb-2 inline-block ${message.sender === "me"
               ? "bg-lime-200 ml-5 md:ml-8 md:max-w-[60%]"
@@ -67,7 +68,7 @@ export default function Chat() {
             </div>
 
             {/* 自分のアバター */}
-            {message.sender === 'me' && <Avatar/>}
+            {message.sender === 'me' && <Avatar href={""}/>}
           </div>
         ))}
       </div>
@@ -91,8 +92,8 @@ export default function Chat() {
   );
 }
 
-function Avatar() {
-  return (
+function Avatar({ href }: { href: string }) {
+  const content = (
     <div className="ml-2">
       <span className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
         <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -101,12 +102,21 @@ function Avatar() {
         </svg>
       </span>
     </div>
+  )
 
+  return (
+    <>
+      {href ? (
+        <Link href={`#`}>
+          {content}
+        </Link>
+      ) : content}
+    </>
   )
 }
 
-function AvatarImg() {
-  return (
+function AvatarImg({ href }: { href: string }) {
+  const content = (
     <div className="mr-2">
       <img
         className="inline-block h-10 w-10 rounded-full"
@@ -114,5 +124,14 @@ function AvatarImg() {
         alt=""
       />
     </div>
+  )
+  return (
+    <>
+      {href ? (
+        <Link href={`#`}>
+          {content}
+        </Link>
+      ) : content}
+    </>
   )
 }

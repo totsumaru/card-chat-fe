@@ -1,4 +1,5 @@
 import './globals.css'
+import React from "react";
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body>
-        <main className="min-h-screen bg-background flex flex-col items-center">
+        <main className="min-h-screen">
           {children}
         </main>
       </body>

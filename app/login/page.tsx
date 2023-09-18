@@ -20,8 +20,9 @@ export default function Login() {
           strokeLinejoin="round"
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        {' '}
         Back
       </Link>
 
@@ -58,7 +59,7 @@ export default function Login() {
         >
           Sign Up
         </button>
-        <Messages />
+        <Messages/>
       </form>
     </div>
   )

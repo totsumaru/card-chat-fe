@@ -1,12 +1,14 @@
 "use client"
 
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Example from "@/components/modal/NoticeEmailModal";
 
 export default function Chat() {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [open, setOpen] = useState(false)
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
 
   // メッセージが追加されたら一番下までスクロール
@@ -44,11 +46,17 @@ export default function Chat() {
     setNewMessage(e.target.value);
   };
 
+  const handleNoticeBtn = () => {
+    setOpen(true)
+  }
+
   return (
     <div className="flex flex-col h-screen">
+      {/* Modal */}
+      <Example open={open} setOpen={setOpen}/>
 
       {/* ヘッダー */}
-      <div className="flex justify-between items-center bg-blue-500 text-white p-3">
+      <div className="flex justify-between items-center bg-blue-500 text-white px-5 py-3">
         {/* 左側 */}
         <div className="flex items-center">
           <AvatarImg href={`#`}/>
@@ -58,17 +66,18 @@ export default function Chat() {
         <div>
           <button
             type="button"
-            className="flex rounded-md bg-white px-3 py-2 text-sm text-gray-700
+            className="flex rounded-md bg-indigo-50 px-3 py-2 text-sm text-gray-700
              shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            onClick={handleNoticeBtn}
           >
             <BellIcon className="w-5 h-5 mr-1"/>
-            <p className="">通知を受け取る</p>
+            <p className="">受信通知を受け取る</p>
           </button>
         </div>
       </div>
 
       {/* メッセージエリア */}
-      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto p-3" id="messageArea">
+      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 py-3" id="messageArea">
         {messages.map((message, index) => (
           <div key={index}
                className={`flex items-start mb-2 ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
@@ -77,11 +86,12 @@ export default function Chat() {
             {/* 相手のアバター */}
             {message.sender !== 'me' && <AvatarImg href={`#`}/>}
 
+            {/* メッセージ */}
             <div className={`rounded-3xl px-4 py-3 mb-2 inline-block whitespace-pre-line ${message.sender === "me"
               ? "bg-lime-200 ml-5 md:ml-8 md:max-w-[60%]"
               : "bg-gray-100 mr-5 md:mr-8 md:max-w-[60%]"}`
             }>
-              {message.text}
+              {linkify(message.text)}
             </div>
 
             {/* 自分のアバター */}
@@ -105,14 +115,17 @@ export default function Chat() {
           </button>
         </div>
         <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
-          <BellIcon className="w-4 h-4 text-gray-600"/>
-          <p className="text-sm text-gray-600">メールアドレスを登録すると、受信通知を受け取れます。</p>
+          <p className="text-sm text-gray-600">
+            ※こちらは簡易チャットです。
+            <b><u>個人情報を送付する場合は、担当者のメールアドレス等に</u></b>送付してください。
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
+// 無名アバター
 function Avatar({ href }: { href: string }) {
   const content = (
     <div className="ml-2">
@@ -136,6 +149,7 @@ function Avatar({ href }: { href: string }) {
   )
 }
 
+// 画像アバター
 function AvatarImg({ href }: { href: string }) {
   const content = (
     <div className="mr-2">
@@ -155,4 +169,16 @@ function AvatarImg({ href }: { href: string }) {
       ) : content}
     </>
   )
+}
+
+// URLの部分をaタグに変更
+function linkify(text: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.split(urlRegex).map((part, i) => {
+    if (i % 2 === 0) {
+      return part;
+    } else {
+      return <a className="text-blue-600" href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+    }
+  });
 }

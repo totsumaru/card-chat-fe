@@ -5,6 +5,8 @@ import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 
+const writerProfileUrl = `/writer/profile/w-123`
+
 export default function Chat() {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
@@ -61,10 +63,13 @@ export default function Chat() {
       {/* ヘッダー */}
       <div className="flex justify-between items-center bg-blue-500 text-white px-5 py-3">
         {/* 左側 */}
-        <div className="flex items-center">
-          <AvatarImg href={`#`}/>
-          <p className="">戸塚翔太</p>
-        </div>
+        <Link href={writerProfileUrl}>
+          <div className="flex items-center">
+            <AvatarImg/>
+            <p className="">戸塚翔太</p>
+          </div>
+        </Link>
+
         {/* 右側 */}
         <div>
           <button
@@ -92,7 +97,7 @@ export default function Chat() {
           >
 
             {/* 相手のアバター */}
-            {message.sender !== 'me' && <AvatarImg href={`#`}/>}
+            {message.sender !== 'me' && <AvatarImg href={writerProfileUrl}/>}
 
             {/* メッセージ */}
             <div className={`rounded-3xl px-4 py-3 mb-2 inline-block whitespace-pre-line ${message.sender === "me"
@@ -103,13 +108,13 @@ export default function Chat() {
             </div>
 
             {/* 自分のアバター */}
-            {message.sender === 'me' && <Avatar href={""}/>}
+            {message.sender === 'me' && <Avatar/>}
           </div>
         ))}
       </div>
 
       {/* 入力エリア */}
-      <div className="flex-none bg-gray-200 p-2">
+      <div className="flex-none bg-gray-200 px-4 py-3">
         <div className="flex">
           <textarea
             className="w-full rounded p-2 resize-none"
@@ -134,7 +139,7 @@ export default function Chat() {
 }
 
 // 無名アバター
-function Avatar({ href }: { href: string }) {
+function Avatar({ href }: { href?: string }) {
   const content = (
     <div className="ml-2">
       <span className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
@@ -149,7 +154,7 @@ function Avatar({ href }: { href: string }) {
   return (
     <>
       {href ? (
-        <Link href={`#`}>
+        <Link href={href}>
           {content}
         </Link>
       ) : content}
@@ -158,7 +163,7 @@ function Avatar({ href }: { href: string }) {
 }
 
 // 画像アバター
-function AvatarImg({ href }: { href: string }) {
+function AvatarImg({ href }: { href?: string }) {
   const content = (
     <div className="mr-2">
       <img
@@ -171,7 +176,7 @@ function AvatarImg({ href }: { href: string }) {
   return (
     <>
       {href ? (
-        <Link href={`#`}>
+        <Link href={href}>
           {content}
         </Link>
       ) : content}

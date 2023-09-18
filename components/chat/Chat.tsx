@@ -3,12 +3,13 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Example from "@/components/modal/NoticeEmailModal";
+import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 
 export default function Chat() {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [open, setOpen] = useState(false)
+  const [currentEmail, setCurrentEmail] = useState<string>("tech")
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
 
   // メッセージが追加されたら一番下までスクロール
@@ -42,10 +43,12 @@ export default function Chat() {
     }, 500);
   };
 
+  // メッセージ送信フォームにに入力された時の挙動です
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewMessage(e.target.value);
   };
 
+  // 通知ボタンを押した時の挙動です
   const handleNoticeBtn = () => {
     setOpen(true)
   }
@@ -53,7 +56,7 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-screen">
       {/* Modal */}
-      <Example open={open} setOpen={setOpen}/>
+      <NoticeEmailModal open={open} setOpen={setOpen} currentEmail={currentEmail}/>
 
       {/* ヘッダー */}
       <div className="flex justify-between items-center bg-blue-500 text-white px-5 py-3">
@@ -71,7 +74,12 @@ export default function Chat() {
             onClick={handleNoticeBtn}
           >
             <BellIcon className="w-5 h-5 mr-1"/>
-            <p className="">受信通知を受け取る</p>
+            <p className="">
+              {currentEmail
+                ? "登録済"
+                : "受信通知を受け取る"
+              }
+            </p>
           </button>
         </div>
       </div>

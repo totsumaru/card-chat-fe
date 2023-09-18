@@ -5,12 +5,14 @@ import { BellIcon } from '@heroicons/react/24/outline'
 type Props = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  currentEmail?: string
 }
 
-export default function Example({ open, setOpen }: Props) {
+// 受信通知でメールアドレスを入力するモーダルです
+export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props) {
   const cancelButtonRef = useRef(null)
   const [success, setSuccess] = useState<boolean>(false)
-  const [email, setEmail] = useState<string>("")
+  const [newEmail, setNewEmail] = useState<string>("")
 
   useEffect(() => {
     // Modalをopenしたときにsuccessをfalseに変更する
@@ -19,7 +21,7 @@ export default function Example({ open, setOpen }: Props) {
 
   // メールアドレスを送信します
   const handleSend = () => {
-    setEmail("")
+    setNewEmail("")
     setSuccess(true)
   }
 
@@ -56,8 +58,15 @@ export default function Example({ open, setOpen }: Props) {
                     <BellIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
+
+                    {/* タイトル */}
                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                      {success ? email : "メールで通知を受け取る"}
+                      {success // 現在のアドレスがあるか判定
+                        ? "完了"
+                        : currentEmail // 送信後であるか判定
+                          ? currentEmail + " に通知中"
+                          : "メールで通知を受け取る"
+                      }
                     </Dialog.Title>
 
                     {/* メールアドレス */}
@@ -72,7 +81,9 @@ export default function Example({ open, setOpen }: Props) {
                           {/* 説明 */}
                           <div className="mt-2 text-left">
                             <p className="text-sm text-gray-500">
-                              *このメッセージの受信通知だけに使用されます。
+                              {currentEmail
+                                ? "*メールアドレスを更新する場合は入力してください。"
+                                : "*このメッセージの受信通知だけに使用されます。"}
                             </p>
                           </div>
 
@@ -86,7 +97,7 @@ export default function Example({ open, setOpen }: Props) {
                              ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                               focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               placeholder="you@example.com"
-                              onChange={(e) => setEmail(e.target.value)}
+                              onChange={(e) => setNewEmail(e.target.value)}
                             />
                           </div>
                         </div>
@@ -104,7 +115,7 @@ export default function Example({ open, setOpen }: Props) {
                     onClick={handleSend}
                     disabled={success}
                   >
-                    設定
+                    {currentEmail ? "更新" : "送信"}
                   </button>
 
                   <button

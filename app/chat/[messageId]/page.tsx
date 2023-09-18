@@ -1,5 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import Home from "@/components/Test/Chat";
 
 // チャット画面です
 export default async function Index({
@@ -12,7 +13,8 @@ export default async function Index({
 
   return (
     <>
-      {messageId}
+      {/*<Chat/>*/}
+      <Home/>
     </>
   )
 }

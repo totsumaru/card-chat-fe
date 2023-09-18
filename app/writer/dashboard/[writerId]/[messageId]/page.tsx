@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-// 顧客情報の登録画面です
+// チャットの登録情報を表示/編集する画面です
 export default async function Index({
   params: { writerId, messageId }
 }: {

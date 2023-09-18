@@ -76,12 +76,12 @@ export default function Chat() {
       {/* 入力エリア */}
       <div className="flex-none bg-gray-200 p-2">
         <div className="flex">
-        <textarea // <--- ここを変更
+        <textarea
           className="w-full rounded p-2 resize-none"
           placeholder="メッセージを入力"
           value={newMessage}
           onChange={handleInputChange}
-          rows={3} // 任意で行数を指定
+          rows={3}
         />
           <button className="ml-2 bg-blue-500 text-white p-5 rounded" onClick={handleSend}>
             <PaperAirplaneIcon className="h-5 w-5"/>

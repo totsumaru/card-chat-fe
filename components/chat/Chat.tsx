@@ -1,59 +1,77 @@
 "use client"
 
-import React from "react";
-import { Message } from "@/data";
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import Header from "@/components/chat/Header";
-import Content from "@/components/chat/Content";
-import InputBox from "@/components/chat/InputBox";
-import { useGetMessages } from "@/hooks/useGetMessages";
+import React, { useLayoutEffect, useRef, useState } from "react";
 
-const Chat = () => {
-  /** Simulate a hook fetching the data */
-  const {
-    messages: { data }
-  } = useGetMessages();
+export default function Chat() {
+  const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const scrollBottomRef = useRef<HTMLDivElement | null>(null);
 
-  /** State to control new messages */
-  const [chatMessages, setChatMessages] = React.useState<Message[]>(data);
+  // メッセージが追加されたら一番下までスクロール
+  useLayoutEffect(() => {
+    if (scrollBottomRef.current) {
+      scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
+    }
+  }, [messages]);
 
-  /**
-   *
-   * @param message
-   * "Create" a new message
-   */
-  const sendANewMessage = (message: Message) => {
-    setChatMessages((prevMessages) => [...prevMessages, message]);
+  const handleSend = () => {
+    // 自分のメッセージを追加
+    setMessages(prevMessages => [
+      ...prevMessages,
+      { text: newMessage, sender: "me" },
+    ]);
+
+    // メッセージボックスをクリア
+    setNewMessage("");
+
+    // TODO: 最終的に削除
+    // 500ミリ秒後に相手のメッセージを追加
+    setTimeout(() => {
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { text: "こんにちは、これは自動応答です。", sender: "other" },
+      ]);
+    }, 500);
   };
 
-  /**
-   * Reset chat to the default messages
-   */
-  const resetChat = () => {
-    setChatMessages(data);
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewMessage(e.target.value);
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-32 ">
-      <div className="flex flex-row justify-between items-center py-2">
-        <p className="text-md text-white bg-purple-500 px-2 py-1 font-semibold animate-pulse">
-          Tiny Chat App
-        </p>
-        <button
-          type="button"
-          onClick={() => resetChat()}
-          className="hover:bg-gray-100 rounded-full font-medium text-sm p-1.5 text-center inline-flex items-center"
-        >
-          <ArrowPathIcon className="text-gray-600 w-5 h-5"/>
-        </button>
+    <div className="flex flex-col h-screen">
+      <div className="flex-none bg-blue-500 text-white p-3">
+        Chat Room
       </div>
-      <div className="bg-white border border-gray-200 rounded-lg shadow relative">
-        <Header name={"devlazar"} numberOfMessages={chatMessages.length}/>
-        <Content messages={chatMessages}/>
-        <InputBox sendANewMessage={sendANewMessage}/>
+
+      {/* メッセージエリア */}
+      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto p-3" id="messageArea">
+        {messages.map((message, index) => (
+          <div key={index} className={`rounded-lg p-2 mb-2 inline-block clear-both 
+                ${message.sender === "me"
+            ? "bg-green-100 float-right ml-5 md:ml-8 md:max-w-[60%]"
+            : "bg-blue-100 float-left mr-5 md:mr-8 md:max-w-[60%]"}`}
+          >
+            {message.text}
+          </div>
+        ))}
+      </div>
+
+      {/* 入力エリア */}
+      <div className="flex-none bg-gray-200 p-2">
+        <div className="flex">
+        <textarea // <--- ここを変更
+          className="w-full rounded p-2 resize-none"
+          placeholder="メッセージを入力"
+          value={newMessage}
+          onChange={handleInputChange}
+          rows={3} // 任意で行数を指定
+        />
+          <button className="ml-2 bg-blue-500 text-white p-2 rounded" onClick={handleSend}>
+            送信
+          </button>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Chat;
+}

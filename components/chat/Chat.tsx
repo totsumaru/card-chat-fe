@@ -7,11 +7,11 @@ import Link from "next/link";
 const writerProfileUrl = `/writer/profile/w-123`
 
 type Props = {
-  messageId: string
+  chatId: string
 }
 
 // チャットコンポーネントです
-export default function Chat({ messageId }: Props) {
+export default function Chat({ chatId }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [open, setOpen] = useState(false)

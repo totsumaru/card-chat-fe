@@ -9,7 +9,16 @@ type Props = {
   registeredEmail?: string
 }
 
-// 通知のモーダルです
+/**
+ * 通知のモーダルを開きます
+ *
+ * 1. メールアドレスが登録されていないとき
+ *   - メールを登録のフォームを表示
+ * 2. メールアドレスが既に登録されているとき
+ *   - 更新フォームを表示
+ *
+ *  いずれも、送信が完了した時は`success`のフラグによって表示が変更されます。
+ */
 export default function NoticeEmailModal({ registeredEmail }: Props) {
   const cancelButtonRef = useRef(null)
   const store = useNoticeModalStore()

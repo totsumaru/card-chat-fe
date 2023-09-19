@@ -13,11 +13,17 @@ import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 const avatarUrl = SampleAvatarUrl
 const registeredEmail = "techstart35@gmail.com"
 
-// チャット画面です
+/**
+ * `/chat/[chatId]`
+ *
+ * チャット画面のページです
+ *
+ * 最初に開いた時のみ、パスコードの入力が必要です。(cookieに保存)
+ */
 export default async function Index({
-  params: { messageId }
+  params: { chatId }
 }: {
-  params: { messageId: string }
+  params: { chatId: string }
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
@@ -27,10 +33,10 @@ export default async function Index({
       {/* ヘッダー */}
       <HeaderBase
         left={(
-          <Link href={`/writer/profile/w-123?message-id=${messageId}`}>
+          <Link href={`/writer/profile/w-123?message-id=${chatId}`}>
             <div className="flex items-center">
               <Avatar imageUrl={avatarUrl}/>
-              <p className="">戸塚翔太</p>
+              <p className="ml-2">戸塚翔太</p>
             </div>
           </Link>
         )}
@@ -39,7 +45,7 @@ export default async function Index({
 
       <PasscodeModal/>
       <NoticeEmailModal registeredEmail={registeredEmail}/>
-      <Chat messageId={messageId}/>
+      <Chat chatId={chatId}/>
     </div>
   )
 }

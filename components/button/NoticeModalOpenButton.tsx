@@ -7,7 +7,9 @@ type Props = {
   registeredEmail?: string
 }
 
-// 通知Modalのボタンです
+/**
+ * 通知モーダルを開くボタンです
+ */
 export default function NoticeModalOpenButton({ registeredEmail }: Props) {
   const store = useNoticeModalStore()
 

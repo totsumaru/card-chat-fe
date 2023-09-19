@@ -6,9 +6,9 @@ import { useSearchParams } from "next/navigation";
 // プロフィール画面からチャットへ戻るリンクです
 export default function ReturnToChatLink() {
   const searchParams = useSearchParams();
-  const messageId = searchParams.get("message-id");
+  const chatId = searchParams.get("chat-id");
 
   return (
-    <ReturnLink text={"チャットへ戻る"} url={`/chat/${messageId}`}/>
+    <ReturnLink text={"チャットへ戻る"} url={`/chat/${chatId}`}/>
   )
 }

@@ -117,7 +117,7 @@ export default function PasscodeModal() {
                       focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       onClick={() => setOpen(false)}
                     >
-                      チャットへ進む
+                      OK
                     </button>
                   ) : (
                     <button

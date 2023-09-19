@@ -82,8 +82,17 @@ export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props)
                           <div className="mt-2 text-left">
                             <p className="text-sm text-gray-500">
                               {currentEmail
-                                ? "*メールアドレスを更新する場合は入力してください。"
-                                : "*このメッセージの受信通知だけに使用されます。"}
+                                ? (
+                                  <p className="text-sm text-gray-500">
+                                    *メールアドレスを更新する場合は、新しいアドレスを入力してください<br/>
+                                    *解除する場合は「解除」と入力してください
+                                  </p>
+                                ) : (
+                                  <p className="text-sm text-gray-500">
+                                    *このメッセージの受信通知だけに使用されます
+                                  </p>
+                                )
+                              }
                             </p>
                           </div>
 

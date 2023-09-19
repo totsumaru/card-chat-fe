@@ -115,7 +115,7 @@ export default function Chat() {
 
       {/* 入力エリア */}
       <div className="flex-none bg-gray-200 px-4 py-3">
-        <div className="flex">
+        <div className="flex items-end">
           <textarea
             className="w-full rounded p-2 resize-none"
             placeholder="返信を入力しよう"
@@ -123,9 +123,12 @@ export default function Chat() {
             onChange={handleInputChange}
             rows={3}
           />
-          <button className="ml-2 bg-blue-500 text-white p-5 rounded" onClick={handleSend}>
-            <PaperAirplaneIcon className="h-5 w-5"/>
-          </button>
+          {/* 送信ボタン */}
+          <div className="flex items-end">
+            <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded h-10" onClick={handleSend}>
+              <PaperAirplaneIcon className="h-5 w-5"/>
+            </button>
+          </div>
         </div>
         <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
           <p className="text-sm text-gray-600">
@@ -134,6 +137,7 @@ export default function Chat() {
           </p>
         </div>
       </div>
+
     </div>
   );
 }

@@ -4,8 +4,14 @@ import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "
 import Link from "next/link";
 import BaseHeader from "@/components/header/BaseHeader";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
+import { ReactNode } from "react";
+import { SampleAvatarUrl } from "@/utils/sample/Sample";
 
-// Writerのプロフィール画面です
+/**
+ * `/writer/profile/[writer-id]`
+ *
+ * ライターのプロフィールページです
+ */
 export default async function Index({
   params: { writerId }
 }: {
@@ -14,7 +20,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const profileUrl = `/writer/profile/w-123/edit`
+  const editUrl = `/writer/profile/w-123/edit`
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
@@ -25,21 +31,10 @@ export default async function Index({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">
         <section className="isolate overflow-hidden px-6 lg:px-8">
           <div className="relative mx-auto max-w-2xl py-24 sm:py-20 lg:max-w-4xl">
-            <div className="absolute left-1/2 top-0 -z-10 h-[50rem] w-[90rem] -translate-x-1/2 opacity-20 lg:left-36"/>
 
             {/* TODO: ログインしている本人であれば表示 */}
             {/* 編集ボタン */}
-            <div className="text-right mb-3">
-              <Link
-                href={profileUrl}
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold
-                 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
-                 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <Cog6ToothIcon className="w-5 h-5 mr-1"/>
-                編集
-              </Link>
-            </div>
+            <EditButton editUrl={editUrl}/>
 
             <figure className="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
 
@@ -47,28 +42,20 @@ export default async function Index({
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
                 <BackgroundSVG/>
                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                  <p>
-                    連絡先を知らない人にもチャットを送れる！アポに繋がる。新しい顧客の獲得に最適な営業ツール「CardChat」を導入しませんか？
-                  </p>
+                  <p>連絡先を知らない人にもチャットを送れる！アポに繋がる。新しい顧客の獲得に最適な営業ツール「CardChat」を導入しませんか？</p>
                 </blockquote>
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img
-                  className="rounded-xl lg:rounded-3xl"
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=576&h=576&q=80"
-                  alt=""
-                />
+                <img className="rounded-xl lg:rounded-3xl" src={SampleAvatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}
               <figcaption className="text-base lg:col-start-1 lg:row-start-3">
-                {/* 名前 */}
                 <div className="font-semibold text-gray-900">
                   戸塚翔太
                 </div>
-                {/* 会社 */}
                 <div className="mt-1 text-gray-500 flex gap-2">
                   <p>株式会社ArGate</p>
                   <p>代表取締役</p>
@@ -80,58 +67,29 @@ export default async function Index({
             {/* 情報 */}
             <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* 電話番号 */}
-              <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300
-                 px-3 py-3 shadow-sm  hover:border-gray-400"
-              >
-                <div className="flex-shrink-0">
-                  <PhoneIcon className="w-4 h-4"/>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <Link href="#" className="focus:outline-none">
-                    <span className="absolute inset-0" aria-hidden="true"/>
-                    <p className="text-sm font-medium text-gray-900">電話番号</p>
-                    <p className="truncate text-gray-500">090-7685-1396</p>
-                  </Link>
-                </div>
-              </div>
+              <InfoGrid icon={(
+                <PhoneIcon className="w-4 h-4"/>
+              )} kind={"電話番号"} value={"090-7685-1396"}/>
 
               {/* メールアドレス */}
-              <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300
-                 px-3 py-3 shadow-sm  hover:border-gray-400"
-              >
-                <div className="flex-shrink-0">
-                  <EnvelopeIcon className="w-4 h-4"/>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <Link href="#" className="focus:outline-none">
-                    <span className="absolute inset-0" aria-hidden="true"/>
-                    <p className="text-sm font-medium text-gray-900">メールアドレス</p>
-                    <p className="truncate text-gray-500">techstart35@gmail.com</p>
-                  </Link>
-                </div>
-              </div>
+              <InfoGrid icon={(
+                <EnvelopeIcon className="w-4 h-4"/>
+              )} kind={"メールアドレス"} value={"techstart35@gmail.com"}/>
 
               {/* ホームページ */}
-              <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300
-                 px-3 py-3 shadow-sm  hover:border-gray-400"
-              >
-                <div className="flex-shrink-0">
-                  <GlobeAsiaAustraliaIcon className="w-4 h-4"/>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <Link href="#" className="focus:outline-none">
-                    <span className="absolute inset-0" aria-hidden="true"/>
-                    <p className="text-sm font-medium text-gray-900">Webサイト</p>
-                    <p className="truncate text-gray-500">https://foo.com</p>
-                  </Link>
-                </div>
-              </div>
-
+              <InfoGrid icon={(
+                <GlobeAsiaAustraliaIcon className="w-4 h-4"/>
+              )} kind={"Webサイト"} value={"https://foo.com"}/>
             </div>
 
             {/* 備考 */}
             <div className="text-gray-600 mt-7">
-              <p>この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ</p>
+              <p>
+                この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、
+                字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。
+                この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、
+                量、字間、行間等を確認するために入れ
+              </p>
             </div>
 
           </div>
@@ -141,6 +99,7 @@ export default async function Index({
   )
 }
 
+// 背景の引用符号のSVGです
 function BackgroundSVG() {
   return (
     <svg
@@ -155,5 +114,48 @@ function BackgroundSVG() {
       />
       <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86}/>
     </svg>
+  )
+}
+
+// 編集ボタンです
+function EditButton({ editUrl }: { editUrl: string }) {
+  return (
+    <div className="text-right mb-3">
+      <Link
+        href={editUrl}
+        className="inline-flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold
+                 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+                 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        <Cog6ToothIcon className="w-5 h-5 mr-1"/>
+        編集
+      </Link>
+    </div>
+  )
+}
+
+// Gridのアイテムです
+function InfoGrid({
+  icon, kind, value
+}: {
+  icon: ReactNode,
+  kind: string,
+  value: string,
+}) {
+  return (
+    <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300
+                 px-3 py-3 shadow-sm  hover:border-gray-400"
+    >
+      <div className="flex-shrink-0">
+        {icon}
+      </div>
+      <div className="min-w-0 flex-1">
+        <Link href="#" className="focus:outline-none">
+          <span className="absolute inset-0" aria-hidden="true"/>
+          <p className="text-sm font-medium text-gray-900">{kind}</p>
+          <p className="truncate text-gray-500">{value}</p>
+        </Link>
+      </div>
+    </div>
   )
 }

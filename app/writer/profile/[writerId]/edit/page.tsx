@@ -13,6 +13,8 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
+  const returnLink = `/writer/profile/w-123`
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl py-20">
@@ -20,7 +22,7 @@ export default async function Index({
         {/* 戻るリンク */}
         <div>
           <Link
-            href={`/writer/profile/w-123`}
+            href={returnLink}
             className="text-blue-600 flex items-center"
           >
             <ChevronLeftIcon className="inline w-4 h-4 mr-1"/>
@@ -156,15 +158,14 @@ export default async function Index({
 
           {/* 保存ボタン */}
           <div className="mt-6">
-            <Link
-              href={`/writer/profile/w-123`}
+            <button
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm shadow-sm
                font-semibold text-white hover:bg-indigo-500 focus-visible:outline
                focus-visible:outline-2 focus-visible:outline-offset-2
                focus-visible:outline-indigo-600"
             >
               保存する
-            </Link>
+            </button>
           </div>
 
         </div>

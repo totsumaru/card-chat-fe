@@ -14,6 +14,8 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
+  const profileUrl = `/writer/profile/w-123/edit`
+
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
@@ -29,7 +31,7 @@ export default async function Index({
             {/* 編集ボタン */}
             <div className="text-right mb-3">
               <Link
-                href={`/writer/profile/w-123/edit`}
+                href={profileUrl}
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold
                  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
                  focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

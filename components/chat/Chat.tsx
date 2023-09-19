@@ -14,8 +14,6 @@ type Props = {
 export default function Chat({ chatId }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [open, setOpen] = useState(false)
-  const [currentEmail, setCurrentEmail] = useState<string>("tech")
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
 
   // メッセージが追加されたら一番下までスクロール

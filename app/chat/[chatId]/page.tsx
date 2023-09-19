@@ -28,12 +28,14 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
+  const profileUrl = `/writer/profile/w-123?message-id=${chatId}`
+
   return (
     <div className="flex flex-col h-screen">
       {/* ヘッダー */}
       <BaseHeader
         left={(
-          <Link href={`/writer/profile/w-123?message-id=${chatId}`}>
+          <Link href={profileUrl}>
             <div className="flex items-center">
               <Avatar imageUrl={avatarUrl}/>
               <p className="ml-2">戸塚翔太</p>
@@ -43,8 +45,11 @@ export default async function Index({
         right={<NoticeModalOpenButton registeredEmail={registeredEmail}/>}
       />
 
+      {/* Modal */}
       <PasscodeModal/>
       <NoticeEmailModal registeredEmail={registeredEmail}/>
+
+      {/* チャット */}
       <Chat chatId={chatId}/>
     </div>
   )

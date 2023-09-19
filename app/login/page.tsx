@@ -1,4 +1,5 @@
-export default function Login() {
+// ログイン画面です
+export default async function Index() {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -39,7 +40,7 @@ export default function Login() {
               </label>
               <div className="text-sm">
                 <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Forgot password?
+                  パスワードを忘れた方
                 </a>
               </div>
             </div>

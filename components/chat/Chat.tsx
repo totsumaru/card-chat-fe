@@ -1,13 +1,17 @@
 "use client"
 
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { BellIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 
 const writerProfileUrl = `/writer/profile/w-123`
 
-export default function Chat() {
+type Props = {
+  messageId: string
+}
+
+// チャットコンポーネントです
+export default function Chat({ messageId }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [open, setOpen] = useState(false)
@@ -50,45 +54,8 @@ export default function Chat() {
     setNewMessage(e.target.value);
   };
 
-  // 通知ボタンを押した時の挙動です
-  const handleNoticeBtn = () => {
-    setOpen(true)
-  }
-
   return (
     <div className="flex flex-col h-screen">
-      {/* Modal */}
-      <NoticeEmailModal open={open} setOpen={setOpen} currentEmail={currentEmail}/>
-
-      {/* ヘッダー */}
-      <div className="flex justify-between items-center bg-blue-500 text-white px-5 py-3">
-        {/* 左側 */}
-        <Link href={writerProfileUrl}>
-          <div className="flex items-center">
-            <AvatarImg/>
-            <p className="">戸塚翔太</p>
-          </div>
-        </Link>
-
-        {/* 右側 */}
-        <div>
-          <button
-            type="button"
-            className="flex rounded-md bg-indigo-50 px-3 py-2 text-sm text-gray-700
-             shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            onClick={handleNoticeBtn}
-          >
-            <BellIcon className="w-5 h-5 mr-1"/>
-            <p className="">
-              {currentEmail
-                ? "登録済"
-                : "受信通知を受け取る"
-              }
-            </p>
-          </button>
-        </div>
-      </div>
-
       {/* メッセージエリア */}
       <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 py-3" id="messageArea">
         {messages.map((message, index) => (

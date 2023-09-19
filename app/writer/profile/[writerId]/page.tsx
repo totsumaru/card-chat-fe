@@ -1,13 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import {
-  ChevronLeftIcon,
-  Cog6ToothIcon,
-  EnvelopeIcon,
-  GlobeAsiaAustraliaIcon,
-  PhoneIcon
-} from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import HeaderBase from "@/components/header/HeaderBase";
+import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 
 // Writerのプロフィール画面です
 export default async function Index({
@@ -21,10 +17,7 @@ export default async function Index({
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <div className="bg-blue-600 flex px-5 py-4 items-center">
-        <ChevronLeftIcon className="w-4 h-4 text-white mr-1"/>
-        <Link href={`/chat/123`} className="text-white">チャットへ戻る</Link>
-      </div>
+      <HeaderBase left={<ReturnToChatLink/>} right={""}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">
@@ -161,8 +154,4 @@ function BackgroundSVG() {
       <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86}/>
     </svg>
   )
-}
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
 }

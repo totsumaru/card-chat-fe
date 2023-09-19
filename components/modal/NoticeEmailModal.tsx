@@ -1,33 +1,47 @@
-import { Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from 'react'
+"use client"
+
+import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BellIcon } from '@heroicons/react/24/outline'
+import { useNoticeModalStore } from "@/store/store";
 
 type Props = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  currentEmail?: string
+  registeredEmail?: string
 }
 
-// 受信通知でメールアドレスを入力するモーダルです
-export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props) {
+// 通知のモーダルです
+export default function NoticeEmailModal({ registeredEmail }: Props) {
   const cancelButtonRef = useRef(null)
-  const [success, setSuccess] = useState<boolean>(false)
+  const store = useNoticeModalStore()
   const [newEmail, setNewEmail] = useState<string>("")
+  const [success, setSuccess] = useState<boolean>(false)
+  const [validationErrMsg, setValidationErrMsg] = useState<string>("")
 
-  useEffect(() => {
-    // Modalをopenしたときにsuccessをfalseに変更する
-    open && setSuccess(false)
-  }, [open])
+  // Modalが閉じられた時の処理です
+  const onCloseHandle = () => {
+    store.setOpen(false)
+    setSuccess(false)
+    setValidationErrMsg("")
+  }
 
   // メールアドレスを送信します
   const handleSend = () => {
+    // メールアドレスのバリデーションを行います
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(newEmail)) {
+      setValidationErrMsg("メールアドレスが正しくありません")
+      return
+    }
+
     setNewEmail("")
     setSuccess(true)
   }
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+    <Transition.Root show={store.open} as={Fragment}>
+      <Dialog as="div" className="relative z-10"
+              initialFocus={cancelButtonRef} onClose={() => onCloseHandle}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -63,8 +77,8 @@ export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props)
                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
                       {success // 現在のアドレスがあるか判定
                         ? "完了"
-                        : currentEmail // 送信後であるか判定
-                          ? currentEmail + " に通知中"
+                        : registeredEmail // 送信後であるか判定
+                          ? registeredEmail + " に通知中"
                           : "メールで通知を受け取る"
                       }
                     </Dialog.Title>
@@ -80,20 +94,18 @@ export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props)
                         <div>
                           {/* 説明 */}
                           <div className="mt-2 text-left">
-                            <p className="text-sm text-gray-500">
-                              {currentEmail
-                                ? (
-                                  <p className="text-sm text-gray-500">
-                                    *メールアドレスを更新する場合は、新しいアドレスを入力してください<br/>
-                                    *解除する場合は「解除」と入力してください
-                                  </p>
-                                ) : (
-                                  <p className="text-sm text-gray-500">
-                                    *このメッセージの受信通知だけに使用されます
-                                  </p>
-                                )
-                              }
-                            </p>
+                            {registeredEmail
+                              ? (
+                                <p className="text-sm text-gray-500">
+                                  *メールアドレスを更新する場合は、新しいアドレスを入力してください<br/>
+                                  *解除する場合は「解除」と入力してください
+                                </p>
+                              ) : (
+                                <p className="text-sm text-gray-500">
+                                  *このメッセージの受信通知だけに使用されます
+                                </p>
+                              )
+                            }
                           </div>
 
                           {/* メールフォーム */}
@@ -109,6 +121,11 @@ export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props)
                               onChange={(e) => setNewEmail(e.target.value)}
                             />
                           </div>
+
+                          {/* エラーメッセージ */}
+                          {validationErrMsg && (
+                            <p className="text-xs text-red-500">※{validationErrMsg}</p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -124,13 +141,13 @@ export default function NoticeEmailModal({ open, setOpen, currentEmail }: Props)
                     onClick={handleSend}
                     disabled={success}
                   >
-                    {currentEmail ? "更新" : "送信"}
+                    {registeredEmail ? "更新" : "送信"}
                   </button>
 
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                    onClick={() => setOpen(false)}
+                    onClick={onCloseHandle}
                     ref={cancelButtonRef}
                   >
                     キャンセル

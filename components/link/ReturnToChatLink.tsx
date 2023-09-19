@@ -9,6 +9,6 @@ export default function ReturnToChatLink() {
   const chatId = searchParams.get("chat-id");
 
   return (
-    <ReturnLink text={"チャットへ戻る"} url={`/chat/${chatId}`}/>
+    <ReturnLink text={"チャットへ戻る"} url={`/chat/${chatId}`} textWhite={true}/>
   )
 }

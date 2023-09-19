@@ -4,15 +4,24 @@ import Link from "next/link";
 type Props = {
   text: string
   url: string
+  textWhite: boolean
 }
 
-export default function ReturnLink({ text }: Props) {
+export default function ReturnLink({ text, url, textWhite }: Props) {
+  const link = (
+    <Link href={url} className="flex items-center">
+      <ChevronLeftIcon className="w-4 h-4 mr-1"/>
+      {text}
+    </Link>
+  )
+
   return (
-    <div className="flex items-center py-1">
-      <ChevronLeftIcon className="w-4 h-4 text-white mr-1"/>
-      <Link href={`/chat/123`} className="text-white">
-        チャットへ戻る
-      </Link>
-    </div>
+    <>
+      {textWhite ? (
+        <div className="py-1 text-white">{link}</div>
+      ) : (
+        <div className="py-1 text-blue-600">{link}</div>
+      )}
+    </>
   )
 }

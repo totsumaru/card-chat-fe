@@ -2,7 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import HeaderBase from "@/components/header/HeaderBase";
+import BaseHeader from "@/components/header/BaseHeader";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 
 // Writerのプロフィール画面です
@@ -17,7 +17,7 @@ export default async function Index({
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <HeaderBase left={<ReturnToChatLink/>} right={""}/>
+      <BaseHeader left={<ReturnToChatLink/>} right={""}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">

@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Chat from "@/components/chat/Chat";
 import PasscodeModal from "@/components/modal/PasscodeModal";
-import HeaderBase from "@/components/header/HeaderBase";
+import BaseHeader from "@/components/header/BaseHeader";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
@@ -31,7 +31,7 @@ export default async function Index({
   return (
     <div className="flex flex-col h-screen">
       {/* ヘッダー */}
-      <HeaderBase
+      <BaseHeader
         left={(
           <Link href={`/writer/profile/w-123?message-id=${chatId}`}>
             <div className="flex items-center">

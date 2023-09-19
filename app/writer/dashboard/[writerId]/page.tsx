@@ -3,8 +3,18 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import BaseHeader from "@/components/header/BaseHeader";
+import Container from "@/components/container/Container";
+import Avatar from "@/components/avatar/Avatar";
 
-// ダッシュボードです
+const configLink = "/writer/dashboard/w-123/m-123"
+const chatLink = "/chat/m-123"
+
+/**
+ * `/writer/dashboard/[writer-id]`
+ *
+ * ユーザーの一覧(ダッシュボード)ページです。
+ */
 export default async function Index({
   params: { writerId }
 }: {
@@ -14,66 +24,55 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div>
       {/* ヘッダー */}
-      <div className="flex justify-between items-center bg-blue-500 text-white px-5 py-3">
-        {/* 左側 */}
-        <Link href={"#"}>
-          <div className="flex items-center">
-            <p className="">戸塚翔太</p>
-          </div>
-        </Link>
+      <BaseHeader left={""} right={""}/>
 
-        {/* 右側 */}
-        <div>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-3xl px-3 py-10">
+      <Container>
         <h1 className="text-gray-900 font-bold text-lg">
           チャット一覧
         </h1>
 
-        <ul role="list" className="mt-5 divide-y divide-gray-100">
+        <ul role="list" className="mt-5 divide-gray-100">
           {comments.map((comment) => (
             <div className="flex">
-              <Link href={`/chat/m-123`}>
+              <Link href={chatLink}>
                 <li key={comment.id} className="flex gap-x-4 p-5 hover:bg-gray-100 border-b border-b-gray-200">
-                  {/* アイコン */}
-                  <img className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                       src={comment.imageUrl} alt=""
-                  />
+                  {/* アバター */}
+                  <Avatar/>
 
                   <div className="flex-auto">
                     {/* 上側(名前+時間) */}
                     <div className="flex items-baseline justify-between gap-x-4">
                       <p className="text-sm font-semibold leading-6 text-gray-900">{comment.name}</p>
                       <p className="flex-none text-xs text-gray-600">
-                        <time dateTime={comment.dateTime}>{comment.date}</time>
+                        {comment.date}
                       </p>
                     </div>
                     {/* 下側(コメント) */}
-                    <div>
-                      <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-600">
-                        {comment.content}
-                      </p>
-                    </div>
+                    <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-600">
+                      {comment.content}
+                    </p>
                   </div>
+
                 </li>
               </Link>
+
+              {/* 設定アイコン */}
               <div className="flex items-center">
                 <Link
-                  href={`/writer/dashboard/w-123/m-123`}
+                  href={configLink}
                   type="button"
                   className="p-2 text-gray-900 hover:text-blue-600"
                 >
                   <Cog6ToothIcon className="w-5 h-5"/>
                 </Link>
               </div>
+
             </div>
           ))}
         </ul>
-      </div>
+      </Container>
     </div>
   )
 }

@@ -6,7 +6,7 @@ type Props = {
 }
 
 // Headerのベースです
-export default function HeaderBase({ left, right }: Props) {
+export default function BaseHeader({ left, right }: Props) {
   return (
     <div className="flex justify-between items-center bg-indigo-500
      text-white px-5 py-3 min-h-[30px]"

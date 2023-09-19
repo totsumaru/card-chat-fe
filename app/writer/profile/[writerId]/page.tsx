@@ -4,8 +4,8 @@ import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "
 import Link from "next/link";
 import BaseHeader from "@/components/header/BaseHeader";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
-import { ReactNode } from "react";
 import { SampleAvatarUrl } from "@/utils/sample/Sample";
+import React from "react";
 
 /**
  * `/writer/profile/[writer-id]`
@@ -135,27 +135,53 @@ function EditButton({ editUrl }: { editUrl: string }) {
 }
 
 // Gridのアイテムです
+// Gridのアイテムです
 function InfoGrid({
-  icon, kind, value
+  icon,
+  kind,
+  value
 }: {
-  icon: ReactNode,
-  kind: string,
+  icon: React.ReactNode,
+  kind: "電話番号" | "メールアドレス" | "Webサイト",
   value: string,
 }) {
+  let link: string | undefined;
+  let isExternal: boolean = false;
+
+  switch (kind) {
+    case "メールアドレス":
+      link = undefined; // メールはリンクもクリックでコピーも無し
+      break;
+    case "電話番号":
+      link = `tel:${value}`;
+      break;
+    case "Webサイト":
+      link = value;
+      isExternal = true;
+      break;
+  }
+
   return (
-    <div className="relative flex items-center space-x-3 rounded-lg border border-gray-300
-                 px-3 py-3 shadow-sm  hover:border-gray-400"
-    >
+    <div
+      className="relative flex items-center space-x-3 rounded-lg border border-gray-300 px-3 py-3 shadow-sm hover:border-gray-400">
       <div className="flex-shrink-0">
         {icon}
       </div>
       <div className="min-w-0 flex-1">
-        <Link href="#" className="focus:outline-none">
-          <span className="absolute inset-0" aria-hidden="true"/>
-          <p className="text-sm font-medium text-gray-900">{kind}</p>
-          <p className="truncate text-gray-500">{value}</p>
-        </Link>
+        {link ? (
+          <Link href={link} className="focus:outline-none" target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}>
+            <span className="absolute inset-0" aria-hidden="true"/>
+            <p className="text-sm font-medium text-gray-900">{kind}</p>
+            <p className="truncate text-gray-500">{value}</p>
+          </Link>
+        ) : (
+          <>
+            <p className="text-sm font-medium text-gray-900">{kind}</p>
+            <p className="truncate text-gray-500">{value}</p>
+          </>
+        )}
       </div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import InputImage from "@/components/image/InputImage";
-import Link from "next/link";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import ReturnLink from "@/components/link/ReturnLink";
+import BaseHeader from "@/components/header/BaseHeader";
+import Container from "@/components/container/Container";
 
 // Writerのプロフィールの編集画面です
 export default async function Index({
@@ -16,19 +17,13 @@ export default async function Index({
   const returnLink = `/writer/profile/w-123`
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl py-20">
-
+    <>
+      <BaseHeader left={""} right={""}/>
+      <Container>
         {/* 戻るリンク */}
-        <div>
-          <Link
-            href={returnLink}
-            className="text-blue-600 flex items-center"
-          >
-            <ChevronLeftIcon className="inline w-4 h-4 mr-1"/>
-            戻る
-          </Link>
-        </div>
+        <ReturnLink text={"戻る"} url={returnLink} textWhite={false}/>
+
+        <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
 
         <div className="mt-5">
           <InputImage/>
@@ -39,57 +34,31 @@ export default async function Index({
 
             {/* 名前 */}
             <div className="sm:col-span-4">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                名前
-              </label>
+              <Label text={"名前"}/>
               <div className="mt-2">
-                <input
-                  type="text"
-                  placeholder="鈴木 太郎"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <input type="text" placeholder="鈴木 太郎" className={inputClassName}/>
               </div>
             </div>
 
             {/* 会社名 */}
             <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                会社名
-              </label>
+              <Label text={"会社名"}/>
               <div className="mt-2">
-                <input
-                  type="text"
-                  placeholder="株式会社ABC"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <input type="text" placeholder="株式会社ABC" className={inputClassName}/>
               </div>
             </div>
 
             {/* 所属 */}
             <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                所属
-              </label>
+              <Label text={"所属"}/>
               <div className="mt-2">
-                <input
-                  type="text"
-                  placeholder="営業部 営業一課"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <input type="text" placeholder="営業部 営業一課" className={inputClassName}/>
               </div>
             </div>
 
             {/*　メールアドレス */}
             <div className="sm:col-span-4">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                メールアドレス
-              </label>
+              <Label text={"メールアドレス"}/>
               <div className="mt-2">
                 <input
                   id="email"
@@ -97,60 +66,40 @@ export default async function Index({
                   type="email"
                   autoComplete="email"
                   placeholder="abc@example.com"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={inputClassName}
                 />
               </div>
             </div>
 
             {/*　電話番号 */}
             <div className="sm:col-span-4">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                電話番号
-              </label>
+              <Label text={"電話番号"}/>
               <div className="mt-2">
-                <input
-                  name="tel"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="090-1234-5678"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <input name="tel" type="tel" placeholder="090-1234-5678" className={inputClassName}/>
               </div>
             </div>
 
             {/*　Webサイト */}
             <div className="sm:col-span-4">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                ホームページ
-              </label>
+              <Label text={"ホームページ"}/>
               <div className="mt-2">
-                <input
-                  type="url"
-                  placeholder="https://example.com"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <input type="url" placeholder="https://example.com" className={inputClassName}/>
+              </div>
+            </div>
+
+            {/*　標題 */}
+            <div className="sm:col-span-4">
+              <Label text={"標題"}/>
+              <div className="mt-2">
+                <textarea rows={4} placeholder="私たちは、お客様を笑顔にするお手伝いをしています。" className={inputClassName}/>
               </div>
             </div>
 
             {/*　コメント */}
             <div className="sm:col-span-4">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                コメント
-              </label>
+              <Label text={"コメント"}/>
               <div className="mt-2">
-                <textarea
-                  rows={4}
-                  placeholder="コメントを記入"
-                  className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
-                   shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                   focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <textarea rows={4} className={inputClassName}/>
               </div>
             </div>
 
@@ -169,7 +118,23 @@ export default async function Index({
           </div>
 
         </div>
-      </div>
-    </div>
+      </Container>
+    </>
   )
 }
+
+// ラベルです
+function Label({ text }: { text: string }) {
+  return (
+    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+      {text}
+    </label>
+  )
+}
+
+// inputのクラス名です
+const inputClassName = `
+block w-full rounded-md border-0 px-3 py-2 text-gray-900
+ shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
+ focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6
+`

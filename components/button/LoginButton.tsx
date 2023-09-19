@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
+import { useRouter } from "next/navigation";
 
 type Props = {
   email: string
@@ -9,11 +10,12 @@ type Props = {
 }
 
 /**
- * ログインボタンです
+ * ログインボタンのコンポーネントです
  */
 export default function LoginButton({ email, password }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const [errMsg, setErrMsg] = useState<string>("ログインできません")
+  const router = useRouter()
 
   const clickHandler = () => {
     // email, passwordを送信
@@ -23,11 +25,13 @@ export default function LoginButton({ email, password }: Props) {
     // TODO: 一時的にSleep
     new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
       setLoading(false)
+      router.push("/writer/dashboard/123")
     })
   }
 
   return (
     <div>
+      {/* ボタン */}
       <button
         type="submit"
         className="flex items-center justify-center w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold
@@ -39,6 +43,8 @@ export default function LoginButton({ email, password }: Props) {
         {loading && <ButtonLoading/>}
         ログイン
       </button>
+
+      {/* エラーメッセージ */}
       <p className="text-sm text-red-500 mt-1">{errMsg}</p>
     </div>
   )

@@ -5,6 +5,9 @@ import LoginButton from "@/components/button/LoginButton";
 import { useState } from "react";
 import Link from "next/link";
 
+/**
+ * ログインページです
+ */
 export default function Index() {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")

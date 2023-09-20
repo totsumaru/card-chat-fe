@@ -21,7 +21,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const data = SampleData
+  const mock = SampleData
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
@@ -39,23 +39,23 @@ export default async function Index({
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
                 <BackgroundSVG/>
                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                  <p>{data.writer.headline}</p>
+                  <p>{mock.writer.headline}</p>
                 </blockquote>
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-xl lg:rounded-3xl" src={data.writer.avatarUrl} alt=""/>
+                <img className="rounded-xl lg:rounded-3xl" src={mock.writer.avatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}
               <figcaption className="text-base lg:col-start-1 lg:row-start-3">
                 <div className="font-semibold text-gray-900">
-                  {data.writer.name}
+                  {mock.writer.name}
                 </div>
                 <div className="mt-1 text-gray-500 flex gap-2">
-                  <p>{data.writer.company.name}</p>
-                  <p>{data.writer.company.position}</p>
+                  <p>{mock.writer.company.name}</p>
+                  <p>{mock.writer.company.position}</p>
                 </div>
               </figcaption>
 
@@ -66,26 +66,26 @@ export default async function Index({
               {/* 電話番号 */}
               <InfoGrid icon={(
                 <PhoneIcon className="w-4 h-4"/>
-              )} kind={"電話番号"} value={data.writer.company.tel}/>
+              )} kind={"電話番号"} value={mock.writer.company.tel}/>
 
               {/* メールアドレス */}
               <InfoGrid icon={(
                 <EnvelopeIcon className="w-4 h-4"/>
-              )} kind={"メールアドレス"} value={data.writer.company.email}/>
+              )} kind={"メールアドレス"} value={mock.writer.company.email}/>
 
               {/* ホームページ */}
               <InfoGrid icon={(
                 <GlobeAsiaAustraliaIcon className="w-4 h-4"/>
-              )} kind={"Webサイト"} value={data.writer.company.website}/>
+              )} kind={"Webサイト"} value={mock.writer.company.website}/>
             </div>
 
             {/* 備考 */}
             <div className="text-gray-600 mt-7">
-              <p>{data.writer.introduction}</p>
+              <p>{mock.writer.introduction}</p>
             </div>
 
             {/* 編集ボタン */}
-            {data.isLogin && (
+            {mock.currentWriterID === mock.writer.id && (
               <div className="mt-5">
                 <EditButton editUrl={pathProfileEdit(writerId)}/>
               </div>

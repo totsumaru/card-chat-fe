@@ -28,16 +28,16 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const writerId = "w-123"
+  const mock = SampleData
 
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
       <Header
         left={(
-          <Link href={pathProfile(writerId, chatId)}>
+          <Link href={pathProfile(mock.writer.id, chatId)}>
             <div className="flex items-center">
-              <Avatar imageUrl={SampleData.writer.avatarUrl}/>
+              <Avatar imageUrl={mock.writer.avatarUrl}/>
               <p className="ml-2">戸塚翔太</p>
             </div>
           </Link>
@@ -54,7 +54,7 @@ export default async function Index({
         chatId={chatId}
         isWriter={false}
         writer={{
-          id: writerId,
+          id: mock.writer.id,
           name: "taro",
           imageUrl: SampleData.writer.avatarUrl,
         }}

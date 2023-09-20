@@ -1,4 +1,5 @@
 const writerId = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
+const writerId2 = "9673bf66-ad61-445a-bf97-5b13142ecbbd"
 const chatId1 = "cd746a35-1360-403a-a747-98e5f1a9fa2f"
 const chatId2 = "cd746a35-1360-403a-a747-98e5f1a9fa2f"
 const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -9,7 +10,7 @@ const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?
  * ここの値を変更することで、状態の変化を確認します。
  */
 export const SampleData = {
-  isLogin: true,
+  currentWriterID: writerId, // 今ログインしているIDです
   writer: {
     id: writerId,
     name: "戸塚 翔太",
@@ -24,7 +25,22 @@ export const SampleData = {
       website: "https://argate.jp",
     },
   },
+  writer2: {
+    id: writerId2,
+    name: "斎藤佑樹",
+    avatarUrl: "",
+    headline: "ライター2です",
+    introduction: "はじめまして。ライター2です",
+    company: {
+      name: "遠州鉄道 株式会社",
+      position: "計画課",
+      tel: "053-455-2255",
+      email: "totsuka.ast@entetsu.co.jp",
+      website: "https://entetsu.jp",
+    },
+  },
   chat: [
+    // 奇数はwriter1,偶数はwriter2のIDを指定しています
     // チャット1
     {
       id: chatId1,
@@ -50,7 +66,7 @@ export const SampleData = {
     // チャット2
     {
       id: chatId2,
-      writerId: writerId,
+      writerId: writerId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
@@ -94,7 +110,7 @@ export const SampleData = {
     // チャット4
     {
       id: chatId2,
-      writerId: writerId,
+      writerId: writerId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
@@ -138,7 +154,7 @@ export const SampleData = {
     // チャット6
     {
       id: chatId2,
-      writerId: writerId,
+      writerId: writerId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",

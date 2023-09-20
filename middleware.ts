@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
 
   await supabase.auth.getSession()
 
-  if (!SampleData.isLogin) {
+  if (!SampleData.currentWriterID) {
     if (req.nextUrl.pathname.startsWith('/writer/dashboard')) {
       const redirectUrl = req.nextUrl.clone();
       redirectUrl.pathname = pathLogin();

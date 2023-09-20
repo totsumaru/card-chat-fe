@@ -27,7 +27,7 @@ export default async function Index() {
   const writer = GetLoginWriter()
 
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-gray-50 h-screen">
       {/* ヘッダー */}
       <Header left={""} right={""}/>
 

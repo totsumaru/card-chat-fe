@@ -27,15 +27,20 @@ export default async function Index({
       <Container>
         <ReturnLink text={"戻る"} url={pathDashboard()} textWhite={false}/>
 
-        <div className="mt-5">
-          <Info text={"この内容は、相手には表示されません。"}/>
-        </div>
+        <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full">
+          {/* ここを中央に */}
+          <div className="mx-auto">
+            <div className="mt-2">
+              <Info text={"この内容は、相手には表示されません。"}/>
+            </div>
 
-        <ChatMetadataForms
-          id={chat?.id || ""}
-          displayName={chat?.reader.displayName || ""}
-          memo={chat?.reader.memo || ""}
-        />
+            <ChatMetadataForms
+              id={chat?.id || ""}
+              displayName={chat?.reader.displayName || ""}
+              memo={chat?.reader.memo || ""}
+            />
+          </div>
+        </div>
 
       </Container>
     </>

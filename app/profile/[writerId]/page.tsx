@@ -44,7 +44,7 @@ export default async function Index({
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-xl lg:rounded-3xl" src={mock.writer.avatarUrl} alt=""/>
+                <img className="rounded-full" src={mock.writer.avatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}

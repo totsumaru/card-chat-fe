@@ -43,7 +43,8 @@ export default function InputImage({ image, setImage }: Props) {
       <div className="mt-2">
         {/* Input */}
         <label htmlFor="dropzone-file"
-               className="flex flex-col bg-cover items-center justify-center h-64 w-64 border-2 ring-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
+               className="flex flex-col bg-cover items-center justify-center h-64 w-64 border-2
+                ring-gray-300 rounded-full cursor-pointer hover:bg-gray-100"
                style={{ backgroundImage: `url(${image})` }}
         >
           <div className="flex flex-col items-center justify-center p-5 bg-gray-50 bg-opacity-80">

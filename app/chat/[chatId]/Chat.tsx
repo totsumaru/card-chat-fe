@@ -48,7 +48,6 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
     // メッセージボックスをクリア
     setNewMessage("");
 
-    // TODO: 最終的に削除
     // 500ミリ秒後に相手のメッセージを追加
     setTimeout(() => {
       setMessages(prevMessages => [
@@ -130,7 +129,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
       <div className="flex-none bg-gray-200 px-4 py-3">
         <div className="flex items-end">
           <textarea
-            className="w-full rounded p-2 resize-none"
+            className="w-full rounded p-2 resize-none text-sm"
             placeholder="メッセージを入力"
             value={newMessage}
             onChange={handleInputChange}
@@ -144,7 +143,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
           </div>
         </div>
         <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-xs text-gray-600">
             ※こちらは簡易チャットです。
             <b><u>個人情報を送付する場合は、担当者のメールアドレス等に</u></b>送付してください。
           </p>
@@ -157,7 +156,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
 
 // URLの部分をaタグに変更
 function urlToA(text: string) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = /(https?:\/\/\S+)/g;
   return text.split(urlRegex).map((part, i) => {
     if (i % 2 === 0) {
       return part;

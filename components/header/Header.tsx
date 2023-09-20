@@ -16,7 +16,7 @@ type Props = {
 export default function Header({ left, right, myWriterId }: Props) {
   let dashboardUrl: string = ""
   if (myWriterId && !right) {
-    dashboardUrl = pathDashboard(myWriterId)
+    dashboardUrl = pathDashboard()
   }
 
   return (

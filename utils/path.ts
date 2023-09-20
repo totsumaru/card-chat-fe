@@ -21,7 +21,7 @@ export function pathChat(chatId: string): string {
  * プロフィール
  */
 export function pathProfile(writerId: string, chatId?: string): string {
-  let path = `/writer/profile/${writerId}`
+  let path = `/profile/${writerId}`
   if (chatId) {
     return path + `?${paramChatId}=${chatId}`
   }
@@ -35,22 +35,19 @@ export function pathProfile(writerId: string, chatId?: string): string {
  * プロフィールの編集
  */
 export function pathProfileEdit(writerId: string): string {
-  return `/writer/profile/${writerId}/edit`
+  return `/profile/${writerId}/edit`
 }
 
 /**
  * ダッシュボード
  */
-export function pathDashboard(writerId: string): string {
-  return `/writer/dashboard/${writerId}`
+export function pathDashboard(): string {
+  return `/dashboard`
 }
 
 /**
  * 表示名の編集
  */
-export function pathDisplayNameEdit(
-  writerId: string,
-  chatId: string,
-): string {
-  return `/writer/dashboard/${writerId}/${chatId}`
+export function pathDisplayNameEdit(chatId: string): string {
+  return `/dashboard/${chatId}`
 }

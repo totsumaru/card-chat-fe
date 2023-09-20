@@ -84,7 +84,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
             {message.sender !== 'me' && (
               <div className="mr-2 flex-shrink-0">
                 {isWriter ? (
-                  <Avatar href={pathDisplayNameEdit(writer.id, chatId)}/>
+                  <Avatar href={pathDisplayNameEdit(chatId)}/>
                 ) : (
                   <Avatar
                     imageUrl={SampleData.writer.avatarUrl}

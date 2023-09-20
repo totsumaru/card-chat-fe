@@ -1,18 +1,21 @@
 "use client"
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import ButtonLoading from "@/components/loading/ButtonLoading";
+
+type Props = {
+  displayName: string
+  memo: string
+}
 
 /**
  * 表示名,メモのフォームコンポーネントです
  */
-export default function Forms() {
-  const [name, setName] = useState<string>("")
-  const [memo, setMemo] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(false)
+export default function ChatMetadataForms(props: Props) {
+  const [displayName, setDisplayName] = useState<string>(props.displayName)
+  const [memo, setMemo] = useState<string>(props.memo)
   const [result, setResult] = useState<string>("")
-  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
 
   // 保存ボタンをクリックした時の挙動です
   const handleClick = () => {
@@ -46,7 +49,8 @@ export default function Forms() {
               className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
                shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              onChange={(e) => setName(e.target.value)}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
             />
           </div>
         </div>
@@ -61,6 +65,7 @@ export default function Forms() {
                   className="block w-full rounded-md border-0 px-3 py-2 text-gray-900
                    shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                    focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={memo}
                   onChange={(e) => setMemo(e.target.value)}
                 />
           </div>

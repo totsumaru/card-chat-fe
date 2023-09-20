@@ -5,7 +5,7 @@ import Container from "@/components/container/Container";
 import { pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
 import { SampleData } from "@/utils/sample/Sample";
-import WriterProfileForm from "@/app/writer/profile/[writerId]/edit/WriterProfileForm";
+import WriterProfileForm from "@/app/profile/[writerId]/edit/WriterProfileForm";
 
 // Writerのプロフィールの編集画面です
 export default async function Index({

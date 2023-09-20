@@ -7,22 +7,19 @@ import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat, pathDisplayNameEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { SampleData } from "@/utils/sample/Sample";
+import { GetDashboard } from "@/utils/sample/API";
 
 /**
  * `/writer/dashboard/[writer-id]`
  *
- * ユーザーの一覧(ダッシュボード)ページです。
+ * ダッシュボードページです。
  */
-export default async function Index({
-  params: { writerId }
-}: {
-  params: { writerId: string }
-}) {
+export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const mock = SampleData
+  // 自分が管理する全てのチャットを取得します
+  const chats = GetDashboard()
 
   return (
     <div>
@@ -34,8 +31,12 @@ export default async function Index({
           チャット一覧
         </h1>
 
+        {/**
+         * TODO: このへんに自分のプロフィールを表示する
+         */}
+
         <ul role="list" className="mt-5">
-          {mock.chat.map((chat) => {
+          {chats && chats.map((chat) => {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
             return (
@@ -68,7 +69,7 @@ export default async function Index({
                 {/* 設定アイコン */}
                 <div className="flex items-center">
                   <Link
-                    href={pathDisplayNameEdit(writerId, chat.id)}
+                    href={pathDisplayNameEdit(chat.id)}
                     type="button"
                     className="p-2 text-gray-900 hover:text-blue-600"
                   >

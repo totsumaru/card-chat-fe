@@ -4,14 +4,13 @@ import PasscodeModal from "@/components/modal/PasscodeModal";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
-import { SampleAvatarUrl } from "@/utils/sample/Sample";
+import { SampleData } from "@/utils/sample/Sample";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import { pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
 
-const avatarUrl = SampleAvatarUrl
 const registeredEmail = "techstart35@gmail.com"
 
 /**
@@ -38,7 +37,7 @@ export default async function Index({
         left={(
           <Link href={pathProfile(writerId, chatId)}>
             <div className="flex items-center">
-              <Avatar imageUrl={avatarUrl}/>
+              <Avatar imageUrl={SampleData.writer.avatarUrl}/>
               <p className="ml-2">戸塚翔太</p>
             </div>
           </Link>
@@ -57,7 +56,7 @@ export default async function Index({
         writer={{
           id: writerId,
           name: "taro",
-          imageUrl: SampleAvatarUrl,
+          imageUrl: SampleData.writer.avatarUrl,
         }}
         reader={{
           displayName: "田中様"

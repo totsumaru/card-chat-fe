@@ -3,7 +3,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
-import { SampleAvatarUrl } from "@/utils/sample/Sample";
+import { SampleData } from "@/utils/sample/Sample";
 import Avatar from "@/components/avatar/Avatar";
 
 // const writerProfileUrl = `/writer/profile/w-123`
@@ -87,7 +87,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
                   <Avatar href={pathDisplayNameEdit(writer.id, chatId)}/>
                 ) : (
                   <Avatar
-                    imageUrl={SampleAvatarUrl}
+                    imageUrl={SampleData.writer.avatarUrl}
                     href={pathProfile(writer.id, chatId)}
                   />
                 )}
@@ -113,7 +113,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
               <div className="ml-2 flex-shrink-0">
                 {isWriter ? (
                   <Avatar
-                    imageUrl={SampleAvatarUrl}
+                    imageUrl={SampleData.writer.avatarUrl}
                     href={pathProfile(writer.id, chatId)}
                   />
                 ) : (

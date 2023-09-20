@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
-import { SampleAvatarUrl } from "@/utils/sample/Sample";
+import { SampleData } from "@/utils/sample/Sample";
 import React from "react";
 import Header from "@/components/header/Header";
 
@@ -44,7 +44,7 @@ export default async function Index({
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-xl lg:rounded-3xl" src={SampleAvatarUrl} alt=""/>
+                <img className="rounded-xl lg:rounded-3xl" src={SampleData.writer.avatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}

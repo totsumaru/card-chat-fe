@@ -100,7 +100,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
               ? "bg-[#6fe57d] max-w-[70%] md:ml-8 md:max-w-[60%]"
               : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
             }>
-              {linkify(message.text)}
+              {urlToA(message.text)}
             </div>
 
             { /**
@@ -156,7 +156,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
 }
 
 // URLの部分をaタグに変更
-function linkify(text: string) {
+function urlToA(text: string) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   return text.split(urlRegex).map((part, i) => {
     if (i % 2 === 0) {

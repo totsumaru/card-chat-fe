@@ -2,7 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import ReturnLink from "@/components/link/ReturnLink";
 import Container from "@/components/container/Container";
-import { pathProfile } from "@/utils/path";
+import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
 import { SampleData } from "@/utils/sample/Sample";
 import WriterProfileForm from "@/app/profile/[writerId]/edit/WriterProfileForm";
@@ -38,7 +38,7 @@ export default async function Index({
       <Header left={""} right={""}/>
       <Container>
         {/* 戻るリンク */}
-        <ReturnLink text={"戻る"} url={pathProfile(writerId)} textWhite={false}/>
+        <ReturnLink text={"ダッシュボード"} url={pathDashboard()} textWhite={false}/>
 
         <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
 

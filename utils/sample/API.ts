@@ -1,12 +1,19 @@
 import { Chat, chats } from "@/utils/sample/Chat";
 import { currentWriterId } from "@/utils/sample/Sample";
+import { Writer, writers } from "@/utils/sample/Writer";
 
 /**
- * Dashboard
  * 全てのチャットを取得します
  */
-export function GetDashboard(): Chat[] | undefined {
+export function GetChats(): Chat[] | undefined {
   return chats.filter(chat => chat.writerId === currentWriterId)
+}
+
+/**
+ * ログインしているライターを取得します
+ */
+export function GetLoginWriter(): Writer | undefined {
+  return writers.find(writer => writer.id === currentWriterId)
 }
 
 /**

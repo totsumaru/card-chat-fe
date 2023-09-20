@@ -27,7 +27,7 @@ export default async function Index() {
   const writer = GetLoginWriter()
 
   return (
-    <div>
+    <div className="bg-gray-100 h-screen">
       {/* ヘッダー */}
       <Header left={""} right={""}/>
 
@@ -35,17 +35,17 @@ export default async function Index() {
         {/* プロフィール */}
         <Profile writer={writer}/>
 
-        <div className="mt-5">
+        <div className="mt-7">
           <Title text={"チャット一覧"}/>
         </div>
 
         {/* チャット一覧 */}
-        <ul role="list" className="mt-5">
+        <ul role="list" className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
           {chats && chats.map((chat) => {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
             return (
-              <div className="flex hover:bg-gray-100 border-b border-b-gray-200">
+              <div className="flex hover:bg-gray-100">
                 <Link href={pathChat(chat.id)} className="flex-1">
                   <li key={chat.id} className="flex gap-x-4 p-5 w-full">
                     {/* アバター */}
@@ -78,7 +78,7 @@ const Title = ({ text }: { text: string }) => {
 // プロフィール
 const Profile = ({ writer }: { writer: Writer | undefined }) => {
   return (
-    <div className="px-5 border border-indigo-400 my-3 rounded-md bg-indigo-50">
+    <div className="px-5 border border-indigo-300 my-3 rounded sm:rounded-xl bg-indigo-50">
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
         {/* 左側 */}
         <div className="flex min-w-0 gap-x-4">

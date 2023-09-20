@@ -1,6 +1,6 @@
 // writer
-export const writerId = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
-export const writerId2 = "9673bf66-ad61-445a-bf97-5b13142ecbbd"
+export const writerId1 = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
+export const writerId2 = "e90b644e-0caf-4c3a-9a25-64e122f8a57b"
 // chat
 export const chatId1 = "cd746a35-1360-403a-a747-98e5f1a9fa2f"
 export const chatId2 = "fd587bc8-a7f2-4d60-91fb-b81e2daea7a0"
@@ -17,16 +17,16 @@ export const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658ab
  * ここを変更すると、ログインしているユーザーが変わります。
  * ""とすると、ログインしていない状態となります。
  */
-export const currentWriterId = writerId
+export const currentWriterId = writerId1
 
 
 /**
  * TODO: ここは削除する
  */
 export const SampleData = {
-  currentWriterID: writerId, // 今ログインしているIDです
+  currentWriterID: writerId1, // 今ログインしているIDです
   writer: {
-    id: writerId,
+    id: writerId1,
     name: "戸塚 翔太",
     avatarUrl: avatarUrl,
     headline: "ナンバーワンよりオンリーワンを目指します",
@@ -58,14 +58,14 @@ export const SampleData = {
     // チャット1
     {
       id: chatId1,
-      writerId: writerId,
+      writerId: writerId1,
       reader: {
         displayName: "鈴木様",
         memo: "静岡県磐田市在住",
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はありがとうございました！\nいつでも気軽にご連絡ください。",
           date: "2023-01-23 11:23",
           isRead: true,
@@ -87,7 +87,7 @@ export const SampleData = {
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -102,14 +102,14 @@ export const SampleData = {
     // チャット3
     {
       id: chatId2,
-      writerId: writerId,
+      writerId: writerId1,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -131,7 +131,7 @@ export const SampleData = {
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -146,14 +146,14 @@ export const SampleData = {
     // チャット5
     {
       id: chatId2,
-      writerId: writerId,
+      writerId: writerId1,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -175,7 +175,7 @@ export const SampleData = {
       },
       messages: [
         {
-          from: writerId,
+          from: writerId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,

@@ -32,6 +32,7 @@ export default async function Index({
         </div>
 
         <ChatMetadataForms
+          id={chat?.id || ""}
           displayName={chat?.reader.displayName || ""}
           memo={chat?.reader.memo || ""}
         />

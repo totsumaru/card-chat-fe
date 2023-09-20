@@ -1,4 +1,4 @@
-import { chatId1, chatId2, chatId3, chatId4, chatId5, chatId6, writerId, writerId2 } from "@/utils/sample/Sample";
+import { chatId1, chatId2, chatId3, chatId4, chatId5, chatId6, writerId1, writerId2 } from "@/utils/sample/Sample";
 
 export type Message = {
   from: string
@@ -26,14 +26,14 @@ export const chats: Chat[] = [
   // チャット1
   {
     id: chatId1,
-    writerId: writerId,
+    writerId: writerId1,
     reader: {
       displayName: "チャット1 様",
       memo: "静岡県磐田市在住",
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はありがとうございました！\nいつでも気軽にご連絡ください。",
         date: "2023-01-23 11:23",
         isRead: true,
@@ -55,7 +55,7 @@ export const chats: Chat[] = [
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
         isRead: true,
@@ -70,14 +70,14 @@ export const chats: Chat[] = [
   // チャット3
   {
     id: chatId3,
-    writerId: writerId,
+    writerId: writerId1,
     reader: {
       displayName: "チャット3 様",
       memo: "本日お伺い済み",
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
         isRead: true,
@@ -99,7 +99,7 @@ export const chats: Chat[] = [
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
         isRead: true,
@@ -114,14 +114,14 @@ export const chats: Chat[] = [
   // チャット5
   {
     id: chatId5,
-    writerId: writerId,
+    writerId: writerId1,
     reader: {
       displayName: "チャット5 様",
       memo: "本日お伺い済み",
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
         isRead: true,
@@ -143,7 +143,7 @@ export const chats: Chat[] = [
     },
     messages: [
       {
-        from: writerId,
+        from: writerId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
         isRead: true,

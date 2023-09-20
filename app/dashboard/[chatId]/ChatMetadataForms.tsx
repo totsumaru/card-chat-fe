@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
 
 type Props = {
+  id: string
   displayName: string
   memo: string
 }
@@ -36,7 +37,7 @@ export default function ChatMetadataForms(props: Props) {
         {/* id */}
         <div className="sm:col-span-4">
           <Label text={"id"}/>
-          <p className="text-gray-500 text-sm">12306f9e-56a0-11ee-8c99-0242ac120002</p>
+          <p className="text-gray-500 text-sm">{props.id}</p>
         </div>
 
         {/* 表示名 */}

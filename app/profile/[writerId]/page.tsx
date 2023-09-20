@@ -1,12 +1,11 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import { SampleData } from "@/utils/sample/Sample";
 import React from "react";
 import Header from "@/components/header/Header";
-import { pathProfileEdit } from "@/utils/path";
 
 /**
  * `/writer/profile/[writer-id]`
@@ -29,7 +28,7 @@ export default async function Index({
       <Header left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
 
       {/* 本体 */}
-      <div className="mx-auto max-w-7xl mt-10 px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="mx-auto max-w-7xl pt-5 px-4 sm:px-6 lg:px-8 min-h-screen">
         <section className="isolate overflow-hidden px-6 lg:px-8">
           <div className="relative mx-auto max-w-2xl py-24 sm:py-20 lg:max-w-4xl">
 
@@ -84,13 +83,6 @@ export default async function Index({
               <p>{mock.writer.introduction}</p>
             </div>
 
-            {/* 編集ボタン */}
-            {mock.currentWriterID === mock.writer.id && (
-              <div className="mt-5">
-                <EditButton editUrl={pathProfileEdit(writerId)}/>
-              </div>
-            )}
-
           </div>
         </section>
       </div>
@@ -116,24 +108,6 @@ function BackgroundSVG() {
   )
 }
 
-// 編集ボタンです
-function EditButton({ editUrl }: { editUrl: string }) {
-  return (
-    <div className="text-right mb-3">
-      <Link
-        href={editUrl}
-        className="inline-flex items-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold
-                 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
-                 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        <Cog6ToothIcon className="w-5 h-5 mr-1"/>
-        編集
-      </Link>
-    </div>
-  )
-}
-
-// Gridのアイテムです
 // Gridのアイテムです
 function InfoGrid({
   icon,

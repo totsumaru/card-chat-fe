@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
@@ -11,6 +11,7 @@ import { GetChats, GetLoginWriter } from "@/utils/sample/API";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { Writer } from "@/utils/sample/Writer";
 import { currentWriterId } from "@/utils/sample/Sample";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 
 /**
  * `/writer/dashboard/[writer-id]`
@@ -77,8 +78,9 @@ const Title = ({ text }: { text: string }) => {
 // プロフィール
 const Profile = ({ writer }: { writer: Writer | undefined }) => {
   return (
-    <div className="px-5 border my-3 rounded-md">
-      <li key={1} className="flex items-center justify-between gap-x-6 py-5">
+    <div className="px-5 border border-indigo-400 my-3 rounded-md bg-indigo-50">
+      <div key={1} className="flex items-center justify-between gap-x-6 py-3">
+        {/* 左側 */}
         <div className="flex min-w-0 gap-x-4">
           <img className="h-12 w-12 flex-none rounded-full bg-gray-50"
                src={writer?.avatarUrl} alt=""
@@ -92,25 +94,40 @@ const Profile = ({ writer }: { writer: Writer | undefined }) => {
             </p>
           </div>
         </div>
-        <div>
-          <ProfileLink text={"プロフィール"} href={pathProfile(currentWriterId)}/>
-          <ProfileLink text={"編集"} href={pathProfileEdit(currentWriterId)}/>
+        {/* 右側 */}
+        <div className="flex flex-col gap-1.5 items-end flex-shrink-0">
+          <ProfileLink
+            text={"プロフィール"}
+            href={pathProfile(currentWriterId)}
+          />
+          <ProfileLink
+            text={"編集"}
+            href={pathProfileEdit(currentWriterId)}
+            icon={<PencilSquareIcon className="w-4 h-4 inline mr-1"/>}
+          />
         </div>
-      </li>
+      </div>
     </div>
   )
 }
 
 // リンクです
-const ProfileLink = ({ text, href }: { text: string, href: string }) => {
+const ProfileLink = ({
+  text, href, icon
+}: {
+  text: string, href: string, icon?: ReactNode
+}) => {
   return (
-    <Link
-      href={href}
-      className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold
-       text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-    >
-      {text}
-    </Link>
+    <div>
+      <Link
+        href={href}
+        className="flex items-center rounded-full bg-white px-2.5 py-1.5
+         text-xs text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300
+         hover:bg-gray-50"
+      >
+        {icon}{text}
+      </Link>
+    </div>
   )
 }
 

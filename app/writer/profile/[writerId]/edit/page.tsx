@@ -4,6 +4,7 @@ import InputImage from "@/components/image/InputImage";
 import ReturnLink from "@/components/link/ReturnLink";
 import BaseHeader from "@/components/header/BaseHeader";
 import Container from "@/components/container/Container";
+import { pathProfile } from "@/utils/path";
 
 // Writerのプロフィールの編集画面です
 export default async function Index({
@@ -14,14 +15,12 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const returnLink = `/writer/profile/w-123`
-
   return (
     <>
       <BaseHeader left={""} right={""}/>
       <Container>
         {/* 戻るリンク */}
-        <ReturnLink text={"戻る"} url={returnLink} textWhite={false}/>
+        <ReturnLink text={"戻る"} url={pathProfile(writerId)} textWhite={false}/>
 
         <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
 

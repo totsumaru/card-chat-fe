@@ -25,7 +25,7 @@ export default async function Index({
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <BaseHeader left={<ReturnToChatLink/>} right={""}/>
+      <BaseHeader left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">

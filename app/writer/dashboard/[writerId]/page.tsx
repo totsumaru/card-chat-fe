@@ -6,9 +6,9 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import BaseHeader from "@/components/header/BaseHeader";
 import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
+import { pathChat } from "@/utils/path";
 
 const configLink = "/writer/dashboard/w-123/m-123"
-const chatLink = "/chat/m-123"
 
 /**
  * `/writer/dashboard/[writer-id]`
@@ -36,7 +36,7 @@ export default async function Index({
         <ul role="list" className="mt-5 divide-gray-100">
           {comments.map((comment) => (
             <div className="flex">
-              <Link href={chatLink}>
+              <Link href={pathChat(comment.id)}>
                 <li key={comment.id} className="flex gap-x-4 p-5 hover:bg-gray-100 border-b border-b-gray-200">
                   {/* アバター */}
                   <Avatar/>
@@ -79,42 +79,27 @@ export default async function Index({
 
 const comments = [
   {
-    id: 1,
-    name: 'Leslie Alexander',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    content:
-      'Explicabo nihil laborum. Saepe facilis consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Culpa vitae placeat vitae. Repudiandae sunt exercitationem nihil nisi facilis placeat minima eveniet.',
+    id: "2883a5d2-f6be-4908-be04-e1da147f05ef",
+    name: "鈴木様",
+    content: "今日はありがとうございました",
     date: '1d ago',
     dateTime: '2023-03-04T15:54Z',
-  },
-  {
-    id: 2,
-    name: 'Michael Foster',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    content:
-      'Laudantium quidem non et saepe vel sequi accusamus consequatur et. Saepe inventore veniam incidunt cumque et laborum nemo blanditiis rerum. A unde et molestiae autem ad. Architecto dolor ex accusantium maxime cumque laudantium itaque aut perferendis.',
+  }, {
+    id: "d115dca9-2168-445f-8a45-991e748a0665",
+    name: "吉田様",
+    content: "今日はありがとうございました",
     date: '2d ago',
     dateTime: '2023-03-03T14:02Z',
-  },
-  {
-    id: 3,
-    name: 'Dries Vincent',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    content:
-      'Quia animi harum in quis quidem sint. Ipsum dolorem molestias veritatis quis eveniet commodi assumenda temporibus. Dicta ut modi alias nisi. Veniam quia velit et ut. Id quas ducimus reprehenderit veniam fugit amet fugiat ipsum eius. Voluptas nobis earum in in vel corporis nisi.',
+  }, {
+    id: "6a3c8a8e-f158-4ee3-a3dc-a6c626349c7a",
+    name: "斉藤様",
+    content: "今日はありがとうございました",
     date: '2d ago',
     dateTime: '2023-03-03T13:23Z',
-  },
-  {
-    id: 4,
-    name: 'Lindsay Walton',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    content:
-      'Unde dolore exercitationem nobis reprehenderit rerum corporis accusamus. Nemo suscipit temporibus quidem dolorum. Nobis optio quae atque blanditiis aspernatur doloribus sit accusamus. Sunt reiciendis ut corrupti ab debitis dolorem dolorem nam sit. Ducimus nisi qui earum aliquam. Est nam doloribus culpa illum.',
+  }, {
+    id: "4f250703-023e-4523-81a7-702a9f847e45",
+    name: "田中 和樹",
+    content: "今日はありがとうございました",
     date: '3d ago',
     dateTime: '2023-03-02T21:13Z',
   },

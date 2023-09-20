@@ -1,5 +1,5 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import Chat from "@/components/chat/Chat";
+import Chat from "./Chat";
 import PasscodeModal from "@/components/modal/PasscodeModal";
 import BaseHeader from "@/components/header/BaseHeader";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { SampleAvatarUrl } from "@/utils/sample/Sample";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
+import { pathProfile } from "@/utils/path";
 
 const avatarUrl = SampleAvatarUrl
 const registeredEmail = "techstart35@gmail.com"
@@ -28,14 +29,14 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const profileUrl = `/writer/profile/w-123?message-id=${chatId}`
+  const writerId = "w-123"
 
   return (
     <div className="flex flex-col h-screen">
       {/* ヘッダー */}
       <BaseHeader
         left={(
-          <Link href={profileUrl}>
+          <Link href={pathProfile(writerId, chatId)}>
             <div className="flex items-center">
               <Avatar imageUrl={avatarUrl}/>
               <p className="ml-2">戸塚翔太</p>
@@ -50,7 +51,18 @@ export default async function Index({
       <NoticeEmailModal registeredEmail={registeredEmail}/>
 
       {/* チャット */}
-      <Chat chatId={chatId}/>
+      <Chat
+        chatId={chatId}
+        isWriter={false}
+        writer={{
+          id: writerId,
+          name: "taro",
+          imageUrl: SampleAvatarUrl,
+        }}
+        reader={{
+          displayName: "田中様"
+        }}
+      />
     </div>
   )
 }

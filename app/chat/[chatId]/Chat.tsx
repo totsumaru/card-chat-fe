@@ -2,16 +2,27 @@
 
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
+import { SampleAvatarUrl } from "@/utils/sample/Sample";
+import Avatar from "@/components/avatar/Avatar";
 
-const writerProfileUrl = `/writer/profile/w-123`
+// const writerProfileUrl = `/writer/profile/w-123`
 
 type Props = {
   chatId: string
+  isWriter: boolean
+  writer: {
+    id: string
+    name: string
+    imageUrl: string
+  }
+  reader: {
+    displayName: string
+  }
 }
 
 // チャットコンポーネントです
-export default function Chat({ chatId }: Props) {
+export default function Chat({ chatId, isWriter, writer, reader }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +53,10 @@ export default function Chat({ chatId }: Props) {
     setTimeout(() => {
       setMessages(prevMessages => [
         ...prevMessages,
-        { text: "こんにちは、これは自動応答です。", sender: "other" },
+        {
+          text: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
+          sender: "other"
+        },
       ]);
     }, 500);
   };
@@ -61,19 +75,53 @@ export default function Chat({ chatId }: Props) {
                className={`flex items-start mb-2 ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
           >
 
-            {/* 相手のアバター */}
-            {message.sender !== 'me' && <AvatarImg href={writerProfileUrl}/>}
+            { /**
+             * 相手のアバター
+             * - メッセージの送信者が相手の場合に表示
+             * - 相手がWriterの場合は 画像&URL を付与
+             * - 相手がReaderの場合はデフォルトのアバター&URL
+             */}
+            {message.sender !== 'me' && (
+              <div className="mr-2 flex-shrink-0">
+                {isWriter ? (
+                  <Avatar href={pathDisplayNameEdit(writer.id, chatId)}/>
+                ) : (
+                  <Avatar
+                    imageUrl={SampleAvatarUrl}
+                    href={pathProfile(writer.id, chatId)}
+                  />
+                )}
+              </div>
+            )}
 
             {/* メッセージ */}
-            <div className={`rounded-3xl px-4 py-3 mb-2 inline-block whitespace-pre-line ${message.sender === "me"
-              ? "bg-lime-200 ml-5 md:ml-8 md:max-w-[60%]"
-              : "bg-gray-100 mr-5 md:mr-8 md:max-w-[60%]"}`
+            <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
+            ${message.sender === "me"
+              ? "bg-lime-200 max-w-[70%] md:ml-8 md:max-w-[60%]"
+              : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
             }>
               {linkify(message.text)}
             </div>
 
-            {/* 自分のアバター */}
-            {message.sender === 'me' && <Avatar/>}
+            { /**
+             * 自分のアバター
+             * - メッセージの送信者が自分の場合に表示
+             * - 自分がWriterの場合は 画像&URL を付与
+             * - 自分がReaderの場合はデフォルトのアバター(URLなし)
+             */}
+            {message.sender === 'me' && (
+              <div className="ml-2 flex-shrink-0">
+                {isWriter ? (
+                  <Avatar
+                    imageUrl={SampleAvatarUrl}
+                    href={pathProfile(writer.id, chatId)}
+                  />
+                ) : (
+                  <Avatar/>
+                )}
+              </div>
+            )}
+
           </div>
         ))}
       </div>
@@ -107,52 +155,6 @@ export default function Chat({ chatId }: Props) {
   );
 }
 
-// 無名アバター
-function Avatar({ href }: { href?: string }) {
-  const content = (
-    <div className="ml-2">
-      <span className="inline-block h-10 w-10 overflow-hidden rounded-full bg-gray-100">
-        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-          <path
-            d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
-        </svg>
-      </span>
-    </div>
-  )
-
-  return (
-    <>
-      {href ? (
-        <Link href={href}>
-          {content}
-        </Link>
-      ) : content}
-    </>
-  )
-}
-
-// 画像アバター
-function AvatarImg({ href }: { href?: string }) {
-  const content = (
-    <div className="mr-2">
-      <img
-        className="inline-block h-10 w-10 rounded-full"
-        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        alt=""
-      />
-    </div>
-  )
-  return (
-    <>
-      {href ? (
-        <Link href={href}>
-          {content}
-        </Link>
-      ) : content}
-    </>
-  )
-}
-
 // URLの部分をaタグに変更
 function linkify(text: string) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -160,7 +162,15 @@ function linkify(text: string) {
     if (i % 2 === 0) {
       return part;
     } else {
-      return <a className="text-blue-600" href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+      return (
+        <a className="text-blue-600"
+           href={part}
+           target="_blank"
+           rel="noopener noreferrer"
+        >
+          {part}
+        </a>
+      );
     }
   });
 }

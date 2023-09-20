@@ -67,7 +67,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-[#8cacdc]">
       {/* メッセージエリア */}
       <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 py-3" id="messageArea">
         {messages.map((message, index) => (
@@ -97,7 +97,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
             {/* メッセージ */}
             <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
             ${message.sender === "me"
-              ? "bg-lime-200 max-w-[70%] md:ml-8 md:max-w-[60%]"
+              ? "bg-[#6fe57d] max-w-[70%] md:ml-8 md:max-w-[60%]"
               : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
             }>
               {linkify(message.text)}

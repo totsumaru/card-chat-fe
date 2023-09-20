@@ -1,11 +1,11 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import React from "react";
-import BaseHeader from "@/components/header/BaseHeader";
 import Container from "@/components/container/Container";
 import ReturnLink from "@/components/link/ReturnLink";
 import Info from "@/components/alert/Info";
 import Forms from "@/app/writer/dashboard/[writerId]/[chatId]/Forms";
+import Header from "@/components/header/Header";
 
 const dashboardLink = "/writer/dashboard/w-123"
 
@@ -21,7 +21,7 @@ export default async function Index({
   return (
     <>
       {/* ヘッダー */}
-      <BaseHeader left={""} right={""}/>
+      <Header left={""} right={""}/>
       <Container>
         <ReturnLink text={"戻る"} url={dashboardLink} textWhite={false}/>
 

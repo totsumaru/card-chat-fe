@@ -3,10 +3,10 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import BaseHeader from "@/components/header/BaseHeader";
 import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat } from "@/utils/path";
+import Header from "@/components/header/Header";
 
 const configLink = "/writer/dashboard/w-123/m-123"
 
@@ -26,7 +26,7 @@ export default async function Index({
   return (
     <div>
       {/* ヘッダー */}
-      <BaseHeader left={""} right={""}/>
+      <Header left={""} right={""}/>
 
       <Container>
         <h1 className="text-gray-900 font-bold text-lg">

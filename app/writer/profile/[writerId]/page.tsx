@@ -2,10 +2,10 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Cog6ToothIcon, EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import BaseHeader from "@/components/header/BaseHeader";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import { SampleAvatarUrl } from "@/utils/sample/Sample";
 import React from "react";
+import Header from "@/components/header/Header";
 
 /**
  * `/writer/profile/[writer-id]`
@@ -25,7 +25,7 @@ export default async function Index({
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <BaseHeader left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
+      <Header left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">

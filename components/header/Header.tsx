@@ -13,7 +13,7 @@ type Props = {
  *
  * ログイン済み(myWriterId) & rightが指定されていない場合は右側にダッシュボードのURLを入れます。
  */
-export default function BaseHeader({ left, right, myWriterId }: Props) {
+export default function Header({ left, right, myWriterId }: Props) {
   let dashboardUrl: string = ""
   if (myWriterId && !right) {
     dashboardUrl = pathDashboard(myWriterId)

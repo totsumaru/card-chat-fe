@@ -1,7 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Chat from "./Chat";
 import PasscodeModal from "@/components/modal/PasscodeModal";
-import BaseHeader from "@/components/header/BaseHeader";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
@@ -10,6 +9,7 @@ import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import { pathProfile } from "@/utils/path";
+import Header from "@/components/header/Header";
 
 const avatarUrl = SampleAvatarUrl
 const registeredEmail = "techstart35@gmail.com"
@@ -34,7 +34,7 @@ export default async function Index({
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
-      <BaseHeader
+      <Header
         left={(
           <Link href={pathProfile(writerId, chatId)}>
             <div className="flex items-center">

@@ -21,6 +21,7 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
 
   const editUrl = `/writer/profile/w-123/edit`
+  const data = SampleData
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
@@ -34,27 +35,27 @@ export default async function Index({
 
             <figure className="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
 
-              {/*　タイトル */}
+              {/*　ヘッドライン */}
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
                 <BackgroundSVG/>
                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                  <p>連絡先を知らない人にもチャットを送れる！アポに繋がる。新しい顧客の獲得に最適な営業ツール「CardChat」を導入しませんか？</p>
+                  <p>{data.writer.headline}</p>
                 </blockquote>
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-xl lg:rounded-3xl" src={SampleData.writer.avatarUrl} alt=""/>
+                <img className="rounded-xl lg:rounded-3xl" src={data.writer.avatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}
               <figcaption className="text-base lg:col-start-1 lg:row-start-3">
                 <div className="font-semibold text-gray-900">
-                  戸塚翔太
+                  {data.writer.name}
                 </div>
                 <div className="mt-1 text-gray-500 flex gap-2">
-                  <p>株式会社ArGate</p>
-                  <p>代表取締役</p>
+                  <p>{data.writer.company.name}</p>
+                  <p>{data.writer.company.position}</p>
                 </div>
               </figcaption>
 
@@ -65,27 +66,22 @@ export default async function Index({
               {/* 電話番号 */}
               <InfoGrid icon={(
                 <PhoneIcon className="w-4 h-4"/>
-              )} kind={"電話番号"} value={"090-7685-1396"}/>
+              )} kind={"電話番号"} value={data.writer.company.tel}/>
 
               {/* メールアドレス */}
               <InfoGrid icon={(
                 <EnvelopeIcon className="w-4 h-4"/>
-              )} kind={"メールアドレス"} value={"techstart35@gmail.com"}/>
+              )} kind={"メールアドレス"} value={data.writer.company.email}/>
 
               {/* ホームページ */}
               <InfoGrid icon={(
                 <GlobeAsiaAustraliaIcon className="w-4 h-4"/>
-              )} kind={"Webサイト"} value={"https://foo.com"}/>
+              )} kind={"Webサイト"} value={data.writer.company.website}/>
             </div>
 
             {/* 備考 */}
             <div className="text-gray-600 mt-7">
-              <p>
-                この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、
-                字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。
-                この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、
-                量、字間、行間等を確認するために入れ
-              </p>
+              <p>{data.writer.introduction}</p>
             </div>
 
             {/* TODO: ログインしている本人であれば表示 */}

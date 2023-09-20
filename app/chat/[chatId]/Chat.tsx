@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { SampleAvatarUrl } from "@/utils/sample/Sample";
 import Avatar from "@/components/avatar/Avatar";
@@ -67,9 +67,9 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-screen pt-20 bg-[#8cacdc]">
+    <div className="flex flex-col h-screen bg-lineBlue">
       {/* メッセージエリア */}
-      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 py-3" id="messageArea">
+      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 pt-24 pb-3" id="messageArea">
         {messages.map((message, index) => (
           <div key={index}
                className={`flex items-start mb-2 ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
@@ -97,7 +97,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
             {/* メッセージ */}
             <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
             ${message.sender === "me"
-              ? "bg-[#6fe57d] max-w-[70%] md:ml-8 md:max-w-[60%]"
+              ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
               : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
             }>
               {urlToA(message.text)}
@@ -138,7 +138,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
           />
           {/* 送信ボタン */}
           <div className="flex items-end">
-            <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded h-10" onClick={handleSend}>
+            <button className="ml-2 bg-blue-600 text-white px-4 py-2 rounded h-10" onClick={handleSend}>
               <PaperAirplaneIcon className="h-5 w-5"/>
             </button>
           </div>

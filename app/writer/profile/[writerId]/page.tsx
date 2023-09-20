@@ -28,13 +28,9 @@ export default async function Index({
       <Header left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
 
       {/* 本体 */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="mx-auto max-w-7xl mt-10 px-4 sm:px-6 lg:px-8 min-h-screen">
         <section className="isolate overflow-hidden px-6 lg:px-8">
           <div className="relative mx-auto max-w-2xl py-24 sm:py-20 lg:max-w-4xl">
-
-            {/* TODO: ログインしている本人であれば表示 */}
-            {/* 編集ボタン */}
-            <EditButton editUrl={editUrl}/>
 
             <figure className="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
 
@@ -90,6 +86,12 @@ export default async function Index({
                 この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、
                 量、字間、行間等を確認するために入れ
               </p>
+            </div>
+
+            {/* TODO: ログインしている本人であれば表示 */}
+            {/* 編集ボタン */}
+            <div className="mt-5">
+              <EditButton editUrl={editUrl}/>
             </div>
 
           </div>

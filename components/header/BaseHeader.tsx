@@ -20,8 +20,8 @@ export default function BaseHeader({ left, right, myWriterId }: Props) {
   }
 
   return (
-    <div className="flex justify-between items-center bg-indigo-500
-     text-white px-5 py-3 min-h-[30px]"
+    <div className="fixed top-0 left-0 right-0 flex justify-between items-center bg-indigo-500
+     text-white px-5 py-3 z-10 min-h-[30px]"
     >
       {/* 左側 */}
       <div>

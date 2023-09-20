@@ -42,7 +42,7 @@ export default async function Index({
                   <Avatar/>
 
                   <div className="flex-auto">
-                    {/* 上側(名前+時間) */}
+                    {/* 上側(表示名+時間) */}
                     <div className="flex items-baseline justify-between gap-x-4">
                       <p className="text-sm font-semibold leading-6 text-gray-900">{comment.name}</p>
                       <p className="flex-none text-xs text-gray-600">

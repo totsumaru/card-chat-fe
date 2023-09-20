@@ -67,7 +67,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#8cacdc]">
+    <div className="flex flex-col h-screen pt-20 bg-[#8cacdc]">
       {/* メッセージエリア */}
       <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 py-3" id="messageArea">
         {messages.map((message, index) => (
@@ -131,7 +131,7 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
         <div className="flex items-end">
           <textarea
             className="w-full rounded p-2 resize-none"
-            placeholder="返信を入力しよう"
+            placeholder="メッセージを入力"
             value={newMessage}
             onChange={handleInputChange}
             rows={3}

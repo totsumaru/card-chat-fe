@@ -32,7 +32,7 @@ export default async function Index({
   const writerId = "w-123"
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
       <BaseHeader
         left={(

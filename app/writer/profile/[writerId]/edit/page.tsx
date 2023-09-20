@@ -33,7 +33,7 @@ export default async function Index({
 
             {/* 名前 */}
             <div className="sm:col-span-4">
-              <Label text={"名前"}/>
+              <Label text={"表示名"}/>
               <div className="mt-2">
                 <input type="text" placeholder="鈴木 太郎" className={inputClassName}/>
               </div>

@@ -2,7 +2,7 @@
 
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
-import ButtonLoading from "@/components/loading/ButtonLoading";
+import SaveButton from "@/components/button/SaveButton";
 
 type Props = {
   name: string
@@ -26,18 +26,9 @@ type Props = {
 export default function WriterProfileForm(props: Props) {
   const [values, setValues] = useState<Props>(props)
   const [image, setImage] = useState<string>(props.imageUrl || "")
-  const [loading, setLoading] = useState<boolean>(false)
-  const [result, setResult] = useState<string>("")
 
-  const handleClick = () => {
-    setLoading(true)
-    setResult("")
-
-    // TODO: 一時的にSleep
-    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
-      setLoading(false)
-      setResult("保存が完了しました。")
-    })
+  const handleClick = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1000))
   }
 
   return (
@@ -199,17 +190,7 @@ export default function WriterProfileForm(props: Props) {
 
         {/* 保存ボタン */}
         <div className="mt-6">
-          <button
-            type="button"
-            className="flex items-center justify-center rounded-md bg-indigo-600 mt-3 px-3 py-2 text-sm font-semibold
-               leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
-                focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={handleClick}
-          >
-            {loading && <ButtonLoading/>}
-            保存する
-          </button>
-          <p className="text-gray-800 text-sm mt-2">{result}</p>
+          <SaveButton clickHandler={handleClick}/>
         </div>
 
       </div>

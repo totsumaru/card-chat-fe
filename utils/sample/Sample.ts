@@ -9,6 +9,7 @@ const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?
  * ここの値を変更することで、状態の変化を確認します。
  */
 export const SampleData = {
+  isLogin: true,
   writer: {
     id: writerId,
     name: "戸塚 翔太",

@@ -16,11 +16,7 @@ export default function ReturnToChatLink() {
   return (
     <>
       {chatId && (
-        <ReturnLink
-          text={"チャットへ戻る"}
-          url={pathChat(chatId)}
-          textWhite={true}
-        />
+        <ReturnLink text={"チャットへ戻る"} url={pathChat(chatId)} textWhite={true}/>
       )}
     </>
   )

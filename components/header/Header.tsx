@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Link from "next/link";
 import { pathDashboard } from "@/utils/path";
+import Link from "next/link";
 
 type Props = {
   left: ReactNode
@@ -32,7 +32,7 @@ export default function Header({ left, right, myWriterId }: Props) {
         {dashboardUrl ? (
           <Link
             href={dashboardUrl}
-            className="rounded-md bg-white px-3 py-2 text-sm font-semibold
+            className="block rounded-md bg-white px-3 py-2 text-sm font-semibold
              text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           >
             ダッシュボード

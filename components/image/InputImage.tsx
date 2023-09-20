@@ -1,27 +1,37 @@
-"use client"
-
 import React, { useState } from "react";
 
 const allowedTypes = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/gif'];
 
-// 画像の選択フォームです
-export default function InputImage() {
-  const [image, setImage] = useState<string>("")
+type Props = {
+  image: string
+  setImage: (img: string) => void
+}
+
+/**
+ * 画像の選択フォームです
+ *
+ * 既に登録されている画像がある場合は、そのURLを表示。
+ * アップロードされたら、stateに入れる&表示。
+ */
+export default function InputImage({ image, setImage }: Props) {
   const [isImageErr, setImageErr] = useState<boolean>(false)
 
+  // 画像はアップロードされた時の挙動
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageErr(false)
     const file = e.target.files?.[0];
     if (file) {
+      // 拡張子を確認します
       if (!allowedTypes.includes(file.type)) {
         setImageErr(true)
         return
+      } else {
+        setImageErr(false)
       }
 
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
-        console.log(reader.result);
       };
       reader.readAsDataURL(file);
     }

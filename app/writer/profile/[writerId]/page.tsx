@@ -6,6 +6,7 @@ import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import { SampleData } from "@/utils/sample/Sample";
 import React from "react";
 import Header from "@/components/header/Header";
+import { pathProfileEdit } from "@/utils/path";
 
 /**
  * `/writer/profile/[writer-id]`
@@ -20,7 +21,6 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const editUrl = `/writer/profile/w-123/edit`
   const data = SampleData
 
   return (
@@ -84,11 +84,12 @@ export default async function Index({
               <p>{data.writer.introduction}</p>
             </div>
 
-            {/* TODO: ログインしている本人であれば表示 */}
             {/* 編集ボタン */}
-            <div className="mt-5">
-              <EditButton editUrl={editUrl}/>
-            </div>
+            {data.isLogin && (
+              <div className="mt-5">
+                <EditButton editUrl={pathProfileEdit(writerId)}/>
+              </div>
+            )}
 
           </div>
         </section>

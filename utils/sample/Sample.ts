@@ -9,7 +9,8 @@ export const chatId4 = "8cac2d27-5b43-4900-83e3-71fd20ac27f7"
 export const chatId5 = "e700eb4a-f86a-4d3a-bbe4-4599efccf7b7"
 export const chatId6 = "b380967b-dbad-4be1-b1ec-701643b40064"
 // url
-export const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+export const avatarUrl1 = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+export const avatarUrl2 = "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jpg&name=large"
 
 /**
  * 現在ログインしているホストIDです
@@ -17,4 +18,4 @@ export const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658ab
  * ここを変更すると、ログインしているユーザーが変わります。
  * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentHostId = hostId1
+export const currentHostId = ""

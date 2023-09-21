@@ -31,6 +31,11 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
 
   // パスコードを送信
   const handlePasscodeSend = async () => {
+    if (!(/^[0-9]*$/.test(passcode) && passcode.length === 6)) {
+      alert("数字6桁で入力してください")
+      return
+    }
+
     setPasscodeStatus("none") // statusをリセット
 
     await new Promise(resolve => setTimeout(resolve, 1000))

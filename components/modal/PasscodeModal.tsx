@@ -1,8 +1,9 @@
 "use client"
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import ButtonLoading from "@/components/loading/ButtonLoading";
 
 export type Status = "success" | "invalid" | "error" | "none"
 
@@ -115,25 +116,9 @@ export default function PasscodeModal(props: Props) {
 
                 {/* ボタン */}
                 <div className="mt-2 sm:mt-3">
-                  {props.status === "success" ? (
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm
-                      font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline
-                      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => props.setModalOpen(false)}
-                    >
-                      OK
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={props.handleSend}
-                    >
-                      送信
-                    </button>
-                  )}
+                  {props.status === "success"
+                    ? <SendButton label={"OK"} clickHandler={() => props.setModalOpen(false)}/>
+                    : <SendButton label={"送信"} clickHandler={props.handleSend}/>}
                 </div>
 
               </Dialog.Panel>
@@ -142,5 +127,32 @@ export default function PasscodeModal(props: Props) {
         </div>
       </Dialog>
     </Transition.Root>
+  )
+}
+
+// 送信ボタン
+const SendButton = ({ label, clickHandler }: {
+  label: string
+  clickHandler: () => void
+}) => {
+  const [loading, setLoading] = useState<boolean>(false)
+
+  return (
+    <button
+      type="button"
+      className="flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold
+        leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2
+        focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      onClick={async () => {
+        setLoading(true)
+        await clickHandler()
+        setLoading(false)
+      }}
+      disabled={loading}
+    >
+      {loading && <ButtonLoading/>}
+      {label}
+    </button>
+
   )
 }

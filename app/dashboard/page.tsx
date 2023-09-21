@@ -7,11 +7,11 @@ import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat, pathDisplayNameEdit, pathProfile, pathProfileEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { GetChats, GetLoginHost } from "@/utils/sample/API";
 import { Chat, Message } from "@/utils/sample/Chat";
-import { Host } from "@/utils/sample/Host";
-import { currentHostId } from "@/utils/sample/Sample";
+import { User } from "@/utils/sample/User";
+import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import GetChats from "@/utils/api/getChats";
 
 /**
  * ダッシュボードページです。
@@ -21,8 +21,7 @@ export default async function Index() {
   const { data: { user } } = await supabase.auth.getUser()
 
   // 自分が管理する全てのチャットを取得します
-  const chats = GetChats()
-  const host = GetLoginHost()
+  const chatsRes = await GetChats(currentUserSession)
 
   return (
     <div className="bg-gray-50 h-screen">
@@ -31,7 +30,7 @@ export default async function Index() {
 
       <Container>
         {/* プロフィール */}
-        <Profile host={host}/>
+        <Profile host={chatsRes.host}/>
 
         <div className="mt-7">
           <Title text={"チャット一覧"}/>
@@ -40,7 +39,7 @@ export default async function Index() {
         {/* チャット一覧 */}
         <ul role="list"
             className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
-          {chats && chats.map((chat) => {
+          {chatsRes.chats && chatsRes.chats.map((chat) => {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
             return (
@@ -75,7 +74,7 @@ const Title = ({ text }: { text: string }) => {
 }
 
 // プロフィール
-const Profile = ({ host }: { host: Host | undefined }) => {
+const Profile = ({ host }: { host: User | undefined }) => {
   return (
     <div className="px-5 border border-indigo-300 my-3 rounded sm:rounded-xl bg-indigo-50">
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
@@ -97,11 +96,11 @@ const Profile = ({ host }: { host: Host | undefined }) => {
         <div className="flex flex-col gap-1.5 items-end flex-shrink-0">
           <ProfileLink
             text={"プロフィール"}
-            href={pathProfile(currentHostId)}
+            href={pathProfile(currentUserId)}
           />
           <ProfileLink
             text={"編集"}
-            href={pathProfileEdit(currentHostId)}
+            href={pathProfileEdit(currentUserId)}
             icon={<PencilSquareIcon className="w-4 h-4 inline mr-1"/>}
           />
         </div>

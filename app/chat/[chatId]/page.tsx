@@ -1,17 +1,16 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import ChatArea from "./ChatArea";
-import PasscodeModal from "@/components/modal/PasscodeModal";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
-import { currentHostId, passcode } from "@/utils/sample/Sample";
+import { currentUserId } from "@/utils/sample/Sample";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { GetChatByPasscode, GetChatByHost, GetHost } from "@/utils/sample/API";
 import { Chat } from "@/utils/sample/Chat";
+import GetUserByID from "@/utils/api/getUserByID";
 
 const registeredEmail = "techstart35@gmail.com"
 
@@ -27,16 +26,15 @@ export default async function Index({
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
+  console.log("hello")
+  console.log(session)
+
+  const isHost = chatId === currentUserId
 
   let chat: Chat | undefined
-  try {
-    chat = GetChatByHost(chatId)
-  } catch (e) {
-    chat = GetChatByPasscode(chatId, passcode)
-  }
 
-  const host = GetHost(chat?.hostId || "")
-  const isHost = chat?.hostId === currentHostId
+  const host = await GetUserByID(chat?.hostId || "")
 
   const headerLink = isHost
     ? pathDisplayNameEdit(chatId, true)
@@ -72,7 +70,7 @@ export default async function Index({
       {/* チャット */}
       <ChatArea
         chatId={chatId}
-        isHost={currentHostId === chat?.hostId}
+        isHost={currentUserId === chat?.hostId}
         host={{
           id: chat?.hostId || "",
           imageUrl: host?.avatarUrl || "",

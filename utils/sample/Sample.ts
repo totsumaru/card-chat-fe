@@ -13,14 +13,24 @@ export const avatarUrl1 = "https://images.unsplash.com/photo-1472099645785-5658a
 export const avatarUrl2 = "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jpg&name=large"
 
 /**
- * 現在ログインしているホストIDです
+ * 現在ログインしているユーザーIDです
  *
  * ここを変更すると、ログインしているユーザーが変わります。
  * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentHostId = hostId2
+export const currentUserId = hostId1
+
+/**
+ * 現在ログインしているユーザーのセッションです
+ */
+export type TestSession = {
+  id: string
+}
+export const currentUserSession: TestSession = {
+  id: currentUserId
+}
 
 /**
  * cookieから取得したパスコードです
  */
-export const passcode = "123456"
+export const passcodeFromCookie = "123456"

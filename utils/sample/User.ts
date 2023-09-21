@@ -1,6 +1,6 @@
 import { avatarUrl1, avatarUrl2, hostId1, hostId2 } from "@/utils/sample/Sample";
 
-export type Host = {
+export type User = {
   id: string
   name: string
   avatarUrl: string
@@ -16,9 +16,9 @@ export type Host = {
 }
 
 /**
- * ホストのモックです
+ * ユーザーのモックです
  */
-export const hosts: Host[] = [
+export const usersDB: User[] = [
   {
     id: hostId1,
     name: "戸塚 翔太",

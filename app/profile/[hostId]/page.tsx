@@ -5,9 +5,9 @@ import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import React from "react";
 import Header from "@/components/header/Header";
-import { GetHost } from "@/utils/sample/API";
 import Avatar from "@/components/avatar/Avatar";
-import { currentHostId } from "@/utils/sample/Sample";
+import { currentUserId } from "@/utils/sample/Sample";
+import GetUserByID from "@/utils/api/getUserByID";
 
 /**
  * ホストのプロフィールページです
@@ -20,7 +20,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const host = GetHost(hostId)
+  const host = await GetUserByID(hostId)
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
@@ -28,7 +28,7 @@ export default async function Index({
       <Header
         left={<ReturnToChatLink textWhite={true}/>}
         right={""}
-        isHost={hostId === currentHostId}
+        isHost={hostId === currentUserId}
       />
 
       {/* 本体 */}

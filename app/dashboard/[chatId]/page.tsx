@@ -5,9 +5,9 @@ import Container from "@/components/container/Container";
 import Info from "@/components/alert/Info";
 import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
-import { GetChatByHost } from "@/utils/sample/API";
-import { currentHostId } from "@/utils/sample/Sample";
+import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
+import { GetChatInfo } from "@/utils/api/getChatInfo";
 
 /**
  * チャットの登録情報を表示/編集する画面です
@@ -20,12 +20,12 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const chat = GetChatByHost(chatId)
+  const chat = await GetChatInfo(chatId, currentUserSession)
 
   return (
     <>
       {/* ヘッダー */}
-      <Header left={""} right={""} isHost={chat?.hostId === currentHostId}/>
+      <Header left={""} right={""} isHost={chat?.hostId === currentUserId}/>
 
       <Container>
         <ReturnToChatLink textWhite={false}/>

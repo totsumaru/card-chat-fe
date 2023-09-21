@@ -21,7 +21,7 @@ type Props = {
 // チャットコンポーネントです
 export default function ChatArea({ chatId, isHost, host, guest }: Props) {
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
-
+  // メッセージ
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   // パスコードModal
@@ -35,13 +35,14 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
       alert("数字6桁で入力してください")
       return
     }
-
-    setPasscodeStatus("none") // statusをリセット
+    // statusをリセット
+    setPasscodeStatus("none")
 
     await new Promise(resolve => setTimeout(resolve, 1000))
-    setPasscodeStatus("invalid")
+    setPasscodeStatus("success")
 
-    setPasscode("") // パスコードをクリア
+    // パスコードをクリア
+    setPasscode("")
   }
 
   // メッセージが追加されたら一番下までスクロール
@@ -51,6 +52,7 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
     }
   }, [messages]);
 
+  // メッセージを送信
   const handleSend = () => {
     if (newMessage === "") {
       return

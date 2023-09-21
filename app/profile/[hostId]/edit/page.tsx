@@ -5,8 +5,8 @@ import Container from "@/components/container/Container";
 import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
 import HostProfileForm from "@/app/profile/[hostId]/edit/HostProfileForm";
-import { GetLoginHost } from "@/utils/sample/API";
-import { currentHostId } from "@/utils/sample/Sample";
+import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
+import GetUserByID from "@/utils/api/getUserByID";
 
 // Hostのプロフィールの編集画面です
 export default async function Index({
@@ -17,7 +17,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const host = GetLoginHost()
+  const host = await GetUserByID(currentUserSession)
 
   // inputへの引数です
   const inputProps = {
@@ -36,7 +36,7 @@ export default async function Index({
 
   return (
     <>
-      <Header left={""} right={""} isHost={hostId === currentHostId}/>
+      <Header left={""} right={""} isHost={hostId === currentUserId}/>
       <Container>
         {/* 戻るリンク */}
         <ReturnLink text={"ダッシュボード"} url={pathDashboard()} textWhite={false}/>

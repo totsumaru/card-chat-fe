@@ -19,11 +19,11 @@ export type Chat = {
 }
 
 /**
- * チャットのモックです
+ * チャットのDBモックです
  *
  * 奇数は`host1`,偶数は`host2`のIDを指定しています
  */
-export const chats: Chat[] = [
+export const chatsDB: Chat[] = [
   // チャット1
   {
     id: chatId1,

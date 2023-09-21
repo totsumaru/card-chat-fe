@@ -29,11 +29,11 @@ export default function InputImage({ image, setImage }: Props) {
         setImageErr(false)
       }
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
+      const guest = new FileReader();
+      guest.onloadend = () => {
+        setImage(guest.result as string);
       };
-      reader.readAsDataURL(file);
+      guest.readAsDataURL(file);
     }
   };
 

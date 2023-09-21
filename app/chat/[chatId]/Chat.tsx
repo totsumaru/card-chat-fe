@@ -76,7 +76,7 @@ export default function Chat({ chatId, isHost, host, guest }: Props) {
              * 相手のアバター
              * - メッセージの送信者が相手の場合に表示
              * - 相手がHostの場合は 画像&URL を付与
-             * - 相手がReaderの場合はデフォルトのアバター&URL
+             * - 相手がGuestの場合はデフォルトのアバター&URL
              */}
             {message.sender !== 'me' && (
               <div className="mr-2 flex-shrink-0">
@@ -104,7 +104,7 @@ export default function Chat({ chatId, isHost, host, guest }: Props) {
              * 自分のアバター
              * - メッセージの送信者が自分の場合に表示
              * - 自分がHostの場合は 画像&URL を付与
-             * - 自分がReaderの場合はデフォルトのアバター(URLなし)
+             * - 自分がGuestの場合はデフォルトのアバター(URLなし)
              */}
             {message.sender === 'me' && (
               <div className="ml-2 flex-shrink-0">

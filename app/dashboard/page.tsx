@@ -141,7 +141,7 @@ const ChatListContent = ({
       {/* 上側(表示名+時間) */}
       <div className="flex items-baseline justify-between gap-x-4">
         <p className="text-sm font-semibold leading-6 text-gray-900">
-          {chat.reader.displayName || chat.id}
+          {chat.guest.displayName || chat.id}
         </p>
         <p className="flex-none text-xs text-gray-600">{latestMessage.date}</p>
       </div>

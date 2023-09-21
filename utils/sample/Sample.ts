@@ -58,7 +58,7 @@ export const SampleData = {
     {
       id: chatId1,
       hostId: hostId1,
-      reader: {
+      guest: {
         displayName: "鈴木様",
         memo: "静岡県磐田市在住",
       },
@@ -80,7 +80,7 @@ export const SampleData = {
     {
       id: chatId2,
       hostId: hostId2,
-      reader: {
+      guest: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
@@ -102,7 +102,7 @@ export const SampleData = {
     {
       id: chatId2,
       hostId: hostId1,
-      reader: {
+      guest: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
@@ -124,7 +124,7 @@ export const SampleData = {
     {
       id: chatId2,
       hostId: hostId2,
-      reader: {
+      guest: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
@@ -146,7 +146,7 @@ export const SampleData = {
     {
       id: chatId2,
       hostId: hostId1,
-      reader: {
+      guest: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
@@ -168,7 +168,7 @@ export const SampleData = {
     {
       id: chatId2,
       hostId: hostId2,
-      reader: {
+      guest: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },

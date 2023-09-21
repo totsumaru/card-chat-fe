@@ -10,7 +10,7 @@ export type Message = {
 export type Chat = {
   id: string
   hostId: string
-  reader: {
+  guest: {
     displayName: string
     memo: string
   }
@@ -27,7 +27,7 @@ export const chats: Chat[] = [
   {
     id: chatId1,
     hostId: hostId1,
-    reader: {
+    guest: {
       displayName: "チャット1 様",
       memo: "静岡県磐田市在住",
     },
@@ -49,7 +49,7 @@ export const chats: Chat[] = [
   {
     id: chatId2,
     hostId: hostId2,
-    reader: {
+    guest: {
       displayName: "チャット2 様",
       memo: "本日お伺い済み",
     },
@@ -71,7 +71,7 @@ export const chats: Chat[] = [
   {
     id: chatId3,
     hostId: hostId1,
-    reader: {
+    guest: {
       displayName: "チャット3 様",
       memo: "本日お伺い済み",
     },
@@ -93,7 +93,7 @@ export const chats: Chat[] = [
   {
     id: chatId4,
     hostId: hostId2,
-    reader: {
+    guest: {
       displayName: "チャット4 様",
       memo: "本日お伺い済み",
     },
@@ -115,7 +115,7 @@ export const chats: Chat[] = [
   {
     id: chatId5,
     hostId: hostId1,
-    reader: {
+    guest: {
       displayName: "チャット5 様",
       memo: "本日お伺い済み",
     },
@@ -137,7 +137,7 @@ export const chats: Chat[] = [
   {
     id: chatId6,
     hostId: hostId2,
-    reader: {
+    guest: {
       displayName: "チャット6 様",
       memo: "本日お伺い済み",
     },

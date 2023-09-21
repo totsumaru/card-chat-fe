@@ -27,7 +27,7 @@ export default function Avatar({ imageUrl, href, unreadFlg, width, height }: Pro
       <div>
         <span className="relative inline-block">
           <img
-            className={`inline-block ${commonClass} aspect-[1/1] object-cover`}  // ここを修正
+            className={`inline-block ${commonClass} aspect-[1/1] object-cover ring-1 ring-gray-300`}
             src={imageUrl}
             alt="Avatar"
           />
@@ -37,7 +37,7 @@ export default function Avatar({ imageUrl, href, unreadFlg, width, height }: Pro
     ) : (
       <div>
         <span className="relative block">
-          <span className={`block ${commonClass} overflow-hidden bg-gray-100`}>  {/* ここを修正 */}
+          <span className={`block ${commonClass} overflow-hidden bg-gray-100 ring-1 ring-gray-300`}>
             <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>

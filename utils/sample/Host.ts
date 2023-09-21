@@ -36,7 +36,8 @@ export const hosts: Host[] = [
   {
     id: hostId2,
     name: "斎藤佑樹",
-    avatarUrl: "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jpg&name=large",
+    // avatarUrl: "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jpg&name=large",
+    avatarUrl: "",
     headline: "ホスト2です",
     introduction: "はじめまして。ホスト2です",
     company: {

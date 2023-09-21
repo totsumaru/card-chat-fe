@@ -35,14 +35,13 @@ export default async function Index({
 
               {/*　ヘッドライン */}
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
-                <BackgroundSVG/>
                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
                   <p>{host?.headline}</p>
                 </blockquote>
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
-              <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
+              <div className="col-end-1 w-16 lg:row-span-4 lg:w-52">
                 {host?.avatarUrl ? (
                   <Avatar width={"full"} height={"full"} imageUrl={host.avatarUrl}/>
                 ) : (
@@ -56,7 +55,7 @@ export default async function Index({
                   <p className="">{host?.company.name}</p>
                   <p className="text-sm">{host?.company.position}</p>
                 </div>
-                <p className="font-semibold text-gray-900 mt-1 sm:mt-3 sm:text-xl">
+                <p className="font-semibold text-gray-900 mt-1 sm:mt-3 sm:text-lg">
                   {host?.name}
                 </p>
               </figcaption>

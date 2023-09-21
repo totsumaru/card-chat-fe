@@ -1,5 +1,5 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import Chat from "./Chat";
+import ChatArea from "./ChatArea";
 import PasscodeModal from "@/components/modal/PasscodeModal";
 import Link from "next/link";
 import React from "react";
@@ -10,13 +10,12 @@ import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { GetChatInfo, GetHost } from "@/utils/sample/API";
+import { GetChatByPasscode, GetChatInfo, GetHost } from "@/utils/sample/API";
+import { Chat } from "@/utils/sample/Chat";
 
 const registeredEmail = "techstart35@gmail.com"
 
 /**
- * `/chat/[chatId]`
- *
  * チャット画面のページです
  *
  * 最初に開いた時のみ、パスコードの入力が必要です。(cookieに保存)
@@ -29,10 +28,15 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const chat = GetChatInfo(chatId)
-  const host = GetHost(chat?.hostId || "")
+  let chat: Chat | undefined
+  try {
+    chat = GetChatInfo(chatId)
+  } catch (e) {
+    chat = GetChatByPasscode(chatId, "123456")
+  }
 
-  const isHost = chat?.hostId === host?.id
+  const host = GetHost(chat?.hostId || "")
+  const isHost = chat?.hostId === currentHostId
 
   return (
     <div className="relative h-screen overflow-hidden">
@@ -41,7 +45,7 @@ export default async function Index({
         left={(
           <Link href={isHost
             ? pathDisplayNameEdit(chatId)
-            : pathProfile(chat?.hostId || "")}
+            : pathProfile(chat?.hostId || "", chatId)}
           >
             <div className="flex items-center">
               <Avatar imageUrl={isHost ? "" : host?.avatarUrl}/>
@@ -61,12 +65,11 @@ export default async function Index({
       <NoticeEmailModal registeredEmail={registeredEmail}/>
 
       {/* チャット */}
-      <Chat
+      <ChatArea
         chatId={chatId}
         isHost={currentHostId === chat?.hostId}
         host={{
           id: chat?.hostId || "",
-          name: host?.name || "",
           imageUrl: host?.avatarUrl || "",
         }}
         guest={{

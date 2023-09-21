@@ -19,7 +19,7 @@ type Props = {
 }
 
 // チャットコンポーネントです
-export default function Chat({ chatId, isHost, host, guest }: Props) {
+export default function ChatArea({ chatId, isHost, host, guest }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);

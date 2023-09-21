@@ -25,15 +25,26 @@ export function GetHost(hostId: string): Host | undefined {
 
 /**
  * 自分の管理するチャットの情報を取得します
- *
- * ログインしていない/パスコードが異なる場合はエラーを返します
  */
-export function GetChatInfo(chatId: string, passcode?: string): Chat | undefined {
+export function GetChatInfo(chatId: string): Chat | undefined {
   const chat = chats.find(chat => chat.id === chatId)
 
-  if (chat?.hostId === currentHostId || passcode === chat?.passcode) {
-    return chat
+  if (chat?.hostId !== currentHostId) {
+    throw new Error("ログインしてください")
   }
 
-  throw new Error("ログインしてください")
+  return chat
+}
+
+/**
+ * パスコードでチャットを取得します
+ */
+export function GetChatByPasscode(chatId: string, passcode: string): Chat | undefined {
+  const chat = chats.find(chat => chat.id === chatId)
+
+  if (chat?.passcode !== passcode) {
+    throw new Error("パスコードが異なります")
+  }
+
+  return chat
 }

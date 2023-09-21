@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
 import { useRouter } from "next/navigation";
+import { pathDashboard } from "@/utils/path";
 
 type Props = {
   email: string
@@ -25,7 +26,7 @@ export default function LoginButton({ email, password }: Props) {
     // TODO: 一時的にSleep
     new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
       setLoading(false)
-      router.push("/writer/dashboard/123")
+      router.push(pathDashboard())
     })
   }
 

@@ -1,19 +1,26 @@
 import { Chat, chats } from "@/utils/sample/Chat";
-import { currentWriterId } from "@/utils/sample/Sample";
-import { Writer, writers } from "@/utils/sample/Writer";
+import { currentHostId } from "@/utils/sample/Sample";
+import { Host, hosts } from "@/utils/sample/Host";
 
 /**
  * 全てのチャットを取得します
  */
 export function GetChats(): Chat[] | undefined {
-  return chats.filter(chat => chat.writerId === currentWriterId)
+  return chats.filter(chat => chat.hostId === currentHostId)
 }
 
 /**
- * ログインしているライターを取得します
+ * ログインしているホストを取得します
  */
-export function GetLoginWriter(): Writer | undefined {
-  return writers.find(writer => writer.id === currentWriterId)
+export function GetLoginHost(): Host | undefined {
+  return hosts.find(host => host.id === currentHostId)
+}
+
+/**
+ * ライターIDでログインしているライターを取得します
+ */
+export function GetHost(hostId: string): Host | undefined {
+  return hosts.find(host => host.id === hostId)
 }
 
 /**
@@ -24,7 +31,7 @@ export function GetLoginWriter(): Writer | undefined {
  */
 export function GetChatMetadata(chatId: string): Chat | undefined {
   const chat = chats.find(chat => chat.id === chatId)
-  if (chat?.writerId !== currentWriterId) {
+  if (chat?.hostId !== currentHostId) {
     throw new Error("ログインしてください")
   }
 

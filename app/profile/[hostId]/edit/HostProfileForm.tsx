@@ -23,7 +23,7 @@ type Props = {
  *
  * clientでの処理のためのコンポーネントです。
  */
-export default function WriterProfileForm(props: Props) {
+export default function HostProfileForm(props: Props) {
   const [values, setValues] = useState<Props>(props)
   const [image, setImage] = useState<string>(props.imageUrl || "")
 

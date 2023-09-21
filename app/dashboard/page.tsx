@@ -7,15 +7,13 @@ import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat, pathDisplayNameEdit, pathProfile, pathProfileEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { GetChats, GetLoginWriter } from "@/utils/sample/API";
+import { GetChats, GetLoginHost } from "@/utils/sample/API";
 import { Chat, Message } from "@/utils/sample/Chat";
-import { Writer } from "@/utils/sample/Writer";
-import { currentWriterId } from "@/utils/sample/Sample";
+import { Host } from "@/utils/sample/Host";
+import { currentHostId } from "@/utils/sample/Sample";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 
 /**
- * `/writer/dashboard/[writer-id]`
- *
  * ダッシュボードページです。
  */
 export default async function Index() {
@@ -24,7 +22,7 @@ export default async function Index() {
 
   // 自分が管理する全てのチャットを取得します
   const chats = GetChats()
-  const writer = GetLoginWriter()
+  const host = GetLoginHost()
 
   return (
     <div className="bg-gray-50 h-screen">
@@ -33,14 +31,15 @@ export default async function Index() {
 
       <Container>
         {/* プロフィール */}
-        <Profile writer={writer}/>
+        <Profile host={host}/>
 
         <div className="mt-7">
           <Title text={"チャット一覧"}/>
         </div>
 
         {/* チャット一覧 */}
-        <ul role="list" className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
+        <ul role="list"
+            className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
           {chats && chats.map((chat) => {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
@@ -76,21 +75,21 @@ const Title = ({ text }: { text: string }) => {
 }
 
 // プロフィール
-const Profile = ({ writer }: { writer: Writer | undefined }) => {
+const Profile = ({ host }: { host: Host | undefined }) => {
   return (
     <div className="px-5 border border-indigo-300 my-3 rounded sm:rounded-xl bg-indigo-50">
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
         {/* 左側 */}
         <div className="flex min-w-0 gap-x-4">
           <img className="h-12 w-12 flex-none rounded-full bg-gray-50"
-               src={writer?.avatarUrl} alt=""
+               src={host?.avatarUrl} alt=""
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">
-              {writer?.name}
+              {host?.name}
             </p>
             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-              {writer?.company.name}
+              {host?.company.name}
             </p>
           </div>
         </div>
@@ -98,11 +97,11 @@ const Profile = ({ writer }: { writer: Writer | undefined }) => {
         <div className="flex flex-col gap-1.5 items-end flex-shrink-0">
           <ProfileLink
             text={"プロフィール"}
-            href={pathProfile(currentWriterId)}
+            href={pathProfile(currentHostId)}
           />
           <ProfileLink
             text={"編集"}
-            href={pathProfileEdit(currentWriterId)}
+            href={pathProfileEdit(currentHostId)}
             icon={<PencilSquareIcon className="w-4 h-4 inline mr-1"/>}
           />
         </div>

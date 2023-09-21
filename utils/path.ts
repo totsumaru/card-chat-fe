@@ -20,8 +20,8 @@ export function pathChat(chatId: string): string {
 /**
  * プロフィール
  */
-export function pathProfile(writerId: string, chatId?: string): string {
-  let path = `/profile/${writerId}`
+export function pathProfile(hostId: string, chatId?: string): string {
+  let path = `/profile/${hostId}`
   if (chatId) {
     return path + `?${paramChatId}=${chatId}`
   }
@@ -34,8 +34,8 @@ export function pathProfile(writerId: string, chatId?: string): string {
 /**
  * プロフィールの編集
  */
-export function pathProfileEdit(writerId: string): string {
-  return `/profile/${writerId}/edit`
+export function pathProfileEdit(hostId: string): string {
+  return `/profile/${hostId}/edit`
 }
 
 /**

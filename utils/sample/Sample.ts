@@ -1,6 +1,6 @@
-// writer
-export const writerId1 = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
-export const writerId2 = "e90b644e-0caf-4c3a-9a25-64e122f8a57b"
+// host
+export const hostId1 = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
+export const hostId2 = "e90b644e-0caf-4c3a-9a25-64e122f8a57b"
 // chat
 export const chatId1 = "cd746a35-1360-403a-a747-98e5f1a9fa2f"
 export const chatId2 = "fd587bc8-a7f2-4d60-91fb-b81e2daea7a0"
@@ -12,21 +12,20 @@ export const chatId6 = "b380967b-dbad-4be1-b1ec-701643b40064"
 export const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
 
 /**
- * 現在ログインしているライターIDです
+ * 現在ログインしているホストIDです
  *
  * ここを変更すると、ログインしているユーザーが変わります。
- * ""とすると、ログインしていない状態となります。
+ * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentWriterId = writerId1
-
+export const currentHostId = hostId1
 
 /**
  * TODO: ここは削除する
  */
 export const SampleData = {
-  currentWriterID: writerId1, // 今ログインしているIDです
-  writer: {
-    id: writerId1,
+  currentHostID: hostId1, // 今ログインしているIDです
+  host: {
+    id: hostId1,
     name: "戸塚 翔太",
     avatarUrl: avatarUrl,
     headline: "ナンバーワンよりオンリーワンを目指します",
@@ -39,8 +38,8 @@ export const SampleData = {
       website: "https://argate.jp",
     },
   },
-  writer2: {
-    id: writerId2,
+  host2: {
+    id: hostId2,
     name: "斎藤佑樹",
     avatarUrl: "",
     headline: "ライター2です",
@@ -54,18 +53,18 @@ export const SampleData = {
     },
   },
   chat: [
-    // 奇数はwriter1,偶数はwriter2のIDを指定しています
+    // 奇数はhost1,偶数はhost2のIDを指定しています
     // チャット1
     {
       id: chatId1,
-      writerId: writerId1,
+      hostId: hostId1,
       reader: {
         displayName: "鈴木様",
         memo: "静岡県磐田市在住",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はありがとうございました！\nいつでも気軽にご連絡ください。",
           date: "2023-01-23 11:23",
           isRead: true,
@@ -80,14 +79,14 @@ export const SampleData = {
     // チャット2
     {
       id: chatId2,
-      writerId: writerId2,
+      hostId: hostId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -102,14 +101,14 @@ export const SampleData = {
     // チャット3
     {
       id: chatId2,
-      writerId: writerId1,
+      hostId: hostId1,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -124,14 +123,14 @@ export const SampleData = {
     // チャット4
     {
       id: chatId2,
-      writerId: writerId2,
+      hostId: hostId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -146,14 +145,14 @@ export const SampleData = {
     // チャット5
     {
       id: chatId2,
-      writerId: writerId1,
+      hostId: hostId1,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,
@@ -168,14 +167,14 @@ export const SampleData = {
     // チャット6
     {
       id: chatId2,
-      writerId: writerId2,
+      hostId: hostId2,
       reader: {
         displayName: "さいとう様",
         memo: "本日お伺い済み",
       },
       messages: [
         {
-          from: writerId1,
+          from: hostId1,
           content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
           date: "2023-02-23 11:23",
           isRead: true,

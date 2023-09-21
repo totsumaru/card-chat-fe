@@ -35,9 +35,9 @@ export default async function Index({
       {/* ヘッダー */}
       <Header
         left={(
-          <Link href={pathProfile(mock.writer.id, chatId)}>
+          <Link href={pathProfile(mock.host.id, chatId)}>
             <div className="flex items-center">
-              <Avatar imageUrl={mock.writer.avatarUrl}/>
+              <Avatar imageUrl={mock.host.avatarUrl}/>
               <p className="ml-2">戸塚翔太</p>
             </div>
           </Link>
@@ -52,13 +52,13 @@ export default async function Index({
       {/* チャット */}
       <Chat
         chatId={chatId}
-        isWriter={false}
-        writer={{
-          id: mock.writer.id,
+        isHost={false}
+        host={{
+          id: mock.host.id,
           name: "taro",
-          imageUrl: SampleData.writer.avatarUrl,
+          imageUrl: SampleData.host.avatarUrl,
         }}
-        reader={{
+        guest={{
           displayName: "田中様"
         }}
       />

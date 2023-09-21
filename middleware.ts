@@ -11,14 +11,14 @@ export async function middleware(req: NextRequest) {
 
   await supabase.auth.getSession()
 
-  if (!SampleData.currentWriterID) {
-    if (req.nextUrl.pathname.startsWith('/writer/dashboard')) {
+  if (!SampleData.currentHostID) {
+    if (req.nextUrl.pathname.startsWith('/dashboard')) {
       const redirectUrl = req.nextUrl.clone();
       redirectUrl.pathname = pathLogin();
       return NextResponse.redirect(redirectUrl);
     }
 
-    const pattern = /^\/writer\/profile\/.*\/edit$/;
+    const pattern = /^\/profile\/.*\/edit$/
     if (pattern.test(req.nextUrl.pathname)) {
       const redirectUrl = req.nextUrl.clone();
       redirectUrl.pathname = pathLogin();

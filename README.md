@@ -7,25 +7,25 @@
 - このページはURLを知っている全てのユーザーに公開されます
 
 ```
-/writer/profile/[writer-id]
+/profile/[host-id]
 ```
 
 送信者のプロフィールを編集します
 
 ```
-/writer/profile/[writer-id]/edit
+/profile/[host-id]/edit
 ```
 
 ダッシュボードです
 
 ```
-/writer/dashboard/[writer-id]
+/dashboard/[host-id]
 ```
 
 チャットの情報(ユーザー名など)を表示/編集します
 
 ```
-/writer/dashboard/[writer-id]/[msg-id]
+/dashboard/[host-id]/[msg-id]
 ```
 
 ログイン画面です

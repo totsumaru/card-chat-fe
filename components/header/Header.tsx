@@ -5,17 +5,17 @@ import Link from "next/link";
 type Props = {
   left: ReactNode
   right: ReactNode
-  myWriterId?: string // Writerとしてログインしている場合のみ
+  myHostId?: string // Hostとしてログインしている場合のみ
 }
 
 /**
  * Headerのベースです
  *
- * ログイン済み(myWriterId) & rightが指定されていない場合は右側にダッシュボードのURLを入れます。
+ * ログイン済み(myHostId) & rightが指定されていない場合は右側にダッシュボードのURLを入れます。
  */
-export default function Header({ left, right, myWriterId }: Props) {
+export default function Header({ left, right, myHostId }: Props) {
   let dashboardUrl: string = ""
-  if (myWriterId && !right) {
+  if (myHostId && !right) {
     dashboardUrl = pathDashboard()
   }
 

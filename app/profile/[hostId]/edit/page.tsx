@@ -5,13 +5,13 @@ import Container from "@/components/container/Container";
 import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
 import { SampleData } from "@/utils/sample/Sample";
-import WriterProfileForm from "@/app/profile/[writerId]/edit/WriterProfileForm";
+import HostProfileForm from "@/app/profile/[hostId]/edit/HostProfileForm";
 
-// Writerのプロフィールの編集画面です
+// Hostのプロフィールの編集画面です
 export default async function Index({
-  params: { writerId }
+  params: { hostId }
 }: {
-  params: { writerId: string }
+  params: { hostId: string }
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
@@ -20,17 +20,17 @@ export default async function Index({
 
   // inputへの引数です
   const inputProps = {
-    name: mock.writer.name,
-    headline: mock.writer.headline,
-    introduction: mock.writer.introduction,
+    name: mock.host.name,
+    headline: mock.host.headline,
+    introduction: mock.host.introduction,
     company: {
-      name: mock.writer.company.name,
-      position: mock.writer.company.position,
-      tel: mock.writer.company.tel,
-      email: mock.writer.company.email,
-      website: mock.writer.company.website,
+      name: mock.host.company.name,
+      position: mock.host.company.position,
+      tel: mock.host.company.tel,
+      email: mock.host.company.email,
+      website: mock.host.company.website,
     },
-    imageUrl: mock.writer.avatarUrl,
+    imageUrl: mock.host.avatarUrl,
   }
 
   return (
@@ -42,7 +42,7 @@ export default async function Index({
 
         <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
 
-        <WriterProfileForm {...inputProps}/>
+        <HostProfileForm {...inputProps}/>
       </Container>
     </>
   )

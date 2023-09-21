@@ -3,29 +3,27 @@ import { cookies } from "next/headers";
 import { EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
-import { SampleData } from "@/utils/sample/Sample";
 import React from "react";
 import Header from "@/components/header/Header";
+import { GetHost } from "@/utils/sample/API";
 
 /**
- * `/writer/profile/[writer-id]`
- *
- * ライターのプロフィールページです
+ * ホストのプロフィールページです
  */
 export default async function Index({
-  params: { writerId }
+  params: { hostId }
 }: {
-  params: { writerId: string }
+  params: { hostId: string }
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const mock = SampleData
+  const host = GetHost(hostId)
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <Header left={<ReturnToChatLink/>} right={""} myWriterId={writerId}/>
+      <Header left={<ReturnToChatLink/>} right={""} myHostId={hostId}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl pt-5 px-4 sm:px-6 lg:px-8 min-h-screen">
@@ -38,23 +36,24 @@ export default async function Index({
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
                 <BackgroundSVG/>
                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                  <p>{mock.writer.headline}</p>
+                  <p>{host?.headline}</p>
                 </blockquote>
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
+              {/* TODO: 画像がない時はデフォルト画像を設定 */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-full" src={mock.writer.avatarUrl} alt=""/>
+                <img className="rounded-full" src={host?.avatarUrl} alt=""/>
               </div>
 
               {/* 概要 */}
               <figcaption className="text-base lg:col-start-1 lg:row-start-3">
                 <div className="font-semibold text-gray-900">
-                  {mock.writer.name}
+                  {host?.name}
                 </div>
                 <div className="mt-1 text-gray-500 flex gap-2">
-                  <p>{mock.writer.company.name}</p>
-                  <p>{mock.writer.company.position}</p>
+                  <p>{host?.company.name}</p>
+                  <p>{host?.company.position}</p>
                 </div>
               </figcaption>
 
@@ -65,22 +64,22 @@ export default async function Index({
               {/* 電話番号 */}
               <InfoGrid icon={(
                 <PhoneIcon className="w-4 h-4"/>
-              )} kind={"電話番号"} value={mock.writer.company.tel}/>
+              )} kind={"電話番号"} value={host?.company.tel || ""}/>
 
               {/* メールアドレス */}
               <InfoGrid icon={(
                 <EnvelopeIcon className="w-4 h-4"/>
-              )} kind={"メールアドレス"} value={mock.writer.company.email}/>
+              )} kind={"メールアドレス"} value={host?.company.email || ""}/>
 
               {/* ホームページ */}
               <InfoGrid icon={(
                 <GlobeAsiaAustraliaIcon className="w-4 h-4"/>
-              )} kind={"Webサイト"} value={mock.writer.company.website}/>
+              )} kind={"Webサイト"} value={host?.company.website || ""}/>
             </div>
 
             {/* 備考 */}
             <div className="text-gray-600 mt-7">
-              <p>{mock.writer.introduction}</p>
+              <p>{host?.introduction}</p>
             </div>
 
           </div>

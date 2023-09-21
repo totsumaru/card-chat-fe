@@ -6,23 +6,21 @@ import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { SampleData } from "@/utils/sample/Sample";
 import Avatar from "@/components/avatar/Avatar";
 
-// const writerProfileUrl = `/writer/profile/w-123`
-
 type Props = {
   chatId: string
-  isWriter: boolean
-  writer: {
+  isHost: boolean
+  host: {
     id: string
     name: string
     imageUrl: string
   }
-  reader: {
+  guest: {
     displayName: string
   }
 }
 
 // チャットコンポーネントです
-export default function Chat({ chatId, isWriter, writer, reader }: Props) {
+export default function Chat({ chatId, isHost, host, guest }: Props) {
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const scrollBottomRef = useRef<HTMLDivElement | null>(null);
@@ -77,17 +75,17 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
             { /**
              * 相手のアバター
              * - メッセージの送信者が相手の場合に表示
-             * - 相手がWriterの場合は 画像&URL を付与
+             * - 相手がHostの場合は 画像&URL を付与
              * - 相手がReaderの場合はデフォルトのアバター&URL
              */}
             {message.sender !== 'me' && (
               <div className="mr-2 flex-shrink-0">
-                {isWriter ? (
+                {isHost ? (
                   <Avatar href={pathDisplayNameEdit(chatId)}/>
                 ) : (
                   <Avatar
-                    imageUrl={SampleData.writer.avatarUrl}
-                    href={pathProfile(writer.id, chatId)}
+                    imageUrl={SampleData.host.avatarUrl}
+                    href={pathProfile(host.id, chatId)}
                   />
                 )}
               </div>
@@ -105,15 +103,15 @@ export default function Chat({ chatId, isWriter, writer, reader }: Props) {
             { /**
              * 自分のアバター
              * - メッセージの送信者が自分の場合に表示
-             * - 自分がWriterの場合は 画像&URL を付与
+             * - 自分がHostの場合は 画像&URL を付与
              * - 自分がReaderの場合はデフォルトのアバター(URLなし)
              */}
             {message.sender === 'me' && (
               <div className="ml-2 flex-shrink-0">
-                {isWriter ? (
+                {isHost ? (
                   <Avatar
-                    imageUrl={SampleData.writer.avatarUrl}
-                    href={pathProfile(writer.id, chatId)}
+                    imageUrl={SampleData.host.avatarUrl}
+                    href={pathProfile(host.id, chatId)}
                   />
                 ) : (
                   <Avatar/>

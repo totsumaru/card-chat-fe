@@ -1,6 +1,6 @@
-import { avatarUrl, writerId1, writerId2 } from "@/utils/sample/Sample";
+import { avatarUrl, hostId1, hostId2 } from "@/utils/sample/Sample";
 
-export type Writer = {
+export type Host = {
   id: string
   name: string
   avatarUrl: string
@@ -18,9 +18,9 @@ export type Writer = {
 /**
  * ライターのモックです
  */
-export const writers: Writer[] = [
+export const hosts: Host[] = [
   {
-    id: writerId1,
+    id: hostId1,
     name: "戸塚 翔太",
     avatarUrl: avatarUrl,
     headline: "ナンバーワンよりオンリーワンを目指します",
@@ -34,7 +34,7 @@ export const writers: Writer[] = [
     },
   },
   {
-    id: writerId2,
+    id: hostId2,
     name: "斎藤佑樹",
     avatarUrl: "",
     headline: "ライター2です",

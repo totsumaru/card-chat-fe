@@ -44,7 +44,7 @@ export default async function Index({
       <Header
         left={(
           <Link href={isHost
-            ? pathDisplayNameEdit(chatId)
+            ? pathDisplayNameEdit(chatId, true)
             : pathProfile(chat?.hostId || "", chatId)}
           >
             <div className="flex items-center">

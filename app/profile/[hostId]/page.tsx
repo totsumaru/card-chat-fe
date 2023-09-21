@@ -25,7 +25,11 @@ export default async function Index({
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <Header left={<ReturnToChatLink/>} right={""} isHost={hostId === currentHostId}/>
+      <Header
+        left={<ReturnToChatLink textWhite={true}/>}
+        right={""}
+        isHost={hostId === currentHostId}
+      />
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl pt-5 px-4 sm:px-6 lg:px-8 min-h-screen">

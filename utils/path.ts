@@ -47,7 +47,18 @@ export function pathDashboard(): string {
 
 /**
  * 表示名の編集
+ *
+ * チャットに戻るためのクエリパラメータが必要な場合は、
+ * `returnToChat`を`true`にしてください。
  */
-export function pathDisplayNameEdit(chatId: string): string {
-  return `/dashboard/${chatId}`
+export function pathDisplayNameEdit(
+  chatId: string,
+  returnToChat?: boolean
+): string {
+  let path = `/dashboard/${chatId}`
+  if (returnToChat) {
+    return path + `?${paramChatId}=${chatId}`
+  }
+
+  return path
 }

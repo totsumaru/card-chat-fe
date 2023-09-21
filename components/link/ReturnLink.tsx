@@ -7,9 +7,12 @@ type Props = {
   textWhite: boolean
 }
 
+/**
+ * 「戻る」リンクのコンポーネントです
+ */
 export default function ReturnLink({ text, url, textWhite }: Props) {
   const link = (
-    <Link href={url} className="flex items-center">
+    <Link href={url} className="flex items-center w-fit">
       <ChevronLeftIcon className="w-4 h-4 mr-1"/>
       {text}
     </Link>

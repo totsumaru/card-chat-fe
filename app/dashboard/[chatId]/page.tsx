@@ -2,15 +2,16 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import React from "react";
 import Container from "@/components/container/Container";
-import ReturnLink from "@/components/link/ReturnLink";
 import Info from "@/components/alert/Info";
 import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
 import { GetChatInfo } from "@/utils/sample/API";
-import { pathDashboard } from "@/utils/path";
 import { currentHostId } from "@/utils/sample/Sample";
+import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 
-// チャットの登録情報を表示/編集する画面です
+/**
+ * チャットの登録情報を表示/編集する画面です
+ */
 export default async function Index({
   params: { chatId }
 }: {
@@ -25,8 +26,9 @@ export default async function Index({
     <>
       {/* ヘッダー */}
       <Header left={""} right={""} isHost={chat?.hostId === currentHostId}/>
+
       <Container>
-        <ReturnLink text={"戻る"} url={pathDashboard()} textWhite={false}/>
+        <ReturnToChatLink textWhite={false}/>
 
         <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full">
           {/* ここを中央に */}

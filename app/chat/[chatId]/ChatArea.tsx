@@ -79,7 +79,7 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
             {message.sender !== 'me' && (
               <div className="mr-2 flex-shrink-0">
                 {isHost ? (
-                  <Avatar href={pathDisplayNameEdit(chatId)}/>
+                  <Avatar href={pathDisplayNameEdit(chatId, true)}/>
                 ) : (
                   <Avatar
                     imageUrl={host.imageUrl}

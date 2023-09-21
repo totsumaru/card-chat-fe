@@ -6,7 +6,7 @@ import ReturnLink from "@/components/link/ReturnLink";
 import Info from "@/components/alert/Info";
 import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
-import { GetChatMetadata } from "@/utils/sample/API";
+import { GetChatInfo } from "@/utils/sample/API";
 import { pathDashboard } from "@/utils/path";
 
 // チャットの登録情報を表示/編集する画面です
@@ -18,7 +18,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const chat = GetChatMetadata(chatId)
+  const chat = GetChatInfo(chatId)
 
   return (
     <>

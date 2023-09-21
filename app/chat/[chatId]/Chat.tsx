@@ -11,7 +11,6 @@ type Props = {
   isHost: boolean
   host: {
     id: string
-    name: string
     imageUrl: string
   }
   guest: {
@@ -75,8 +74,8 @@ export default function Chat({ chatId, isHost, host, guest }: Props) {
             { /**
              * 相手のアバター
              * - メッセージの送信者が相手の場合に表示
-             * - 相手がHostの場合は 画像&URL を付与
-             * - 相手がGuestの場合はデフォルトのアバター&URL
+             * - 自分がHostの場合は、相手はデフォルトのアバター&URL
+             * - 自分がGuestの場合は、相手は 画像&URL を付与
              */}
             {message.sender !== 'me' && (
               <div className="mr-2 flex-shrink-0">

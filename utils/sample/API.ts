@@ -17,23 +17,23 @@ export function GetLoginHost(): Host | undefined {
 }
 
 /**
- * ライターIDでログインしているライターを取得します
+ * IDでホストを取得します
  */
 export function GetHost(hostId: string): Host | undefined {
   return hosts.find(host => host.id === hostId)
 }
 
 /**
- * Dashboard/[chatId]
- * 自分の管理するチャットのメタデータを取得します
+ * 自分の管理するチャットの情報を取得します
  *
- * ログインしていない場合はエラーを返します
+ * ログインしていない/パスコードが異なる場合はエラーを返します
  */
-export function GetChatMetadata(chatId: string): Chat | undefined {
+export function GetChatInfo(chatId: string, passcode?: string): Chat | undefined {
   const chat = chats.find(chat => chat.id === chatId)
-  if (chat?.hostId !== currentHostId) {
-    throw new Error("ログインしてください")
+
+  if (chat?.hostId === currentHostId || passcode === chat?.passcode) {
+    return chat
   }
 
-  return chat
+  throw new Error("ログインしてください")
 }

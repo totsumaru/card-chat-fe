@@ -4,12 +4,13 @@ import PasscodeModal from "@/components/modal/PasscodeModal";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
-import { SampleData } from "@/utils/sample/Sample";
+import { currentHostId } from "@/utils/sample/Sample";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
-import { pathProfile } from "@/utils/path";
+import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
+import { GetChatInfo, GetHost } from "@/utils/sample/API";
 
 const registeredEmail = "techstart35@gmail.com"
 
@@ -28,17 +29,27 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const mock = SampleData
+  const chat = GetChatInfo(chatId)
+  const host = GetHost(chat?.hostId || "")
+
+  const isHost = chat?.hostId === host?.id
 
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
       <Header
         left={(
-          <Link href={pathProfile(mock.host.id, chatId)}>
+          <Link href={isHost
+            ? pathDisplayNameEdit(chatId)
+            : pathProfile(chat?.hostId || "")}
+          >
             <div className="flex items-center">
-              <Avatar imageUrl={mock.host.avatarUrl}/>
-              <p className="ml-2">戸塚翔太</p>
+              <Avatar imageUrl={isHost ? "" : host?.avatarUrl}/>
+              <p className="ml-2">{isHost ? (
+                chat?.guest.displayName || chat?.id
+              ) : (
+                host?.name
+              )}</p>
             </div>
           </Link>
         )}
@@ -52,14 +63,14 @@ export default async function Index({
       {/* チャット */}
       <Chat
         chatId={chatId}
-        isHost={false}
+        isHost={currentHostId === chat?.hostId}
         host={{
-          id: mock.host.id,
-          name: "taro",
-          imageUrl: SampleData.host.avatarUrl,
+          id: chat?.hostId || "",
+          name: host?.name || "",
+          imageUrl: host?.avatarUrl || "",
         }}
         guest={{
-          displayName: "田中様"
+          displayName: chat?.guest.displayName || "",
         }}
       />
     </div>

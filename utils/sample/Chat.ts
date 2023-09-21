@@ -9,6 +9,7 @@ export type Message = {
 
 export type Chat = {
   id: string
+  passcode: string
   hostId: string
   guest: {
     displayName: string
@@ -26,6 +27,7 @@ export const chats: Chat[] = [
   // チャット1
   {
     id: chatId1,
+    passcode: "123456",
     hostId: hostId1,
     guest: {
       displayName: "チャット1 様",
@@ -48,6 +50,7 @@ export const chats: Chat[] = [
   // チャット2
   {
     id: chatId2,
+    passcode: "234567",
     hostId: hostId2,
     guest: {
       displayName: "チャット2 様",
@@ -70,6 +73,7 @@ export const chats: Chat[] = [
   // チャット3
   {
     id: chatId3,
+    passcode: "345678",
     hostId: hostId1,
     guest: {
       displayName: "チャット3 様",
@@ -92,6 +96,7 @@ export const chats: Chat[] = [
   // チャット4
   {
     id: chatId4,
+    passcode: "456789",
     hostId: hostId2,
     guest: {
       displayName: "チャット4 様",
@@ -114,6 +119,7 @@ export const chats: Chat[] = [
   // チャット5
   {
     id: chatId5,
+    passcode: "567890",
     hostId: hostId1,
     guest: {
       displayName: "チャット5 様",
@@ -136,6 +142,7 @@ export const chats: Chat[] = [
   // チャット6
   {
     id: chatId6,
+    passcode: "678901",
     hostId: hostId2,
     guest: {
       displayName: "チャット6 様",

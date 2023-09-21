@@ -38,25 +38,31 @@ export default async function Index({
   const host = GetHost(chat?.hostId || "")
   const isHost = chat?.hostId === currentHostId
 
+  const headerLink = isHost
+    ? pathDisplayNameEdit(chatId, true)
+    : pathProfile(chat?.hostId || "", chatId)
+
+  const headerAvatarUrl = isHost ? "" : host?.avatarUrl
+
+  const headerDisplayName = isHost
+    ? chat?.guest.displayName || chat?.id
+    : host?.name
+
+  const headerLeft = (
+    <Link href={headerLink}>
+      <div className="flex items-center">
+        <Avatar imageUrl={headerAvatarUrl}/>
+        <p className="ml-2">{headerDisplayName}</p>
+      </div>
+    </Link>
+  )
+
+
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
       <Header
-        left={(
-          <Link href={isHost
-            ? pathDisplayNameEdit(chatId, true)
-            : pathProfile(chat?.hostId || "", chatId)}
-          >
-            <div className="flex items-center">
-              <Avatar imageUrl={isHost ? "" : host?.avatarUrl}/>
-              <p className="ml-2">{isHost ? (
-                chat?.guest.displayName || chat?.id
-              ) : (
-                host?.name
-              )}</p>
-            </div>
-          </Link>
-        )}
+        left={headerLeft}
         right={<NoticeModalOpenButton registeredEmail={registeredEmail}/>}
         isHost={isHost}
       />

@@ -6,6 +6,7 @@ import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import React from "react";
 import Header from "@/components/header/Header";
 import { GetHost } from "@/utils/sample/API";
+import Avatar from "@/components/avatar/Avatar";
 
 /**
  * ホストのプロフィールページです
@@ -41,20 +42,23 @@ export default async function Index({
               </div>
 
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
-              {/* TODO: 画像がない時はデフォルト画像を設定 */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
-                <img className="rounded-full" src={host?.avatarUrl} alt=""/>
+                {host?.avatarUrl ? (
+                  <Avatar width={"full"} height={"full"} imageUrl={host.avatarUrl}/>
+                ) : (
+                  <Avatar width={"full"} height={"full"}/>
+                )}
               </div>
 
               {/* 概要 */}
               <figcaption className="text-base lg:col-start-1 lg:row-start-3">
-                <div className="font-semibold text-gray-900">
+                <div className="text-gray-500 gap-2">
+                  <p className="">{host?.company.name}</p>
+                  <p className="text-sm">{host?.company.position}</p>
+                </div>
+                <p className="font-semibold text-gray-900 mt-1 sm:mt-3 sm:text-xl">
                   {host?.name}
-                </div>
-                <div className="mt-1 text-gray-500 flex gap-2">
-                  <p>{host?.company.name}</p>
-                  <p>{host?.company.position}</p>
-                </div>
+                </p>
               </figcaption>
 
             </figure>

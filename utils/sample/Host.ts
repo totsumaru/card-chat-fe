@@ -16,7 +16,7 @@ export type Host = {
 }
 
 /**
- * ライターのモックです
+ * ホストのモックです
  */
 export const hosts: Host[] = [
   {
@@ -36,9 +36,9 @@ export const hosts: Host[] = [
   {
     id: hostId2,
     name: "斎藤佑樹",
-    avatarUrl: "",
-    headline: "ライター2です",
-    introduction: "はじめまして。ライター2です",
+    avatarUrl: "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jpg&name=large",
+    headline: "ホスト2です",
+    introduction: "はじめまして。ホスト2です",
     company: {
       name: "遠州鉄道 株式会社",
       position: "計画課",

@@ -50,7 +50,7 @@ export const chats: Chat[] = [
   // チャット2
   {
     id: chatId2,
-    passcode: "234567",
+    passcode: "123456",
     hostId: hostId2,
     guest: {
       displayName: "チャット2 様",

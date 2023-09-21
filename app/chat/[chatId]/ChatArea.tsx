@@ -4,7 +4,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Avatar from "@/components/avatar/Avatar";
-import PasscodeModal from "@/components/modal/PasscodeModal";
+import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
 
 type Props = {
   chatId: string
@@ -20,11 +20,24 @@ type Props = {
 
 // チャットコンポーネントです
 export default function ChatArea({ chatId, isHost, host, guest }: Props) {
+  const scrollBottomRef = useRef<HTMLDivElement | null>(null)
+
   const [messages, setMessages] = useState<{ text: string, sender: string }[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const scrollBottomRef = useRef<HTMLDivElement | null>(null);
   // パスコードModal
   const [passcodeModalOpen, setPasscodeModalOpen] = useState<boolean>(true)
+  const [passcode, setPasscode] = useState<string>("")
+  const [passcodeStatus, setPasscodeStatus] = useState<Status>("none")
+
+  // パスコードを送信
+  const handlePasscodeSend = async () => {
+    setPasscodeStatus("none") // statusをリセット
+
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    setPasscodeStatus("invalid")
+
+    setPasscode("") // パスコードをクリア
+  }
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -67,11 +80,17 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
   return (
     <div className="flex flex-col h-screen bg-lineBlue">
       {/* メッセージエリア */}
-      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 pt-24 pb-3" id="messageArea">
-        {isHost || <PasscodeModal
-          modalOpen={passcodeModalOpen}
-          setModalOpen={setPasscodeModalOpen}
-        />}
+      <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 pt-24 pb-3">
+        {isHost || (
+          <PasscodeModal
+            modalOpen={passcodeModalOpen}
+            setModalOpen={setPasscodeModalOpen}
+            passcode={passcode}
+            setPasscode={setPasscode}
+            handleSend={handlePasscodeSend}
+            status={passcodeStatus}
+          />
+        )}
 
         {messages.map((message, index) => (
           <div key={index}

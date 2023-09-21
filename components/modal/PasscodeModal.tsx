@@ -1,36 +1,30 @@
 "use client"
 
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+
+export type Status = "success" | "invalid" | "error" | "none"
 
 type Props = {
   modalOpen: boolean
   setModalOpen: (open: boolean) => void
+  passcode: string
+  setPasscode: (passcode: string) => void
+  handleSend: () => void
+  status: Status
 }
 
 export default function PasscodeModal(props: Props) {
-  const [passcode, setPasscode] = useState<string>("")
-  const [success, setSuccess] = useState<boolean>(false)
-  const [errMsg, setErrMsg] = useState<string>("")
-
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
     // 入力された値が数字のみで、かつ6文字以下であれば更新
     if (/^[0-9]*$/.test(inputValue) && inputValue.length <= 6) {
-      setPasscode(inputValue);
+      props.setPasscode(inputValue);
     }
   };
-
-  // 送信ボタンを押した時の挙動です
-  const handleSend = () => {
-    setSuccess(true)
-    // setErrMsg("パスコードが間違っています")
-
-    setPasscode("") // パスコードをクリア
-  }
 
   return (
     <Transition.Root show={props.modalOpen} as={Fragment}>
@@ -65,7 +59,7 @@ export default function PasscodeModal(props: Props) {
 
                   {/* アイコン */}
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    {success ? (
+                    {props.status === "success" ? (
                       <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>
                     ) : (
                       <LockClosedIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>
@@ -75,13 +69,16 @@ export default function PasscodeModal(props: Props) {
 
                     {/* タイトル */}
                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                      {success ? "認証しました" : "パスコードを入力してください"}
+                      {props.status === "success"
+                        ? "認証しました"
+                        : "パスコードを入力してください"
+                      }
                     </Dialog.Title>
 
                     {/* 説明 */}
                     <div className="mt-2">
                       <p className="text-sm text-gray-500 text-left">
-                        {success
+                        {props.status === "success"
                           ? "認証が完了しました。チャットの内容を確認してみましょう。"
                           : "このチャットを見るには、最初のみパスコードが必要です。パスコードは「カードの表面」に書いてあります。"}
                       </p>
@@ -91,7 +88,7 @@ export default function PasscodeModal(props: Props) {
                 </div>
 
                 {/* フォーム */}
-                {success || (
+                {props.status === "success" || (
                   <div className="mt-3">
                     <input
                       type="text"
@@ -104,17 +101,21 @@ export default function PasscodeModal(props: Props) {
                     focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
                       placeholder="123456"
                       onChange={handlePasscodeChange}
-                      value={passcode}
+                      value={props.passcode}
                     />
-                    {errMsg && (
-                      <p className="text-sm text-red-600 ml-0.5">※{errMsg}</p>
-                    )}
+                    <p className="text-sm text-red-600 ml-0.5">
+                      {props.status === "error"
+                        ? "※エラーが発生しました"
+                        : props.status === "invalid"
+                          ? "※パスコードが違います"
+                          : ""}
+                    </p>
                   </div>
                 )}
 
                 {/* ボタン */}
                 <div className="mt-2 sm:mt-3">
-                  {success ? (
+                  {props.status === "success" ? (
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm
@@ -128,7 +129,7 @@ export default function PasscodeModal(props: Props) {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={handleSend}
+                      onClick={props.handleSend}
                     >
                       送信
                     </button>

@@ -3,7 +3,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
-import { SampleData } from "@/utils/sample/Sample";
 import Avatar from "@/components/avatar/Avatar";
 
 type Props = {
@@ -83,7 +82,7 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
                   <Avatar href={pathDisplayNameEdit(chatId)}/>
                 ) : (
                   <Avatar
-                    imageUrl={SampleData.host.avatarUrl}
+                    imageUrl={host.imageUrl}
                     href={pathProfile(host.id, chatId)}
                   />
                 )}
@@ -109,7 +108,7 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
               <div className="ml-2 flex-shrink-0">
                 {isHost ? (
                   <Avatar
-                    imageUrl={SampleData.host.avatarUrl}
+                    imageUrl={host.imageUrl}
                     href={pathProfile(host.id, chatId)}
                   />
                 ) : (

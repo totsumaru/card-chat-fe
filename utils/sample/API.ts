@@ -11,8 +11,14 @@ export function GetChats(): Chat[] | undefined {
 
 /**
  * ログインしているホストを取得します
+ *
+ * ログインしていない場合はエラーを返します。
  */
 export function GetLoginHost(): Host | undefined {
+  if (!currentHostId) {
+    throw new Error("ログインしていません")
+  }
+
   return hosts.find(host => host.id === currentHostId)
 }
 

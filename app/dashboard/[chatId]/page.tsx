@@ -8,6 +8,7 @@ import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
 import { GetChatInfo } from "@/utils/sample/API";
 import { pathDashboard } from "@/utils/path";
+import { currentHostId } from "@/utils/sample/Sample";
 
 // チャットの登録情報を表示/編集する画面です
 export default async function Index({
@@ -23,7 +24,7 @@ export default async function Index({
   return (
     <>
       {/* ヘッダー */}
-      <Header left={""} right={""}/>
+      <Header left={""} right={""} isHost={chat?.hostId === currentHostId}/>
       <Container>
         <ReturnLink text={"戻る"} url={pathDashboard()} textWhite={false}/>
 

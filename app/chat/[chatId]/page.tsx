@@ -58,6 +58,7 @@ export default async function Index({
           </Link>
         )}
         right={<NoticeModalOpenButton registeredEmail={registeredEmail}/>}
+        isHost={isHost}
       />
 
       {/* Modal */}

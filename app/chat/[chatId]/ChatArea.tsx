@@ -92,7 +92,7 @@ export default function ChatArea({ chatId, isHost, host, guest }: Props) {
             {/* メッセージ */}
             <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
             ${message.sender === "me"
-              ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
+              ? "bg-green-400 max-w-[70%] md:ml-8 md:max-w-[60%]"
               : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
             }>
               {urlToA(message.text)}

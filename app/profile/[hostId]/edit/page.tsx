@@ -6,6 +6,7 @@ import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
 import HostProfileForm from "@/app/profile/[hostId]/edit/HostProfileForm";
 import { GetLoginHost } from "@/utils/sample/API";
+import { currentHostId } from "@/utils/sample/Sample";
 
 // Hostのプロフィールの編集画面です
 export default async function Index({
@@ -35,7 +36,7 @@ export default async function Index({
 
   return (
     <>
-      <Header left={""} right={""}/>
+      <Header left={""} right={""} isHost={hostId === currentHostId}/>
       <Container>
         {/* 戻るリンク */}
         <ReturnLink text={"ダッシュボード"} url={pathDashboard()} textWhite={false}/>

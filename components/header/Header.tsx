@@ -5,17 +5,20 @@ import Link from "next/link";
 type Props = {
   left: ReactNode
   right: ReactNode
-  myHostId?: string // Hostとしてログインしている場合のみ
+  isHost?: boolean
 }
 
 /**
  * Headerのベースです
  *
- * ログイン済み(myHostId) & rightが指定されていない場合は右側にダッシュボードのURLを入れます。
+ * Hostの場合は、右側にダッシュボードのURLを入れます。
+ *
+ * `isHost`が`right`よりも優先となるため、
+ * rightを優先させたい場合は`isHost`は指定しないでください。
  */
-export default function Header({ left, right, myHostId }: Props) {
+export default function Header({ left, right, isHost }: Props) {
   let dashboardUrl: string = ""
-  if (myHostId && !right) {
+  if (isHost) {
     dashboardUrl = pathDashboard()
   }
 

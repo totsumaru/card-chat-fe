@@ -17,4 +17,4 @@ export const avatarUrl = "https://images.unsplash.com/photo-1472099645785-5658ab
  * ここを変更すると、ログインしているユーザーが変わります。
  * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentHostId = ""
+export const currentHostId = hostId1

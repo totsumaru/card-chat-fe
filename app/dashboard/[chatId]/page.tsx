@@ -5,7 +5,7 @@ import Container from "@/components/container/Container";
 import Info from "@/components/alert/Info";
 import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
-import { GetChatInfo } from "@/utils/sample/API";
+import { GetChatByHost } from "@/utils/sample/API";
 import { currentHostId } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 
@@ -20,7 +20,7 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const chat = GetChatInfo(chatId)
+  const chat = GetChatByHost(chatId)
 
   return (
     <>

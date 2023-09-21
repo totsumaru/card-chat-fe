@@ -4,8 +4,12 @@ import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 
-export default function PasscodeModal() {
-  const [open, setOpen] = useState<boolean>(true)
+type Props = {
+  modalOpen: boolean
+  setModalOpen: (open: boolean) => void
+}
+
+export default function PasscodeModal(props: Props) {
   const [passcode, setPasscode] = useState<string>("")
   const [success, setSuccess] = useState<boolean>(false)
   const [errMsg, setErrMsg] = useState<string>("")
@@ -29,8 +33,9 @@ export default function PasscodeModal() {
   }
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+    <Transition.Root show={props.modalOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={() => {
+      }}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -115,7 +120,7 @@ export default function PasscodeModal() {
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm
                       font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline
                       focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => setOpen(false)}
+                      onClick={() => props.setModalOpen(false)}
                     >
                       OK
                     </button>

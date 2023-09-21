@@ -30,9 +30,9 @@ export function GetHost(hostId: string): Host | undefined {
 }
 
 /**
- * 自分の管理するチャットの情報を取得します
+ * 自分がホストとなっているチャットの情報を取得します
  */
-export function GetChatInfo(chatId: string): Chat | undefined {
+export function GetChatByHost(chatId: string): Chat | undefined {
   const chat = chats.find(chat => chat.id === chatId)
 
   if (chat?.hostId !== currentHostId) {

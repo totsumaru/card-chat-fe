@@ -18,4 +18,9 @@ export const avatarUrl2 = "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jp
  * ここを変更すると、ログインしているユーザーが変わります。
  * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentHostId = hostId1
+export const currentHostId = hostId2
+
+/**
+ * cookieから取得したパスコードです
+ */
+export const passcode = "123456"

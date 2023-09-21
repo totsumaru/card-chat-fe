@@ -4,13 +4,13 @@ import PasscodeModal from "@/components/modal/PasscodeModal";
 import Link from "next/link";
 import React from "react";
 import Avatar from "@/components/avatar/Avatar";
-import { currentHostId } from "@/utils/sample/Sample";
+import { currentHostId, passcode } from "@/utils/sample/Sample";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import { cookies } from "next/headers";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { GetChatByPasscode, GetChatInfo, GetHost } from "@/utils/sample/API";
+import { GetChatByPasscode, GetChatByHost, GetHost } from "@/utils/sample/API";
 import { Chat } from "@/utils/sample/Chat";
 
 const registeredEmail = "techstart35@gmail.com"
@@ -30,9 +30,9 @@ export default async function Index({
 
   let chat: Chat | undefined
   try {
-    chat = GetChatInfo(chatId)
+    chat = GetChatByHost(chatId)
   } catch (e) {
-    chat = GetChatByPasscode(chatId, "123456")
+    chat = GetChatByPasscode(chatId, passcode)
   }
 
   const host = GetHost(chat?.hostId || "")
@@ -57,7 +57,6 @@ export default async function Index({
     </Link>
   )
 
-
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
@@ -68,7 +67,6 @@ export default async function Index({
       />
 
       {/* Modal */}
-      <PasscodeModal/>
       <NoticeEmailModal registeredEmail={registeredEmail}/>
 
       {/* チャット */}

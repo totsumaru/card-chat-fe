@@ -1,4 +1,4 @@
-import { avatarUrl1, avatarUrl2, hostId1, hostId2 } from "@/utils/sample/Sample";
+import { avatarUrl1, avatarUrl2, userId1, userId2 } from "@/utils/sample/Sample";
 
 export type User = {
   id: string
@@ -20,7 +20,7 @@ export type User = {
  */
 export const usersDB: User[] = [
   {
-    id: hostId1,
+    id: userId1,
     name: "戸塚 翔太",
     avatarUrl: avatarUrl1,
     headline: "ナンバーワンよりオンリーワンを目指します",
@@ -34,7 +34,7 @@ export const usersDB: User[] = [
     },
   },
   {
-    id: hostId2,
+    id: userId2,
     name: "斎藤佑樹",
     avatarUrl: avatarUrl2,
     headline: "ホスト2です",

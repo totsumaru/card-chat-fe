@@ -3,7 +3,7 @@
 import { Session } from "@supabase/gotrue-js";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { GetChat } from "@/utils/api/getChat";
-import { currentUserSession } from "@/utils/sample/Sample";
+import { currentUserSession, passcodeFromCookie } from "@/utils/sample/Sample";
 import { Chat, Message } from "@/utils/sample/Chat";
 import Link from "next/link";
 import Avatar from "@/components/avatar/Avatar";
@@ -51,11 +51,22 @@ export default function Client({ userId, session, chatId }: Props) {
           setHost(res.host)
           setMyID(userId)
         } catch (e) {
-          console.log(e)
           setPasscodeModalOpen(true)
         }
       } else {
-        setPasscodeModalOpen(true)
+        if (passcodeFromCookie) {
+          try {
+            const res = await GetChatByPasscode(chatId, passcodeFromCookie)
+            setChat(res.chat)
+            setMessages(res.chat.messages)
+            setHost(res.host)
+            setMyID(chatId)
+          } catch (e) {
+            setPasscodeModalOpen(true)
+          }
+        } else {
+          setPasscodeModalOpen(true)
+        }
       }
     }
     auth().then()
@@ -125,7 +136,7 @@ export default function Client({ userId, session, chatId }: Props) {
       setChat(res.chat)
       setMessages(res.chat.messages)
       setHost(res.host)
-      setMyID(userId)
+      setMyID(chatId)
     } catch (e) {
       setPasscodeStatus("invalid")
       return

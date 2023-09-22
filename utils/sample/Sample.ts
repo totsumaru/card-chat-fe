@@ -1,6 +1,6 @@
 // host
-export const hostId1 = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
-export const hostId2 = "e90b644e-0caf-4c3a-9a25-64e122f8a57b"
+export const userId1 = "8673bf66-ad61-445a-bf97-5b13142ecbbf"
+export const userId2 = "e90b644e-0caf-4c3a-9a25-64e122f8a57b"
 // chat
 export const chatId1 = "cd746a35-1360-403a-a747-98e5f1a9fa2f"
 export const chatId2 = "fd587bc8-a7f2-4d60-91fb-b81e2daea7a0"
@@ -18,7 +18,7 @@ export const avatarUrl2 = "https://pbs.twimg.com/media/EDsOvIRU8AA7pnv?format=jp
  * ここを変更すると、ログインしているユーザーが変わります。
  * 空の値("")とすると、ログインしていない状態となります。
  */
-export const currentUserId = hostId2
+export const currentUserId = userId1
 
 /**
  * 現在ログインしているユーザーのセッションです
@@ -33,4 +33,4 @@ export const currentUserSession: TestSession = {
 /**
  * cookieから取得したパスコードです
  */
-export const passcodeFromCookie = "123456"
+export const passcodeFromCookie = "12345"

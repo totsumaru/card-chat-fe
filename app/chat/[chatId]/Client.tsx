@@ -58,8 +58,6 @@ export default function Client({
       const msg: Message = {
         content: "これは自動返信です",
         from: myId === userId ? chatId : userId,
-        date: "2023-01-23",
-        isRead: true,
       }
 
       if (!prevMessages) {
@@ -76,26 +74,22 @@ export default function Client({
   };
 
   // メッセージを送信
-  const handleMessageSend = () => {
+  const handleMessageSend = async () => {
     if (!newMessage) return
     // 自分のメッセージを追加
     setMessages(prevMessages => {
-      const msg: Message = {
-        content: newMessage,
-        from: myId,
-        date: "2023-01-23",
-        isRead: true,
-      }
+      const msg: Message = { content: newMessage, from: myId }
       if (!prevMessages) {
         return [msg];
       }
       return [...prevMessages, msg];
     });
 
-    // メッセージボックスをクリア
     setNewMessage("");
-    // 500ミリ秒後に相手のメッセージを追加
-    setTimeout(() => autoReply(), 500);
+
+    // 自動返信
+    await sleep()
+    autoReply()
   };
 
   // パスコードを送信

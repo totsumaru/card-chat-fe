@@ -25,8 +25,8 @@ export type ChatInfo = {
 export type Message = {
   from: string
   content: string
-  date: string
-  isRead: boolean
+  date?: string
+  isRead?: boolean
 }
 
 export type Chat = ChatInfo & {

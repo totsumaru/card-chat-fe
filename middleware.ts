@@ -24,6 +24,13 @@ export async function middleware(req: NextRequest) {
       redirectUrl.pathname = pathLogin();
       return NextResponse.redirect(redirectUrl);
     }
+
+    const patternChatEdit = /^\/chat\/.*\/edit$/
+    if (patternChatEdit.test(req.nextUrl.pathname)) {
+      const redirectUrl = req.nextUrl.clone();
+      redirectUrl.pathname = pathLogin();
+      return NextResponse.redirect(redirectUrl);
+    }
   }
 
   return res

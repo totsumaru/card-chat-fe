@@ -20,13 +20,13 @@ export type ChatInfo = {
     memo: string
     noticeEmail: string
   }
+  isRead: boolean
 }
 
 export type Message = {
   from: string
   content: string
   date?: string
-  isRead?: boolean
 }
 
 export type Chat = ChatInfo & {
@@ -49,17 +49,16 @@ export const chatsDB: Chat[] = [
       memo: "静岡県磐田市在住",
       noticeEmail: email1,
     },
+    isRead: false,
     messages: [
       {
         from: userId1,
         content: "今日はありがとうございました！\nいつでも気軽にご連絡ください。",
         date: "2023-01-23 11:23",
-        isRead: true,
       }, {
         from: chatId1,
         content: "こちらこそありがとうございました。大変勉強になりました。\nところで、来週またお話を聞きたいんですが、よろしいでしょうか？",
         date: "2023-01-23 11:25",
-        isRead: false,
       }
     ]
   },
@@ -73,17 +72,16 @@ export const chatsDB: Chat[] = [
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },
+    isRead: true,
     messages: [
       {
         from: userId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
-        isRead: true,
       }, {
         from: chatId2,
         content: "aaa",
         date: "2023-02-23 11:25",
-        isRead: true,
       }
     ]
   },
@@ -97,17 +95,16 @@ export const chatsDB: Chat[] = [
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },
+    isRead: true,
     messages: [
       {
         from: userId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
-        isRead: true,
       }, {
         from: chatId3,
         content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
         date: "2023-02-23 11:25",
-        isRead: true,
       }
     ]
   },
@@ -121,17 +118,16 @@ export const chatsDB: Chat[] = [
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },
+    isRead: true,
     messages: [
       {
         from: userId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
-        isRead: true,
       }, {
         from: chatId4,
         content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
         date: "2023-02-23 11:25",
-        isRead: true,
       }
     ]
   },
@@ -145,17 +141,16 @@ export const chatsDB: Chat[] = [
       memo: "本日お伺い済み",
       noticeEmail: email1,
     },
+    isRead: true,
     messages: [
       {
         from: userId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
-        isRead: true,
       }, {
         from: chatId5,
         content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
         date: "2023-02-23 11:25",
-        isRead: true,
       }
     ]
   },
@@ -169,17 +164,16 @@ export const chatsDB: Chat[] = [
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },
+    isRead: true,
     messages: [
       {
         from: userId1,
         content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
         date: "2023-02-23 11:23",
-        isRead: true,
       }, {
         from: chatId6,
         content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
         date: "2023-02-23 11:25",
-        isRead: true,
       }
     ]
   },

@@ -31,11 +31,10 @@ export default async function Index() {
       <Container>
         {/* プロフィール */}
         <Profile host={chatsRes.host}/>
-
+        {/* タイトル */}
         <div className="mt-7">
           <Title text={"チャット一覧"}/>
         </div>
-
         {/* チャット一覧 */}
         <ul role="list"
             className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
@@ -43,11 +42,11 @@ export default async function Index() {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
             return (
-              <div className="flex hover:bg-gray-100">
+              <div className="flex hover:bg-gray-100" key={chat.id}>
                 <Link href={pathChat(chat.id)} className="flex-1">
                   <li key={chat.id} className="flex gap-x-4 p-5 w-full">
                     {/* アバター */}
-                    <Avatar unreadFlg={!latestMessage.isRead}/>
+                    <Avatar unreadFlg={!chat.isRead}/>
                     {/* 名前,コンテンツ */}
                     <ChatListContent chat={chat} latestMessage={latestMessage}/>
                   </li>
@@ -58,7 +57,6 @@ export default async function Index() {
             )
           })}
         </ul>
-
       </Container>
     </div>
   )
@@ -146,7 +144,7 @@ const ChatListContent = ({
       </div>
       {/* 下側(コメント) */}
       <p className={`mt-1 line-clamp-1 text-sm leading-6
-                       ${latestMessage.isRead ? "text-gray-400" : "text-gray-600 font-bold"}`}
+                       ${chat.isRead ? "text-gray-400" : "text-gray-600 font-bold"}`}
       >
         {latestMessage.content}
       </p>

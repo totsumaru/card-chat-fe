@@ -4,8 +4,9 @@ import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import ButtonLoading from "@/components/loading/ButtonLoading";
+import { validatePasscodeInput } from "@/utils/validatePasscode";
 
-export type Status = "success" | "invalid" | "error" | "none"
+export type Status = "success" | "invalid" | "none"
 
 type Props = {
   modalOpen: boolean
@@ -18,13 +19,8 @@ type Props = {
 
 export default function PasscodeModal(props: Props) {
   // Inputが入力された時の挙動です
-  const handlePasscodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-
-    // 入力された値が数字のみで、かつ6文字以下であれば更新
-    if (/^[0-9]*$/.test(inputValue) && inputValue.length <= 6) {
-      props.setPasscode(inputValue);
-    }
+  const handlePasscodeChange = (value: string) => {
+    validatePasscodeInput(value) && props.setPasscode(value)
   };
 
   return (
@@ -101,15 +97,11 @@ export default function PasscodeModal(props: Props) {
                     ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                     focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
                       placeholder="123456"
-                      onChange={handlePasscodeChange}
+                      onChange={(e) => handlePasscodeChange(e.target.value)}
                       value={props.passcode}
                     />
                     <p className="text-sm text-red-600 ml-0.5">
-                      {props.status === "error"
-                        ? "※エラーが発生しました"
-                        : props.status === "invalid"
-                          ? "※パスコードが違います"
-                          : ""}
+                      {props.status === "invalid" ? "※ログインできません" : ""}
                     </p>
                   </div>
                 )}

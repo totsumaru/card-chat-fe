@@ -1,7 +1,8 @@
 import { Chat, chatsDB } from "@/utils/sample/Chat";
-import { TestSession } from "@/utils/sample/Sample";
+import { passcodeFromCookie, TestSession } from "@/utils/sample/Sample";
 import { User, usersDB } from "@/utils/sample/User";
 
+// レスポンスです
 type Res = {
   chat: Chat
   host: User
@@ -14,7 +15,7 @@ type Res = {
  */
 export const GetChat = async (
   chatId: string,
-  session: TestSession
+  session?: TestSession
 ): Promise<Res> => {
   const res = await backend(chatId, session)
 
@@ -24,19 +25,22 @@ export const GetChat = async (
 // バックエンドの処理です
 const backend = async (
   chatId: string,
-  session: TestSession,
+  session?: TestSession,
 ): Promise<Res> => {
-  if (!session.id) {
+  // セッションがなく、cookieのパスコードもない場合はエラーを返します
+  if (!session && !passcodeFromCookie) {
     throw new Error("ログインしてください")
   }
 
+  // チャットを取得します
   const chat = chatsDB.find(chat => chat.id === chatId)
   if (!chat) {
     throw new Error("チャットが取得できません")
   }
 
-  if (chat?.hostId !== session.id) {
-    throw new Error("このチャットのホストではありません")
+  // ホストでもなく、パスコードも一致しない場合はエラーを返します
+  if (chat.hostId !== session?.id && chat.passcode !== passcodeFromCookie) {
+    throw new Error("このチャットを閲覧できません")
   }
 
   const host = usersDB.find(user => user.id === chat?.hostId)

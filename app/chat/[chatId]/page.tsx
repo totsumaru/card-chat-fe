@@ -2,7 +2,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import React from "react";
 import { cookies } from "next/headers";
 import Client from "@/app/chat/[chatId]/Client";
-import { currentUserId } from "@/utils/sample/Sample";
+import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
+import { GetChat } from "@/utils/api/getChat";
 
 /**
  * チャット画面のページです
@@ -18,11 +19,19 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
+  let res
+  try {
+    res = await GetChat(chatId, currentUserSession)
+  } catch (e) {
+    // setPasscodeModalOpen(true)
+  }
+
   return (
     <Client
       userId={currentUserId}
-      session={session}
       chatId={chatId}
+      chat={res?.chat}
+      host={res?.host}
     />
   )
 }

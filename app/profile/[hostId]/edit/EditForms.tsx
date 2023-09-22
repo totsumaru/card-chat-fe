@@ -3,20 +3,14 @@
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import SaveButton from "@/components/button/SaveButton";
-import { sleep } from "@/utils/sample/sleep";
+import { User } from "@/utils/sample/User";
+import { PostProfileEdit } from "@/utils/api/postProfileEdit";
+import { Session } from "@supabase/gotrue-js";
+import { currentUserSession } from "@/utils/sample/Sample";
 
 type Props = {
-  name: string
-  headline: string,
-  introduction: string,
-  company: {
-    name: string,
-    position: string,
-    tel: string,
-    email: string,
-    website: string,
-  }
-  imageUrl: string
+  session: Session | null
+  host: User | undefined
 }
 
 /**
@@ -24,18 +18,40 @@ type Props = {
  *
  * clientでの処理のためのコンポーネントです。
  */
-export default function HostProfileForm(props: Props) {
-  const [values, setValues] = useState<Props>(props)
-  const [image, setImage] = useState<string>(props.imageUrl || "")
+export default function EditForms({ host }: Props) {
+  const [avatarImageByte, setAvatarImageByte] = useState<string>(host?.avatarUrl || "")
+  const [name, setName] = useState<string>(host?.name || "")
+  const [headline, setHeadline] = useState<string>(host?.headline || "")
+  const [intro, setIntro] = useState<string>(host?.introduction || "")
+  const [companyName, setCompanyName] = useState<string>(host?.company.name || "")
+  const [position, setPosition] = useState<string>(host?.company.position || "")
+  const [tel, setTel] = useState<string>(host?.company.tel || "")
+  const [email, setEmail] = useState<string>(host?.company.email || "")
+  const [website, setWebsite] = useState<string>(host?.company.website || "")
 
+  // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {
-    await sleep()
+    const req: User = {
+      id: host?.id!,
+      name: name,
+      avatarUrl: avatarImageByte,
+      headline: headline,
+      introduction: intro,
+      company: {
+        name: companyName,
+        position: position,
+        tel: tel,
+        email: email,
+        website: website,
+      }
+    }
+    await PostProfileEdit(currentUserSession, req)
   }
 
   return (
     <>
       <div className="mt-5">
-        <InputImage image={image} setImage={setImage}/>
+        <InputImage image={avatarImageByte} setImage={setAvatarImageByte}/>
       </div>
 
       <div className="border-b border-gray-900/10 pb-12">
@@ -49,10 +65,8 @@ export default function HostProfileForm(props: Props) {
                 type="text"
                 placeholder="鈴木 太郎"
                 className={inputClassName}
-                value={values.name}
-                onChange={(e) => setValues((prevState) => (
-                  { ...prevState, name: e.target.value })
-                )}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
@@ -65,13 +79,8 @@ export default function HostProfileForm(props: Props) {
                 type="text"
                 placeholder="株式会社ABC"
                 className={inputClassName}
-                value={values.company.name}
-                onChange={(e) => setValues((prevState) => (
-                  {
-                    ...prevState,
-                    company: { ...prevState.company, name: e.target.value }
-                  })
-                )}
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
           </div>
@@ -84,13 +93,8 @@ export default function HostProfileForm(props: Props) {
                 type="text"
                 placeholder="営業部 営業一課"
                 className={inputClassName}
-                value={values.company.position}
-                onChange={(e) => setValues((prevState) => (
-                  {
-                    ...prevState,
-                    company: { ...prevState.company, position: e.target.value }
-                  })
-                )}
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
               />
             </div>
           </div>
@@ -106,13 +110,8 @@ export default function HostProfileForm(props: Props) {
                 autoComplete="email"
                 placeholder="abc@example.com"
                 className={inputClassName}
-                value={values.company.email}
-                onChange={(e) => setValues((prevState) => (
-                  {
-                    ...prevState,
-                    company: { ...prevState.company, email: e.target.value }
-                  })
-                )}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -126,13 +125,8 @@ export default function HostProfileForm(props: Props) {
                 type="tel"
                 placeholder="090-1234-5678"
                 className={inputClassName}
-                value={values.company.tel}
-                onChange={(e) => setValues((prevState) => (
-                  {
-                    ...prevState,
-                    company: { ...prevState.company, tel: e.target.value }
-                  })
-                )}
+                value={tel}
+                onChange={(e) => setTel(e.target.value)}
               />
             </div>
           </div>
@@ -145,13 +139,8 @@ export default function HostProfileForm(props: Props) {
                 type="url"
                 placeholder="https://example.com"
                 className={inputClassName}
-                value={values.company.website}
-                onChange={(e) => setValues((prevState) => (
-                  {
-                    ...prevState,
-                    company: { ...prevState.company, website: e.target.value }
-                  })
-                )}
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
               />
             </div>
           </div>
@@ -164,10 +153,8 @@ export default function HostProfileForm(props: Props) {
                 rows={2}
                 placeholder="私たちは、お客様を笑顔にするお手伝いをしています。"
                 className={inputClassName}
-                value={values.headline}
-                onChange={(e) => setValues((prevState) => (
-                  { ...prevState, headline: e.target.value }
-                ))}
+                value={headline}
+                onChange={(e) => setHeadline(e.target.value)}
               />
             </div>
           </div>
@@ -179,10 +166,8 @@ export default function HostProfileForm(props: Props) {
               <textarea
                 rows={7}
                 className={inputClassName}
-                value={values.introduction}
-                onChange={(e) => setValues((prevState) => (
-                  { ...prevState, introduction: e.target.value }
-                ))}
+                value={intro}
+                onChange={(e) => setIntro(e.target.value)}
               />
             </div>
           </div>

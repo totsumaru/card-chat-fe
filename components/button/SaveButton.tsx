@@ -11,16 +11,20 @@ type Props = {
  */
 export default function SaveButton({ clickHandler, customLabel }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
-  const [result, setResult] = useState<string>("")
+  const [result, setResult] = useState<"success" | "failure">()
 
   const handler = async () => {
     setLoading(true)
-    setResult("")
+    setResult(undefined)
 
-    await clickHandler()
-
-    setLoading(false)
-    setResult("保存しました")
+    try {
+      await clickHandler()
+      setResult("success")
+    } catch (e) {
+      setResult("failure")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -35,7 +39,15 @@ export default function SaveButton({ clickHandler, customLabel }: Props) {
         {loading && <ButtonLoading/>}
         {customLabel || "保存する"}
       </button>
-      <p className="text-gray-800 text-sm mt-2">{result}</p>
+      {result === "success" ? (
+        <p className="text-gray-800 text-sm mt-2">
+          保存しました
+        </p>
+      ) : result === "failure" && (
+        <p className="text-red-600 text-sm mt-2">
+          保存に失敗しました
+        </p>
+      )}
     </>
   )
 }

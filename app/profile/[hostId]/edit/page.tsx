@@ -4,7 +4,7 @@ import ReturnLink from "@/components/link/ReturnLink";
 import Container from "@/components/container/Container";
 import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
-import HostProfileForm from "@/app/profile/[hostId]/edit/HostProfileForm";
+import EditForms from "@/app/profile/[hostId]/edit/EditForms";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
 
@@ -16,23 +16,9 @@ export default async function Index({
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
   const host = await GetUserByID(currentUserId)
-
-  // inputへの引数です
-  const inputProps = {
-    name: host?.name || "",
-    headline: host?.headline || "",
-    introduction: host?.introduction || "",
-    company: {
-      name: host?.company.name || "",
-      position: host?.company.position || "",
-      tel: host?.company.tel || "",
-      email: host?.company.email || "",
-      website: host?.company.website || "",
-    },
-    imageUrl: host?.avatarUrl || "",
-  }
 
   return (
     <>
@@ -43,7 +29,7 @@ export default async function Index({
 
         <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
 
-        <HostProfileForm {...inputProps}/>
+        <EditForms session={session} host={host}/>
       </Container>
     </>
   )

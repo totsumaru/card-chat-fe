@@ -9,12 +9,11 @@ import Link from "next/link";
 import Avatar from "@/components/avatar/Avatar";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { User } from "@/utils/sample/User";
-import Header from "@/components/header/Header";
-import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
+import ChatHeader from "@/components/header/ChatHeader";
 
 type Props = {
   userId: string
@@ -148,36 +147,10 @@ export default function Client({ userId, session, chatId }: Props) {
     setMyID(chatId)
   }
 
-  /**
-   * Header
-   */
-  const headerLink = host?.id === userId
-    ? pathDisplayNameEdit(chatId, true)
-    : pathProfile(chat?.hostId || "", chatId)
-
-  const headerAvatarUrl = host?.id === userId ? "" : host?.avatarUrl
-
-  const headerDisplayName = host?.id === userId
-    ? chat?.guest.displayName || chat?.id
-    : host?.name
-
-  const headerLeft = (
-    <Link href={headerLink}>
-      <div className="flex items-center">
-        <Avatar imageUrl={headerAvatarUrl}/>
-        <p className="ml-2">{headerDisplayName}</p>
-      </div>
-    </Link>
-  )
-
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
-      <Header
-        left={headerLeft}
-        right={<NoticeModalOpenButton registeredEmail={registeredEmail}/>}
-        isHost={host?.id === userId}
-      />
+      <ChatHeader isHost={host?.id === userId} chat={chat!} host={host!}/>
 
       {/* Modal */}
       <NoticeEmailModal registeredEmail={registeredEmail}/>

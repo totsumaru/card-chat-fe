@@ -1,4 +1,15 @@
-import { chatId1, chatId2, chatId3, chatId4, chatId5, chatId6, userId1, userId2 } from "@/utils/sample/Sample";
+import {
+  chatId1,
+  chatId2,
+  chatId3,
+  chatId4,
+  chatId5,
+  chatId6,
+  email1,
+  email2,
+  userId1,
+  userId2
+} from "@/utils/sample/Sample";
 
 export type ChatInfo = {
   id: string
@@ -7,6 +18,7 @@ export type ChatInfo = {
   guest: {
     displayName: string
     memo: string
+    noticeEmail: string
   }
 }
 
@@ -35,6 +47,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット1 様",
       memo: "静岡県磐田市在住",
+      noticeEmail: email1,
     },
     messages: [
       {
@@ -58,6 +71,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット2 様",
       memo: "本日お伺い済み",
+      noticeEmail: email2,
     },
     messages: [
       {
@@ -81,6 +95,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット3 様",
       memo: "本日お伺い済み",
+      noticeEmail: email2,
     },
     messages: [
       {
@@ -104,6 +119,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット4 様",
       memo: "本日お伺い済み",
+      noticeEmail: email2,
     },
     messages: [
       {
@@ -127,6 +143,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット5 様",
       memo: "本日お伺い済み",
+      noticeEmail: email1,
     },
     messages: [
       {
@@ -150,6 +167,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "チャット6 様",
       memo: "本日お伺い済み",
+      noticeEmail: email2,
     },
     messages: [
       {

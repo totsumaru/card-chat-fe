@@ -17,6 +17,9 @@ type Props = {
   status: Status
 }
 
+/**
+ * パスコードのModalです
+ */
 export default function PasscodeModal(props: Props) {
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (value: string) => {
@@ -145,6 +148,5 @@ const SendButton = ({ label, clickHandler }: {
       {loading && <ButtonLoading/>}
       {label}
     </button>
-
   )
 }

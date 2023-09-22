@@ -2,8 +2,6 @@
 
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { Chat, Message } from "@/utils/sample/Chat";
-import Avatar from "@/components/avatar/Avatar";
-import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { User } from "@/utils/sample/User";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
@@ -11,7 +9,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import ChatHeader from "@/components/header/ChatHeader";
 import { validatePasscode } from "@/utils/validatePasscode";
-import { urlToA } from "@/utils/urlToA";
+import MessageArea from "@/app/chat/[chatId]/MessageArea";
 
 type Props = {
   userId: string
@@ -130,80 +128,28 @@ export default function Client({
       {/* ヘッダー */}
       <ChatHeader isHost={host?.id === userId} chat={chat!} host={host!}/>
 
-      {/* Modal */}
+      {/* 通知Modal */}
       <NoticeEmailModal registeredEmail={chat?.guest.noticeEmail}/>
+
+      {/* パスコードModal */}
+      <PasscodeModal
+        modalOpen={passcodeModalOpen}
+        setModalOpen={setPasscodeModalOpen}
+        passcode={passcode}
+        setPasscode={setPasscode}
+        handleSend={handlePasscodeSend}
+        status={passcodeStatus}
+      />
 
       {/* チャット */}
       <div className="flex flex-col h-screen bg-lineBlue">
-        {/* メッセージエリア */}
-        <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 pt-24 pb-3">
-          {host?.id === userId || (
-            <PasscodeModal
-              modalOpen={passcodeModalOpen}
-              setModalOpen={setPasscodeModalOpen}
-              passcode={passcode}
-              setPasscode={setPasscode}
-              handleSend={handlePasscodeSend}
-              status={passcodeStatus}
-            />
-          )}
-
-          {messages && messages.map((message, index) => (
-            <div key={index}
-                 className={`flex items-start mb-2 ${message.from === myId
-                   ? 'justify-end' : 'justify-start'}`}
-            >
-
-              { /**
-               * 相手のアバター
-               * - メッセージの送信者が相手の場合に表示
-               * - 自分がHostの場合は、相手はデフォルトのアバター&URL
-               * - 自分がGuestの場合は、相手は 画像&URL を付与
-               */}
-              {message.from !== myId && (
-                <div className="mr-2 flex-shrink-0">
-                  {host?.id === userId ? (
-                    <Avatar href={pathDisplayNameEdit(chatId, true)}/>
-                  ) : (
-                    <Avatar
-                      imageUrl={host?.avatarUrl}
-                      href={pathProfile(host?.id!, chatId)}
-                    />
-                  )}
-                </div>
-              )}
-
-              {/* メッセージ */}
-              <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
-            ${message.from === myId
-                ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
-                : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
-              }>
-                {urlToA(message.content)}
-              </div>
-
-              { /**
-               * 自分のアバター
-               * - メッセージの送信者が自分の場合に表示
-               * - 自分がHostの場合は 画像&URL を付与
-               * - 自分がGuestの場合はデフォルトのアバター(URLなし)
-               */}
-              {message.from === myId && (
-                <div className="ml-2 flex-shrink-0">
-                  {host?.id === userId ? (
-                    <Avatar
-                      imageUrl={host?.avatarUrl}
-                      href={pathProfile(host?.id!, chatId)}
-                    />
-                  ) : (
-                    <Avatar/>
-                  )}
-                </div>
-              )}
-
-            </div>
-          ))}
-        </div>
+        <MessageArea
+          userId={userId}
+          chatId={chatId}
+          myId={myId}
+          host={host}
+          messages={messages}
+        />
 
         {/* 入力エリア */}
         <div className="flex-none bg-gray-200 px-4 py-3">

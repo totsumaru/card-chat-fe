@@ -14,6 +14,7 @@ import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 
 type Props = {
   userId: string
@@ -105,6 +106,7 @@ export default function Client({ userId, session, chatId }: Props) {
 
   // メッセージ送信フォームにに入力された時の挙動です
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // TODO: ここでPOSTリクエストを送信
     setNewMessage(e.target.value);
   };
 
@@ -118,9 +120,20 @@ export default function Client({ userId, session, chatId }: Props) {
     setPasscodeStatus("none")
 
     await new Promise(resolve => setTimeout(resolve, 1000))
+    try {
+      const res = await GetChatByPasscode(chatId, passcode)
+      setChat(res.chat)
+      setMessages(res.chat.messages)
+      setHost(res.host)
+      setMyID(userId)
+    } catch (e) {
+      setPasscodeStatus("invalid")
+      return
+    } finally {
+      setPasscode("")
+    }
 
     setPasscodeStatus("success")
-    setPasscode("")
     setMyID(chatId)
   }
 

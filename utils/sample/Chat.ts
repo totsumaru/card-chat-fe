@@ -1,13 +1,6 @@
 import { chatId1, chatId2, chatId3, chatId4, chatId5, chatId6, hostId1, hostId2 } from "@/utils/sample/Sample";
 
-export type Message = {
-  from: string
-  content: string
-  date: string
-  isRead: boolean
-}
-
-export type Chat = {
+export type ChatInfo = {
   id: string
   passcode: string
   hostId: string
@@ -15,6 +8,16 @@ export type Chat = {
     displayName: string
     memo: string
   }
+}
+
+export type Message = {
+  from: string
+  content: string
+  date: string
+  isRead: boolean
+}
+
+export type Chat = ChatInfo & {
   messages: Message[]
 }
 

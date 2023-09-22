@@ -7,7 +7,7 @@ import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
 import Header from "@/components/header/Header";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
-import { GetChatInfo } from "@/utils/api/getChatInfo";
+import { GetChat } from "@/utils/api/getChat";
 
 /**
  * チャットの登録情報を表示/編集する画面です
@@ -20,12 +20,12 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const chat = await GetChatInfo(chatId, currentUserSession)
+  const res = await GetChat(chatId, currentUserSession)
 
   return (
     <>
       {/* ヘッダー */}
-      <Header left={""} right={""} isHost={chat?.hostId === currentUserId}/>
+      <Header left={""} right={""} isHost={res?.host.id === currentUserId}/>
 
       <Container>
         <ReturnToChatLink textWhite={false}/>
@@ -38,9 +38,9 @@ export default async function Index({
             </div>
 
             <ChatMetadataForms
-              id={chat?.id || ""}
-              displayName={chat?.guest.displayName || ""}
-              memo={chat?.guest.memo || ""}
+              id={res?.chat.id || ""}
+              displayName={res?.chat.guest.displayName || ""}
+              memo={res?.chat.guest.memo || ""}
             />
           </div>
         </div>

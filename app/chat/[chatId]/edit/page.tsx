@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import React from "react";
 import Container from "@/components/container/Container";
 import Info from "@/components/alert/Info";
-import ChatMetadataForms from "@/app/dashboard/[chatId]/ChatMetadataForms";
+import ChatMetadataForms from "@/app/chat/[chatId]/edit/ChatMetadataForms";
 import Header from "@/components/header/Header";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";

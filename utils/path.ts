@@ -55,7 +55,7 @@ export function pathDisplayNameEdit(
   chatId: string,
   returnToChat?: boolean
 ): string {
-  let path = `/dashboard/${chatId}`
+  let path = `/chat/${chatId}/edit`
   if (returnToChat) {
     return path + `?${paramChatId}=${chatId}`
   }

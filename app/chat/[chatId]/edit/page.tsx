@@ -19,6 +19,7 @@ export default async function Index({
 }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
   const res = await GetChat(chatId, currentUserSession)
 
@@ -28,23 +29,23 @@ export default async function Index({
       <Header left={""} right={""} isHost={res?.host.id === currentUserId}/>
 
       <Container>
+        {/* 戻るボタン */}
         <ReturnToChatLink textWhite={false}/>
-
         <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full">
-          {/* ここを中央に */}
           <div className="mx-auto">
+            {/* Info */}
             <div className="mt-2">
               <Info text={"この内容は、相手には表示されません。"}/>
             </div>
-
+            {/* フォーム */}
             <ChatMetadataForms
-              id={res?.chat.id || ""}
+              chatId={res?.chat.id || ""}
+              session={session}
               displayName={res?.chat.guest.displayName || ""}
               memo={res?.chat.guest.memo || ""}
             />
           </div>
         </div>
-
       </Container>
     </>
   )

@@ -2,10 +2,13 @@
 
 import React, { useState } from "react";
 import SaveButton from "@/components/button/SaveButton";
-import { sleep } from "@/utils/sample/sleep";
+import { PostChatInfoEdit } from "@/utils/api/postChatInfo";
+import { Session } from "@supabase/gotrue-js";
+import { currentUserSession } from "@/utils/sample/Sample";
 
 type Props = {
-  id: string
+  chatId: string
+  session: Session | null
   displayName: string
   memo: string
 }
@@ -18,8 +21,12 @@ export default function ChatMetadataForms(props: Props) {
   const [memo, setMemo] = useState<string>(props.memo)
 
   // 保存ボタンをクリックした時の挙動です
-  const handleClick = async () => {
-    await sleep()
+  const handleSave = async () => {
+    try {
+      await PostChatInfoEdit(currentUserSession, props.chatId, displayName, memo)
+    } catch (e) {
+      alert("保存に失敗しました")
+    }
   }
 
   return (
@@ -29,7 +36,7 @@ export default function ChatMetadataForms(props: Props) {
         {/* id */}
         <div className="sm:col-span-4">
           <Label text={"id"}/>
-          <p className="text-gray-500 text-sm">{props.id}</p>
+          <p className="text-gray-500 text-sm">{props.chatId}</p>
         </div>
 
         {/* 表示名 */}
@@ -68,7 +75,7 @@ export default function ChatMetadataForms(props: Props) {
 
       {/* 保存ボタン */}
       <div className="mt-3">
-        <SaveButton clickHandler={handleClick}/>
+        <SaveButton clickHandler={handleSave}/>
       </div>
     </>
   )

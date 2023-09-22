@@ -29,15 +29,14 @@ export default async function Index() {
       <Header left={""} right={""}/>
 
       <Container>
-        {/* プロフィール */}
         <Profile host={chatsRes.host}/>
-        {/* タイトル */}
         <div className="mt-7">
           <Title text={"チャット一覧"}/>
         </div>
-        {/* チャット一覧 */}
         <ul role="list"
-            className="mt-3 divide-y divide-gray-100 overflow-hidden bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl">
+            className="mt-3 divide-y divide-gray-100 overflow-hidden
+             bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl"
+        >
           {chatsRes.chats && chatsRes.chats.map((chat) => {
             const latestMessage = chat.messages[chat.messages.length - 1]
 
@@ -45,9 +44,7 @@ export default async function Index() {
               <div className="flex hover:bg-gray-100" key={chat.id}>
                 <Link href={pathChat(chat.id)} className="flex-1">
                   <li key={chat.id} className="flex gap-x-4 p-5 w-full">
-                    {/* アバター */}
                     <Avatar unreadFlg={!chat.isRead}/>
-                    {/* 名前,コンテンツ */}
                     <ChatListContent chat={chat} latestMessage={latestMessage}/>
                   </li>
                 </Link>

@@ -3,7 +3,7 @@
 import Avatar from "@/components/avatar/Avatar";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { urlToA } from "@/utils/urlToA";
-import { useRef } from "react";
+import { MutableRefObject } from "react";
 import { User } from "@/utils/sample/User";
 import { Message } from "@/utils/sample/Chat";
 
@@ -13,17 +13,17 @@ type Props = {
   myId: string
   host: User | undefined
   messages: Message[] | undefined
+  scrollBottomRes: any
 }
 
 /**
  * メッセージ表示エリアのコンポーネントです
  */
 export default function MessageArea({
-  userId, chatId, host, messages, myId
+  userId, chatId, host, messages, myId, scrollBottomRes
 }: Props) {
-  const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   return (
-    <div ref={scrollBottomRef} className="flex-1 overflow-y-auto px-4 pt-24 pb-3">
+    <div ref={scrollBottomRes} className="flex-1 overflow-y-auto px-4 pt-24 pb-3">
       {messages && messages.map((message, index) => (
         <div key={index}
              className={`flex items-start mb-2 ${message.from === myId

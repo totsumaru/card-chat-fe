@@ -5,11 +5,11 @@ import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
-import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import ChatHeader from "@/components/header/ChatHeader";
 import { validatePasscode } from "@/utils/validatePasscode";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
+import InputArea from "@/app/chat/[chatId]/InputArea";
 
 type Props = {
   userId: string
@@ -69,10 +69,14 @@ export default function Client({
     });
   }
 
-  // メッセージを送信
-  const handleSend = () => {
-    if (!newMessage) return
+  // メッセージ送信フォームにに入力された時の挙動です
+  const handleInputChange = (inputValue: string) => {
+    setNewMessage(inputValue);
+  };
 
+  // メッセージを送信
+  const handleMessageSend = () => {
+    if (!newMessage) return
     // 自分のメッセージを追加
     setMessages(prevMessages => {
       const msg: Message = {
@@ -91,12 +95,6 @@ export default function Client({
     setNewMessage("");
     // 500ミリ秒後に相手のメッセージを追加
     setTimeout(() => autoReply(), 500);
-  };
-
-  // メッセージ送信フォームにに入力された時の挙動です
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // TODO: ここでPOSTリクエストを送信
-    setNewMessage(e.target.value);
   };
 
   // パスコードを送信
@@ -149,33 +147,15 @@ export default function Client({
           myId={myId}
           host={host}
           messages={messages}
+          scrollBottomRes={scrollBottomRef}
         />
 
         {/* 入力エリア */}
-        <div className="flex-none bg-gray-200 px-4 py-3">
-          <div className="flex items-end">
-          <textarea
-            className="w-full rounded p-2 resize-none text-sm"
-            placeholder="メッセージを入力"
-            value={newMessage}
-            onChange={handleInputChange}
-            rows={3}
-          />
-            {/* 送信ボタン */}
-            <div className="flex items-end">
-              <button className="ml-2 bg-blue-600 text-white px-4 py-2 rounded h-10" onClick={handleSend}>
-                <PaperAirplaneIcon className="h-5 w-5"/>
-              </button>
-            </div>
-          </div>
-          <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
-            <p className="text-xs text-gray-600">
-              ※こちらは簡易チャットです。
-              <b><u>個人情報を送付する場合は、担当者のメールアドレス等に</u></b>送付してください。
-            </p>
-          </div>
-        </div>
-
+        <InputArea
+          newMessage={newMessage}
+          handleInputChange={handleInputChange}
+          handleMessageSend={handleMessageSend}
+        />
       </div>
     </div>
   )

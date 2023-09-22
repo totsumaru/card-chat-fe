@@ -10,6 +10,7 @@ import ChatHeader from "@/components/header/ChatHeader";
 import { validatePasscode } from "@/utils/validatePasscode";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
+import { sleep } from "@/utils/sample/sleep";
 
 type Props = {
   userId: string
@@ -102,8 +103,8 @@ export default function Client({
     validatePasscode(passcode) || alert("数字6桁で入力してください")
     // statusをリセット
     setPasscodeStatus("none")
+    await sleep()
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
     try {
       const res = await GetChatByPasscode(chatId, passcode)
       setChat(res.chat)

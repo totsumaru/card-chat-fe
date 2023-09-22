@@ -19,6 +19,7 @@ export default function InputArea({
             onChange={(e) => handleInputChange(e.target.value)}
             rows={3}
           />
+
         {/* 送信ボタン */}
         <div className="flex items-end">
           <button
@@ -29,12 +30,15 @@ export default function InputArea({
           </button>
         </div>
       </div>
+
+      {/* 備考 */}
       <div className="mx-1 mt-1 mb-2 w-fit flex items-center">
         <p className="text-xs text-gray-600">
           ※こちらは簡易チャットです。
           <b><u>個人情報を送付する場合は、担当者のメールアドレス等に</u></b>送付してください。
         </p>
       </div>
+
     </div>
   )
 }

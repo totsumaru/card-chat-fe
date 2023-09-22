@@ -4,6 +4,7 @@ import { useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
 import { useRouter } from "next/navigation";
 import { pathDashboard } from "@/utils/path";
+import { sleep } from "@/utils/sample/sleep";
 
 type Props = {
   email: string
@@ -18,16 +19,15 @@ export default function LoginButton({ email, password }: Props) {
   const [errMsg, setErrMsg] = useState<string>("ログインできません")
   const router = useRouter()
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     // email, passwordを送信
     setLoading(true)
     setErrMsg("")
 
     // TODO: 一時的にSleep
-    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
-      setLoading(false)
-      router.push(pathDashboard())
-    })
+    await sleep()
+    setLoading(false)
+    router.push(pathDashboard())
   }
 
   return (

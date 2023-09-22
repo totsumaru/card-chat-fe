@@ -3,6 +3,7 @@
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import SaveButton from "@/components/button/SaveButton";
+import { sleep } from "@/utils/sample/sleep";
 
 type Props = {
   name: string
@@ -27,8 +28,8 @@ export default function HostProfileForm(props: Props) {
   const [values, setValues] = useState<Props>(props)
   const [image, setImage] = useState<string>(props.imageUrl || "")
 
-  const handleClick = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000))
+  const handleSaveButtonClick = async () => {
+    await sleep()
   }
 
   return (
@@ -190,7 +191,7 @@ export default function HostProfileForm(props: Props) {
 
         {/* 保存ボタン */}
         <div className="mt-6">
-          <SaveButton clickHandler={handleClick}/>
+          <SaveButton clickHandler={handleSaveButtonClick}/>
         </div>
 
       </div>

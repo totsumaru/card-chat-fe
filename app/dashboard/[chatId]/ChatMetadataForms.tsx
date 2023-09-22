@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import SaveButton from "@/components/button/SaveButton";
+import { sleep } from "@/utils/sample/sleep";
 
 type Props = {
   id: string
@@ -18,7 +19,7 @@ export default function ChatMetadataForms(props: Props) {
 
   // 保存ボタンをクリックした時の挙動です
   const handleClick = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await sleep()
   }
 
   return (

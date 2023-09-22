@@ -36,4 +36,4 @@ export const currentUserSession: TestSession = {
 /**
  * cookieから取得したパスコードです
  */
-export const passcodeFromCookie = "123456"
+export const passcodeFromCookie = "12345"

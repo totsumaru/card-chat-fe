@@ -14,6 +14,7 @@ import { User } from "@/utils/sample/User";
 type Props = {
   chatId: string
   chatStatus: ChatStatus
+  // setter
   setChat: (chat: Chat | undefined) => void
   setMessages: (messages: Message[] | undefined) => void
   setHost: (host: User | undefined) => void
@@ -22,6 +23,8 @@ type Props = {
 
 /**
  * パスコードのModalです
+ *
+ * チャットステータスが"visitor"の時にOPENします。
  */
 export default function PasscodeModal(props: Props) {
   const [modalOpen, setModalOpen] = useState<boolean>(props.chatStatus === "visitor")
@@ -85,7 +88,6 @@ export default function PasscodeModal(props: Props) {
               <Dialog.Panel
                 className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 <div>
-
                   {/* アイコン */}
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                     {success ? (
@@ -95,15 +97,10 @@ export default function PasscodeModal(props: Props) {
                     )}
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
-
                     {/* タイトル */}
                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                      {success
-                        ? "認証しました"
-                        : "パスコードを入力してください"
-                      }
+                      {success ? "認証しました" : "パスコードを入力してください"}
                     </Dialog.Title>
-
                     {/* 説明 */}
                     <div className="mt-2">
                       <p className="text-sm text-gray-500 text-left">
@@ -112,7 +109,6 @@ export default function PasscodeModal(props: Props) {
                           : "このチャットを見るには、最初のみパスコードが必要です。パスコードは「カードの表面」に書いてあります。"}
                       </p>
                     </div>
-
                   </div>
                 </div>
 
@@ -126,8 +122,8 @@ export default function PasscodeModal(props: Props) {
                       name="passcode"
                       id="passcode"
                       className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
-                    ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
-                    focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
+                      ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
+                      focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
                       placeholder="123456"
                       onChange={(e) => handlePasscodeChange(e.target.value)}
                       value={passcode}

@@ -5,29 +5,31 @@ import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import ButtonLoading from "@/components/loading/ButtonLoading";
 import { validatePasscodeInput } from "@/utils/validatePasscode";
+import { ChatStatus } from "@/utils/api/getChat";
 
 export type Status = "success" | "invalid" | "none"
 
 type Props = {
-  modalOpen: boolean
-  setModalOpen: (open: boolean) => void
   passcode: string
   setPasscode: (passcode: string) => void
   handleSend: () => void
   status: Status
+  chatStatus: ChatStatus
 }
 
 /**
  * パスコードのModalです
  */
 export default function PasscodeModal(props: Props) {
+  const [modalOpen, setModalOpen] = useState<boolean>(props.chatStatus === "visitor")
+
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (value: string) => {
     validatePasscodeInput(value) && props.setPasscode(value)
   };
 
   return (
-    <Transition.Root show={props.modalOpen} as={Fragment}>
+    <Transition.Root show={modalOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => {
       }}>
         <Transition.Child
@@ -112,7 +114,7 @@ export default function PasscodeModal(props: Props) {
                 {/* ボタン */}
                 <div className="mt-2 sm:mt-3">
                   {props.status === "success"
-                    ? <SendButton label={"OK"} clickHandler={() => props.setModalOpen(false)}/>
+                    ? <SendButton label={"OK"} clickHandler={() => setModalOpen(false)}/>
                     : <SendButton label={"送信"} clickHandler={props.handleSend}/>}
                 </div>
 

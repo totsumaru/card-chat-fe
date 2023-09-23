@@ -30,7 +30,6 @@ export default function Client({
   userId, chatId, chat: propsChat, host: propsHost, status
 }: Props) {
   // パスコードModal(status: "visitor")
-  const [passcodeModalOpen, setPasscodeModalOpen] = useState<boolean>(status === "visitor")
   const [passcode, setPasscode] = useState<string>("")
   const [passcodeStatus, setPasscodeStatus] = useState<Status>("none")
   // チャット開始Modal(status: "first-is-login")
@@ -130,12 +129,11 @@ export default function Client({
 
       {/* パスコードModal */}
       <PasscodeModal
-        modalOpen={passcodeModalOpen}
-        setModalOpen={setPasscodeModalOpen}
         passcode={passcode}
         setPasscode={setPasscode}
         handleSend={handlePasscodeSend}
         status={passcodeStatus}
+        chatStatus={status || "first-not-login"}
       />
 
       {/* チャット */}

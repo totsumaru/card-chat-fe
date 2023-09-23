@@ -10,6 +10,6 @@ export const buttonClassName = (isWhite?: boolean, widthFull?: boolean) => {
   }
 
   return (
-    `${widthFull && "w-full"} ${colorClassName} flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold leading-6 shadow-sm`
+    `${widthFull && "w-full"} ${colorClassName} whitespace-nowrap flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold leading-6 shadow-sm`
   )
 }

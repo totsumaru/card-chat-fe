@@ -7,6 +7,7 @@ type Props = {
 
 /**
  * 通知モーダルを開くボタンです
+ * TODO: ボタンコンポーネントにする(アイコンを追加できるように)
  */
 export default function NoticeModalOpenButton({
   setModalOpen, registeredEmail

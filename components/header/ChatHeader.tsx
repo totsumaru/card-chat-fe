@@ -16,25 +16,33 @@ type Props = {
 
 /**
  * チャットのヘッダーです
+ *
+ * 自分がHostの場合、相手(Guest)の情報を表示、
+ * 自分がGuestの場合、相手(Host)の情報を表示します。
  */
 export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) {
-  const headerLink = isHost
-    ? pathDisplayNameEdit(chat?.id || "", true)
-    : pathProfile(host?.id || "", chat?.id || "")
+  const chatId = chat?.id || ""
+  const hostId = chat?.id || ""
 
+  // 左側のリンクです
+  const headerLink = isHost
+    ? pathDisplayNameEdit(chatId, true)
+    : pathProfile(hostId, chatId)
+
+  // アバターのURLです
   const headerAvatarUrl = isHost
     ? ""
     : host?.avatarUrl
 
   const headerDisplayName = isHost
-    ? chat?.guest.displayName || chat?.id
+    ? chat?.guest.displayName || chatId
     : host?.name
 
   const left = (
     <Link href={headerLink}>
-      <div className="flex items-center">
+      <div className="flex items-center flex-grow">
         <Avatar imageUrl={headerAvatarUrl}/>
-        <p className="ml-2">{headerDisplayName}</p>
+        <p className="ml-2 line-clamp-1">{headerDisplayName}</p>
       </div>
     </Link>
   )

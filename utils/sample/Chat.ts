@@ -68,7 +68,7 @@ export const chatsDB: Chat[] = [
     passcode: "123456",
     hostId: userId2,
     guest: {
-      displayName: "チャット2 様",
+      displayName: "あいうえおかきくけこさしすせそたちつてと",
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },
@@ -105,7 +105,7 @@ export const chatsDB: Chat[] = [
     passcode: "456789",
     hostId: userId2,
     guest: {
-      displayName: "チャット4 様",
+      displayName: "",
       memo: "本日お伺い済み",
       noticeEmail: email2,
     },

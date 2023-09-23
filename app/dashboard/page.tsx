@@ -81,10 +81,10 @@ const Profile = ({ host }: { host: User | undefined }) => {
                src={host?.avatarUrl} alt=""
           />
           <div className="min-w-0 flex-auto">
-            <p className="text-sm font-semibold leading-6 text-gray-900">
+            <p className="text-sm line-clamp-1 font-semibold leading-6 text-gray-900">
               {host?.name}
             </p>
-            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+            <p className="mt-1 line-clamp-1 truncate text-xs leading-5 text-gray-500">
               {host?.company.name}
             </p>
           </div>
@@ -136,7 +136,7 @@ const ChatListContent = ({
     <div className="w-full">
       {/* 上側(表示名+時間) */}
       <div className="flex items-baseline justify-between gap-x-4">
-        <p className="text-sm font-semibold leading-6 text-gray-900">
+        <p className="text-sm font-semibold leading-6 text-gray-900 line-clamp-1">
           {chat.guest.displayName || chat.id}
         </p>
         <p className="flex-none text-xs text-gray-600">{latestMessage.date}</p>

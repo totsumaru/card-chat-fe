@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { pathDashboard } from "@/utils/path";
-import Link from "next/link";
+import LinkButton from "@/components/button/LinkButton";
 
 type Props = {
   left: ReactNode
@@ -33,13 +33,7 @@ export default function Header({ left, right, isHost }: Props) {
       {/* 右側 */}
       <div>
         {dashboardUrl ? (
-          <Link
-            href={dashboardUrl}
-            className="block rounded-md bg-white px-3 py-2 text-sm font-semibold
-             text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          >
-            ダッシュボード
-          </Link>
+          <LinkButton label={"ダッシュボード"} href={dashboardUrl} isWhite/>
         ) : right}
       </div>
     </div>

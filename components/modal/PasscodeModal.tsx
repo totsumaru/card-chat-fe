@@ -11,8 +11,6 @@ import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 
-export type Status = "success" | "invalid" | "none"
-
 type Props = {
   chatId: string
   chatStatus: ChatStatus
@@ -28,7 +26,7 @@ type Props = {
 export default function PasscodeModal(props: Props) {
   const [modalOpen, setModalOpen] = useState<boolean>(props.chatStatus === "visitor")
   const [passcode, setPasscode] = useState<string>("")
-  const [status, setStatus] = useState<Status>("none")
+  const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (value: string) => {
@@ -39,7 +37,7 @@ export default function PasscodeModal(props: Props) {
   const handlePasscodeSend = async () => {
     validatePasscode(passcode) || alert("数字6桁で入力してください")
     // statusをリセット
-    setStatus("none")
+    setSuccess(undefined)
     await sleep()
 
     try {
@@ -48,15 +46,13 @@ export default function PasscodeModal(props: Props) {
       props.setMessages(res.chat.messages)
       props.setHost(res.host)
       props.setMyId(props.chatId)
+      setSuccess(true)
     } catch (e) {
-      setStatus("invalid")
+      setSuccess(false)
       return
     } finally {
       setPasscode("")
     }
-
-    setStatus("success")
-    props.setMyId(props.chatId)
   }
 
   return (
@@ -92,7 +88,7 @@ export default function PasscodeModal(props: Props) {
 
                   {/* アイコン */}
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    {status === "success" ? (
+                    {success ? (
                       <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>
                     ) : (
                       <LockClosedIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>
@@ -102,7 +98,7 @@ export default function PasscodeModal(props: Props) {
 
                     {/* タイトル */}
                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                      {status === "success"
+                      {success
                         ? "認証しました"
                         : "パスコードを入力してください"
                       }
@@ -111,7 +107,7 @@ export default function PasscodeModal(props: Props) {
                     {/* 説明 */}
                     <div className="mt-2">
                       <p className="text-sm text-gray-500 text-left">
-                        {status === "success"
+                        {success
                           ? "認証が完了しました。チャットの内容を確認してみましょう。"
                           : "このチャットを見るには、最初のみパスコードが必要です。パスコードは「カードの表面」に書いてあります。"}
                       </p>
@@ -121,7 +117,7 @@ export default function PasscodeModal(props: Props) {
                 </div>
 
                 {/* フォーム */}
-                {status === "success" || (
+                {success || (
                   <div className="mt-3">
                     <input
                       type="text"
@@ -137,14 +133,14 @@ export default function PasscodeModal(props: Props) {
                       value={passcode}
                     />
                     <p className="text-sm text-red-600 ml-0.5">
-                      {status === "invalid" ? "※ログインできません" : ""}
+                      {success === false && "※ログインできません"}
                     </p>
                   </div>
                 )}
 
                 {/* ボタン */}
                 <div className="mt-2 sm:mt-3">
-                  {status === "success"
+                  {success
                     ? <SendButton label={"OK"} clickHandler={() => setModalOpen(false)}/>
                     : <SendButton label={"送信"} clickHandler={handlePasscodeSend}/>}
                 </div>

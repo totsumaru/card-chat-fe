@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import BaseModal from "@/components/modal/BaseModal";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import LinkButton from "@/components/button/LinkButton";
 import { pathLogin } from "@/utils/path";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";

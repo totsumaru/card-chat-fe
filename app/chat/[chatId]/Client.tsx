@@ -4,10 +4,8 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
-import PasscodeModal, { Status } from "@/components/modal/PasscodeModal";
-import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
+import PasscodeModal from "@/components/modal/PasscodeModal";
 import ChatHeader from "@/components/header/ChatHeader";
-import { validatePasscode } from "@/utils/validatePasscode";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
 import { sleep } from "@/utils/sample/sleep";
@@ -29,9 +27,6 @@ type Props = {
 export default function Client({
   userId, chatId, chat: propsChat, host: propsHost, status
 }: Props) {
-  // パスコードModal(status: "visitor")
-  const [passcode, setPasscode] = useState<string>("")
-  const [passcodeStatus, setPasscodeStatus] = useState<Status>("none")
   // チャット開始Modal(status: "first-is-login")
   const [chatStartModalOpen, setChatStartModalOpen] = useState<boolean>(status === "first-is-login")
   // ログイン催促Modal(status: "first-not-login")
@@ -94,30 +89,6 @@ export default function Client({
     await sleep()
     autoReply()
   };
-
-  // パスコードを送信
-  const handlePasscodeSend = async () => {
-    validatePasscode(passcode) || alert("数字6桁で入力してください")
-    // statusをリセット
-    setPasscodeStatus("none")
-    await sleep()
-
-    try {
-      const res = await GetChatByPasscode(chatId, passcode)
-      setChat(res.chat)
-      setMessages(res.chat.messages)
-      setHost(res.host)
-      setMyId(chatId)
-    } catch (e) {
-      setPasscodeStatus("invalid")
-      return
-    } finally {
-      setPasscode("")
-    }
-
-    setPasscodeStatus("success")
-    setMyId(chatId)
-  }
 
   return (
     <div className="relative h-screen overflow-hidden">

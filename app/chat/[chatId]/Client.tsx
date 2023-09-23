@@ -12,6 +12,7 @@ import { sleep } from "@/utils/sample/sleep";
 import { ChatStatus } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
 import { Session } from "@supabase/gotrue-js";
+import MustLoginModal from "@/components/modal/MustLoginModal";
 
 type Props = {
   userId: string
@@ -41,6 +42,8 @@ export default function Client(props: Props) {
       ? chat.id // cookieでチャットが取得できている場合
       : ""      // チャットが取得できていない場合
   )
+
+  // console.log(props.status)
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -105,6 +108,8 @@ export default function Client(props: Props) {
         setHost={setHost}
         setMyId={setMyId}
       />
+      {/* ログイン催促Modal */}
+      <MustLoginModal open={props.status === "first-not-login"}/>
 
       {/* パスコードModal */}
       <PasscodeModal

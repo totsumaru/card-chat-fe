@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
+import { buttonClassName } from "@/components/button/buttonClassName";
 
 type Props = {
   clickHandler: () => Promise<void>
@@ -36,21 +37,12 @@ export default function LoadingButton({
     }
   }
 
-  // ボタンのクラス名
-  let colorClassName: string
-  if (isWhite) {
-    colorClassName = `bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50`
-  } else {
-    colorClassName = `bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`
-  }
-
   return (
     <>
       {/* ボタン */}
       <button
         type="button"
-        className={`${widthFull && "w-full"} ${colorClassName} flex items-center
-         justify-center rounded-md px-3 py-2 text-sm font-semibold leading-6 shadow-sm`}
+        className={buttonClassName(isWhite, widthFull)}
         onClick={handler}>
         {loading && <ButtonLoading/>}
         {label}

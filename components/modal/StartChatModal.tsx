@@ -107,7 +107,7 @@ export default function StartChatModal(props: Props) {
       modalOpen={modalOpen}
       setModalOpen={setModalOpen}
       icon={<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>}
-      title={"表示名を設定"}
+      title={"相手の表示名を設定"}
       description={
         <>渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。（相手には表示されません）</>
       }

@@ -8,15 +8,21 @@ import { User, usersDB } from "@/utils/sample/User";
  *
  * @success チャットが開始されていて、自分がホスト/ゲストで参加済みの状態である
  * -> Modalを開かずチャット可能
+ *
  * @first-not-login チャットが開始されておらず、自分もログインしていない
  * -> ログインを促すModalがOpen
+ *
  * @first-is-login チャットが開始されていないが、ログイン済み
  * -> チャット開始ModalがOpen
+ *
  * @visitor チャットが開始されているが、パスコードは未入力
  * -> パスコード入力ModalがOpen
  */
 export type ChatStatus =
-  "success" | "first-not-login" | "first-is-login" | "visitor"
+  "success" |
+  "first-not-login" |
+  "first-is-login" |
+  "visitor"
 
 // レスポンスです
 type Res = {
@@ -34,9 +40,7 @@ export const GetChat = async (
   chatId: string,
   session?: TestSession
 ): Promise<Res> => {
-  const res = await backend(chatId, session)
-
-  return res
+  return await backend(chatId, session)
 }
 
 // バックエンドの処理です
@@ -44,30 +48,30 @@ const backend = async (
   chatId: string,
   session?: TestSession,
 ): Promise<Res> => {
-  const isLogin: boolean = !!session
+  const isLogin: boolean = !!session?.id
 
   const chat = chatsDB.find(chat => chat.id === chatId)
   const host = usersDB.find(user => user.id === chat?.hostId)
 
-  // 自分がホスト/ゲスト(パスコードログイン済み)の場合 = success
-  if (chat?.hostId === session?.id || chat?.passcode === passcodeFromCookie) {
-    return {
-      chat: chat,
-      host: host,
-      status: "success",
-    }
-  }
-
   let status: ChatStatus
 
-  // hostが存在しない = first
-  if (!host) {
-    if (isLogin) {
-      status = "first-is-login"
-    } else {
-      status = "first-not-login"
-    }
+  const isHost = chat?.hostId === session?.id
+  const isGuest = chat?.passcode === passcodeFromCookie // cookieのパスコードで認証済み
+
+  if (!chat?.hostId) {
+    // hostIDが存在しない = first
+    isLogin
+      ? status = "first-is-login"
+      : status = "first-not-login"
   } else {
+    // 自分がホスト/ゲストの場合 = success
+    if (isHost || isGuest) {
+      return {
+        chat: chat,
+        host: host,
+        status: "success",
+      }
+    }
     status = "visitor"
   }
 

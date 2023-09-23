@@ -11,6 +11,7 @@ type Props = {
  * アバターです
  */
 export default function Avatar({ imageUrl, href, unreadFlg, widthHeight }: Props) {
+  // 未読時の赤い丸です
   const noticeIcon = (
     <span className="absolute right-0 top-0 block h-2.5 w-2.5 rounded-full bg-red-400 ring-2 ring-white"/>
   )

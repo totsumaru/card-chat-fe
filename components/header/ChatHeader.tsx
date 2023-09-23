@@ -11,12 +11,13 @@ type Props = {
   isHost: boolean
   chat: Chat | undefined
   host: User | undefined
+  setModalOpen: (open: boolean) => void
 }
 
 /**
  * チャットのヘッダーです
  */
-export default function ChatHeader({ isHost, chat, host }: Props) {
+export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) {
   const headerLink = isHost
     ? pathDisplayNameEdit(chat?.id || "", true)
     : pathProfile(host?.id || "", chat?.id || "")
@@ -38,11 +39,14 @@ export default function ChatHeader({ isHost, chat, host }: Props) {
     </Link>
   )
 
-  return (
-    <Header
-      left={left}
-      right={<NoticeModalOpenButton registeredEmail={chat?.guest.noticeEmail}/>}
-      isHost={isHost}
+  const right = (
+    <NoticeModalOpenButton
+      setModalOpen={setModalOpen}
+      registeredEmail={chat?.guest.noticeEmail}
     />
+  )
+
+  return (
+    <Header left={left} right={right} isHost={isHost}/>
   )
 }

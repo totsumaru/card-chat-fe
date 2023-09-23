@@ -29,6 +29,8 @@ type Props = {
  * TODO: ゲストは、memoや表示名を取得できないようにする
  */
 export default function Client(props: Props) {
+  // 通知Modal
+  const [noticeModalOpen, setNoticeModalOpen] = useState<boolean>(false)
   // チャット
   const [chat, setChat] = useState<Chat | undefined>(props.chat) // ここはInfo用に使用します
   const [messages, setMessages] = useState<Message[] | undefined>(props.chat?.messages)
@@ -37,13 +39,11 @@ export default function Client(props: Props) {
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
-    ? props.userId    // 自分がhostの場合
+    ? props.userId  // 自分がhostの場合
     : chat?.id
-      ? chat.id // cookieでチャットが取得できている場合
-      : ""      // チャットが取得できていない場合
+      ? chat.id     // cookieでチャットが取得できている場合
+      : ""          // チャットが取得できていない場合
   )
-
-  // console.log(props.status)
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -93,10 +93,19 @@ export default function Client(props: Props) {
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
-      <ChatHeader isHost={host?.id === props.userId} chat={chat!} host={host!}/>
+      <ChatHeader
+        setModalOpen={setNoticeModalOpen}
+        isHost={host?.id === props.userId}
+        chat={chat!}
+        host={host!}
+      />
 
       {/* 通知Modal */}
-      <NoticeEmailModal registeredEmail={chat?.guest.noticeEmail}/>
+      <NoticeEmailModal
+        openModal={noticeModalOpen}
+        setOpenModal={setNoticeModalOpen}
+        registeredEmail={chat?.guest.noticeEmail}
+      />
 
       {/* 開始Modal */}
       <StartChatModal

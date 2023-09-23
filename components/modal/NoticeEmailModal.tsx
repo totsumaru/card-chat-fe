@@ -1,11 +1,10 @@
-"use client"
-
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BellIcon } from '@heroicons/react/24/outline'
-import { useNoticeModalStore } from "@/store/store";
 
 type Props = {
+  openModal: boolean
+  setOpenModal: (open: boolean) => void
   registeredEmail?: string
 }
 
@@ -19,16 +18,17 @@ type Props = {
  *
  *  いずれも、送信が完了した時は`success`のフラグによって表示が変更されます。
  */
-export default function NoticeEmailModal({ registeredEmail }: Props) {
+export default function NoticeEmailModal({
+  openModal, setOpenModal, registeredEmail
+}: Props) {
   const cancelButtonRef = useRef(null)
-  const store = useNoticeModalStore()
   const [newEmail, setNewEmail] = useState<string>("")
   const [success, setSuccess] = useState<boolean>(false)
   const [validationErrMsg, setValidationErrMsg] = useState<string>("")
 
   // Modalが閉じられた時の処理です
   const onCloseHandle = () => {
-    store.setOpen(false)
+    setOpenModal(false)
     setSuccess(false)
     setValidationErrMsg("")
   }
@@ -47,7 +47,7 @@ export default function NoticeEmailModal({ registeredEmail }: Props) {
   }
 
   return (
-    <Transition.Root show={store.open} as={Fragment}>
+    <Transition.Root show={openModal} as={Fragment}>
       <Dialog as="div" className="relative z-10"
               initialFocus={cancelButtonRef} onClose={() => onCloseHandle}
       >

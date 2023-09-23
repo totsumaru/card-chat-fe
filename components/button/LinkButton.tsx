@@ -10,8 +10,6 @@ type Props = {
 
 /**
  * リンクボタンです
- *
- * aタグやLinkとして使用します。
  */
 export default function LinkButton({
   label, href, widthFull, isWhite

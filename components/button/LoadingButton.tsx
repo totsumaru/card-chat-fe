@@ -7,13 +7,12 @@ type Props = {
   label: string
   successMessage: string
   failureMessage: string
-  // option
   widthFull?: boolean
   isWhite?: boolean
 }
 
 /**
- * ボタンです
+ * Loading付きのボタンです
  *
  * 処理時にSpinnerが表示されます
  */

@@ -20,6 +20,5 @@ export default function Info({ text }: Props) {
         </div>
       </div>
     </div>
-
   )
 }

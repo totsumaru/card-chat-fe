@@ -101,7 +101,7 @@ export default function Client({
       {/* パスコードModal */}
       <PasscodeModal
         chatId={chatId}
-        chatStatus={status || "first-not-login"}
+        open={status === "visitor"}
         setChat={setChat}
         setMessages={setMessages}
         setHost={setHost}

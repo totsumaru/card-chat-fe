@@ -2,7 +2,7 @@
 
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
-import SaveButton from "@/components/button/SaveButton";
+import LoadingButton from "@/components/button/LoadingButton";
 import { User } from "@/utils/sample/User";
 import { PostProfileEdit } from "@/utils/api/postProfileEdit";
 import { Session } from "@supabase/gotrue-js";
@@ -176,7 +176,12 @@ export default function EditForms({ host }: Props) {
 
         {/* 保存ボタン */}
         <div className="mt-6">
-          <SaveButton clickHandler={handleSaveButtonClick}/>
+          <LoadingButton
+            clickHandler={handleSaveButtonClick}
+            label={"保存する"}
+            successMessage={"保存しました"}
+            failureMessage={"保存に失敗しました"}
+          />
         </div>
 
       </div>

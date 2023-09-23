@@ -6,6 +6,9 @@ type Props = {
   handleMessageSend: () => void
 }
 
+/**
+ * チャットの入力エリアです
+ */
 export default function InputArea({
   newMessage, handleInputChange, handleMessageSend
 }: Props) {

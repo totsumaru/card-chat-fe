@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react";
-import SaveButton from "@/components/button/SaveButton";
+import LoadingButton from "@/components/button/LoadingButton";
 import { PostChatInfoEdit } from "@/utils/api/postChatInfo";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
@@ -75,7 +75,12 @@ export default function ChatMetadataForms(props: Props) {
 
       {/* 保存ボタン */}
       <div className="mt-3">
-        <SaveButton clickHandler={handleSave}/>
+        <LoadingButton
+          clickHandler={handleSave}
+          label={"保存する"}
+          successMessage={"保存しました"}
+          failureMessage={"保存に失敗しました"}
+        />
       </div>
     </>
   )

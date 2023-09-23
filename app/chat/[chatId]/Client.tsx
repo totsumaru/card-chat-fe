@@ -43,7 +43,7 @@ export default function Client({
   const [host, setHost] = useState<User | undefined>(propsHost)
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
-  const [myId, setMyID] = useState<string>(userId === host?.id
+  const [myId, setMyId] = useState<string>(userId === host?.id
     ? userId    // 自分がhostの場合
     : chat?.id
       ? chat.id // cookieでチャットが取得できている場合
@@ -107,7 +107,7 @@ export default function Client({
       setChat(res.chat)
       setMessages(res.chat.messages)
       setHost(res.host)
-      setMyID(chatId)
+      setMyId(chatId)
     } catch (e) {
       setPasscodeStatus("invalid")
       return
@@ -116,7 +116,7 @@ export default function Client({
     }
 
     setPasscodeStatus("success")
-    setMyID(chatId)
+    setMyId(chatId)
   }
 
   return (
@@ -129,11 +129,12 @@ export default function Client({
 
       {/* パスコードModal */}
       <PasscodeModal
-        passcode={passcode}
-        setPasscode={setPasscode}
-        handleSend={handlePasscodeSend}
-        status={passcodeStatus}
+        chatId={chatId}
         chatStatus={status || "first-not-login"}
+        setChat={setChat}
+        setMessages={setMessages}
+        setHost={setHost}
+        setMyId={setMyId}
       />
 
       {/* チャット */}

@@ -11,12 +11,14 @@ import { validatePasscode } from "@/utils/validatePasscode";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
 import { sleep } from "@/utils/sample/sleep";
+import { ChatStatus } from "@/utils/api/getChat";
 
 type Props = {
   userId: string
   chatId: string
   chat: Chat | undefined
   host: User | undefined
+  status: ChatStatus | undefined
 }
 
 /**
@@ -25,12 +27,16 @@ type Props = {
  * TODO: ゲストは、memoや表示名を取得できないようにする
  */
 export default function Client({
-  userId, chatId, chat: propsChat, host: propsHost
+  userId, chatId, chat: propsChat, host: propsHost, status
 }: Props) {
-  // パスコードModal
-  const [passcodeModalOpen, setPasscodeModalOpen] = useState<boolean>(!propsChat)
+  // パスコードModal(status: "visitor")
+  const [passcodeModalOpen, setPasscodeModalOpen] = useState<boolean>(status === "visitor")
   const [passcode, setPasscode] = useState<string>("")
   const [passcodeStatus, setPasscodeStatus] = useState<Status>("none")
+  // チャット開始Modal(status: "first-is-login")
+  const [chatStartModalOpen, setChatStartModalOpen] = useState<boolean>(status === "first-is-login")
+  // ログイン催促Modal(status: "first-not-login")
+  const [mustLoginModalOpen, setMustLoginModalOpen] = useState<boolean>(status === "first-not-login")
   // チャット
   const [chat, setChat] = useState<Chat | undefined>(propsChat) // ここはInfo用に使用します
   const [messages, setMessages] = useState<Message[] | undefined>(propsChat?.messages)
@@ -59,11 +65,9 @@ export default function Client({
         content: "これは自動返信です",
         from: myId === userId ? chatId : userId,
       }
-
       if (!prevMessages) {
         return [msg];
       }
-
       return [...prevMessages, msg];
     });
   }

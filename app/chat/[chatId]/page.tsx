@@ -23,7 +23,7 @@ export default async function Index({
   try {
     res = await GetChat(chatId, currentUserSession)
   } catch (e) {
-    // setPasscodeModalOpen(true)
+    console.error(e)
   }
 
   return (
@@ -32,6 +32,7 @@ export default async function Index({
       chatId={chatId}
       chat={res?.chat}
       host={res?.host}
+      status={res?.status}
     />
   )
 }

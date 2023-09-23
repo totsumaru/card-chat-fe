@@ -26,7 +26,7 @@ export default async function Index({
   return (
     <>
       {/* ヘッダー */}
-      <Header left={""} right={""} isHost={res?.host.id === currentUserId}/>
+      <Header left={""} right={""} isHost={res?.host?.id === currentUserId}/>
 
       <Container>
         {/* 戻るボタン */}
@@ -39,10 +39,10 @@ export default async function Index({
             </div>
             {/* フォーム */}
             <ChatMetadataForms
-              chatId={res?.chat.id || ""}
+              chatId={res?.chat?.id || ""}
               session={session}
-              displayName={res?.chat.guest.displayName || ""}
-              memo={res?.chat.guest.memo || ""}
+              displayName={res?.chat?.guest.displayName || ""}
+              memo={res?.chat?.guest.memo || ""}
             />
           </div>
         </div>

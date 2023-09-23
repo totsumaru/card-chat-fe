@@ -9,6 +9,8 @@ import Avatar from "@/components/avatar/Avatar";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * ホストのプロフィールページです
  */

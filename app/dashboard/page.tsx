@@ -13,6 +13,8 @@ import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import GetChats from "@/utils/api/getChats";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * ダッシュボードページです。
  */

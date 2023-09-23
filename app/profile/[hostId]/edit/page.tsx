@@ -8,6 +8,8 @@ import EditForms from "@/app/profile/[hostId]/edit/EditForms";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
 
+export const dynamic = 'force-dynamic'
+
 // Hostのプロフィールの編集画面です
 export default async function Index({
   params: { hostId }

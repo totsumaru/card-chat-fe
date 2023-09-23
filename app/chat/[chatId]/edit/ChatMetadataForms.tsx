@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
-import { PostChatInfoEdit } from "@/utils/api/postChatInfo";
+import { PostChatInfo } from "@/utils/api/postChatInfo";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
 
@@ -23,7 +23,7 @@ export default function ChatMetadataForms(props: Props) {
   // 保存ボタンをクリックした時の挙動です
   const handleSave = async () => {
     try {
-      await PostChatInfoEdit(currentUserSession, props.chatId, displayName, memo)
+      await PostChatInfo(currentUserSession, props.chatId, displayName, memo)
     } catch (e) {
       alert("保存に失敗しました")
     }

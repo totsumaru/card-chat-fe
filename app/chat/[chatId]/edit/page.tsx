@@ -9,6 +9,8 @@ import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import { GetChat } from "@/utils/api/getChat";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * チャットの登録情報を表示/編集する画面です
  */

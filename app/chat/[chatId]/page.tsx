@@ -5,6 +5,8 @@ import Client from "@/app/chat/[chatId]/Client";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { GetChat } from "@/utils/api/getChat";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * チャット画面のページです
  *
@@ -30,6 +32,7 @@ export default async function Index({
     <Client
       userId={currentUserId}
       chatId={chatId}
+      session={session}
       chat={res?.chat}
       host={res?.host}
       status={res?.status}

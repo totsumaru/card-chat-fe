@@ -10,10 +10,13 @@ import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
 import { sleep } from "@/utils/sample/sleep";
 import { ChatStatus } from "@/utils/api/getChat";
+import StartChatModal from "@/components/modal/StartChatModal";
+import { Session } from "@supabase/gotrue-js";
 
 type Props = {
   userId: string
   chatId: string
+  session: Session | null
   chat: Chat | undefined
   host: User | undefined
   status: ChatStatus | undefined
@@ -24,22 +27,16 @@ type Props = {
  *
  * TODO: ゲストは、memoや表示名を取得できないようにする
  */
-export default function Client({
-  userId, chatId, chat: propsChat, host: propsHost, status
-}: Props) {
-  // チャット開始Modal(status: "first-is-login")
-  const [chatStartModalOpen, setChatStartModalOpen] = useState<boolean>(status === "first-is-login")
-  // ログイン催促Modal(status: "first-not-login")
-  const [mustLoginModalOpen, setMustLoginModalOpen] = useState<boolean>(status === "first-not-login")
+export default function Client(props: Props) {
   // チャット
-  const [chat, setChat] = useState<Chat | undefined>(propsChat) // ここはInfo用に使用します
-  const [messages, setMessages] = useState<Message[] | undefined>(propsChat?.messages)
+  const [chat, setChat] = useState<Chat | undefined>(props.chat) // ここはInfo用に使用します
+  const [messages, setMessages] = useState<Message[] | undefined>(props.chat?.messages)
   const [newMessage, setNewMessage] = useState<string>("")
-  const [host, setHost] = useState<User | undefined>(propsHost)
+  const [host, setHost] = useState<User | undefined>(props.host)
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
-  const [myId, setMyId] = useState<string>(userId === host?.id
-    ? userId    // 自分がhostの場合
+  const [myId, setMyId] = useState<string>(props.userId === host?.id
+    ? props.userId    // 自分がhostの場合
     : chat?.id
       ? chat.id // cookieでチャットが取得できている場合
       : ""      // チャットが取得できていない場合
@@ -57,7 +54,7 @@ export default function Client({
     setMessages(prevMessages => {
       const msg: Message = {
         content: "これは自動返信です",
-        from: myId === userId ? chatId : userId,
+        from: myId === props.userId ? props.chatId : props.userId,
       }
       if (!prevMessages) {
         return [msg];
@@ -93,15 +90,26 @@ export default function Client({
   return (
     <div className="relative h-screen overflow-hidden">
       {/* ヘッダー */}
-      <ChatHeader isHost={host?.id === userId} chat={chat!} host={host!}/>
+      <ChatHeader isHost={host?.id === props.userId} chat={chat!} host={host!}/>
 
       {/* 通知Modal */}
       <NoticeEmailModal registeredEmail={chat?.guest.noticeEmail}/>
 
+      {/* 開始Modal */}
+      <StartChatModal
+        chatId={props.chatId}
+        session={props.session}
+        open={props.status === "first-is-login"}
+        setChat={setChat}
+        setMessages={setMessages}
+        setHost={setHost}
+        setMyId={setMyId}
+      />
+
       {/* パスコードModal */}
       <PasscodeModal
-        chatId={chatId}
-        open={status === "visitor"}
+        chatId={props.chatId}
+        open={props.status === "visitor"}
         setChat={setChat}
         setMessages={setMessages}
         setHost={setHost}
@@ -111,8 +119,8 @@ export default function Client({
       {/* チャット */}
       <div className="flex flex-col h-screen bg-lineBlue">
         <MessageArea
-          userId={userId}
-          chatId={chatId}
+          userId={props.userId}
+          chatId={props.chatId}
           myId={myId}
           host={host}
           messages={messages}

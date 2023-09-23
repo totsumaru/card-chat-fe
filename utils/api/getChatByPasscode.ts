@@ -1,5 +1,6 @@
 import { Chat, chatsDB } from "@/utils/sample/Chat";
 import { User, usersDB } from "@/utils/sample/User";
+import { sleep } from "@/utils/sample/sleep";
 
 type Res = {
   chat: Chat
@@ -31,6 +32,8 @@ export const backend = async (
   if (!host) {
     throw new Error("ホストが取得できません")
   }
+
+  await sleep()
 
   return {
     chat: chat,

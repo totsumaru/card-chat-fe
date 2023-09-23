@@ -86,27 +86,18 @@ export const chatsDB: Chat[] = [
     ]
   },
   // チャット3
+  // * 初期状態です
   {
     id: chatId3,
     passcode: "345678",
-    hostId: userId1,
+    hostId: "",
     guest: {
-      displayName: "チャット3 様",
-      memo: "本日お伺い済み",
-      noticeEmail: email2,
+      displayName: "",
+      memo: "",
+      noticeEmail: "",
     },
-    isRead: true,
-    messages: [
-      {
-        from: userId1,
-        content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
-        date: "2023-02-23 11:23",
-      }, {
-        from: chatId3,
-        content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
-        date: "2023-02-23 11:25",
-      }
-    ]
+    isRead: false,
+    messages: []
   },
   // チャット4
   {

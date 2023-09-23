@@ -6,7 +6,7 @@ import { sleep } from "@/utils/sample/sleep";
 /**
  * チャットの情報を変更します
  */
-export const PostChatInfoEdit = async (
+export const PostChatInfo = async (
   session: TestSession,
   chatId: string,
   displayName: string,

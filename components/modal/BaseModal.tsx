@@ -6,7 +6,7 @@ type Props = {
   setModalOpen: (open: boolean) => void
   icon: ReactNode
   title: string
-  description: string
+  description: ReactNode
   body: ReactNode // Formやボタンなど
 }
 

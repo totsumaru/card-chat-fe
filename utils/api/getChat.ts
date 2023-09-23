@@ -63,9 +63,9 @@ const backend = async (
   // hostが存在しない = first
   if (!host) {
     if (isLogin) {
-      status = "first-not-login"
-    } else {
       status = "first-is-login"
+    } else {
+      status = "first-not-login"
     }
   } else {
     status = "visitor"

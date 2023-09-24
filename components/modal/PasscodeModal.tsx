@@ -27,17 +27,22 @@ type Props = {
 export default function PasscodeModal(props: Props) {
   const [modalOpen, setModalOpen] = useState<boolean>(props.open)
   const [passcode, setPasscode] = useState<string>("")
-  const [success, setSuccess] = useState<boolean | undefined>(undefined)
+  const [success, setSuccess] = useState<boolean>(false)
+  const [errMsg, setErrMsg] = useState<string>("")
 
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (value: string) => {
     validatePasscodeInput(value) && setPasscode(value)
+    setErrMsg("")
   };
 
   // パスコードを送信
   const handlePasscodeSend = async () => {
-    validate(passcode) || alert("数字6桁で入力してください")
-    setSuccess(undefined)
+    if (!validate(passcode)) {
+      setErrMsg("数字6桁で入力してください")
+      return
+    }
+    setSuccess(false)
 
     try {
       const res = await GetChatByPasscode(props.chatId, passcode)
@@ -47,8 +52,7 @@ export default function PasscodeModal(props: Props) {
       props.setMyId(props.chatId)
       setSuccess(true)
     } catch (e) {
-      setSuccess(false)
-      console.error(e)
+      setErrMsg("ログインできません")
     } finally {
       setPasscode("")
     }
@@ -81,6 +85,7 @@ export default function PasscodeModal(props: Props) {
             onChange={(e) => handlePasscodeChange(e.target.value)}
             value={passcode}
           />
+          <p className="text-red-500 text-sm ml-0.5">{errMsg}</p>
         </div>
       )}
 
@@ -90,16 +95,12 @@ export default function PasscodeModal(props: Props) {
           <LoadingButton
             clickHandler={async () => setModalOpen(false)}
             label={"OK"}
-            successMessage={""}
-            failureMessage={""}
             widthFull
           />
         ) : (
           <LoadingButton
             clickHandler={handlePasscodeSend}
             label={"送信"}
-            successMessage={""}
-            failureMessage={"※ログインできません"}
             widthFull
           />
         )}

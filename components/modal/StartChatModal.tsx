@@ -73,7 +73,7 @@ export default function StartChatModal(props: Props) {
           maxLength={displayNameMaxLength}
           className="block w-full rounded-md border-0 mt-0.5 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
            ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
-           focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
+           focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder="鈴木 様"
           onChange={(e) => setDisplayName(e.target.value)}
           value={displayName}
@@ -87,18 +87,10 @@ export default function StartChatModal(props: Props) {
       <div className="mt-2 sm:mt-3 flex flex-col gap-2">
         <LoadingButton
           clickHandler={handleSaveDisplayName}
-          label={"設定して開始"}
+          label={"開始"}
           successMessage={""}
           failureMessage={"エラー: チャットを開始できません"}
           widthFull
-        />
-        <LoadingButton
-          clickHandler={async () => setModalOpen(false)}
-          label={"スキップ"}
-          successMessage={""}
-          failureMessage={"エラー: チャットを開始できません"}
-          widthFull
-          isWhite
         />
       </div>
     </>
@@ -110,7 +102,15 @@ export default function StartChatModal(props: Props) {
       setModalOpen={setModalOpen}
       icon={<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>}
       title={"チャットを開始します"}
-      description={"渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。（相手には表示されません）"}
+      description={
+        <span>
+          渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。
+          <span className="block mt-2">
+            ※ 相手には表示されません<br/>
+            ※ いつでも変更できます
+          </span>
+        </span>
+      }
       body={body}
     />
   )

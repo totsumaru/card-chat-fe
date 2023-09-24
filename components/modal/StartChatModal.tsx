@@ -65,10 +65,13 @@ export default function StartChatModal(props: Props) {
     <>
       {/* フォーム */}
       <div className="mt-3">
+        <p className="text-gray-500 text-sm ml-0.5">
+          表示名
+        </p>
         <input
           type="text"
           maxLength={displayNameMaxLength}
-          className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
+          className="block w-full rounded-md border-0 mt-0.5 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
            ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
            focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
           placeholder="鈴木 様"
@@ -106,10 +109,8 @@ export default function StartChatModal(props: Props) {
       modalOpen={modalOpen}
       setModalOpen={setModalOpen}
       icon={<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>}
-      title={"相手の表示名を設定"}
-      description={
-        <>渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。（相手には表示されません）</>
-      }
+      title={"チャットを開始します"}
+      description={"渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。（相手には表示されません）"}
       body={body}
     />
   )

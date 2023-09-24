@@ -30,7 +30,7 @@ export default function EditForms({ host }: Props) {
   const [email, setEmail] = useState<string>(host?.company.email || "")
   const [website, setWebsite] = useState<string>(host?.company.website || "")
   // 結果
-  const [success, setSuccess] = useState<boolean | undefined>(false)
+  const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
   // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {

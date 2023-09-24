@@ -100,8 +100,7 @@ export default function StartChatModal(props: Props) {
           <p className="text-xs text-red-400 ml-1 mt-0.5">{displayNameErrMsg}</p>
         )}
         <span className="block text-xs text-gray-500 font-thin ml-1 mt-0.5">
-          ※相手には表示されません<br/>
-          ※いつでも変更できます
+          ※相手には表示されず、いつでも変更できます
         </span>
       </div>
 

@@ -1,3 +1,5 @@
+import { passcodeLength } from "@/utils/variable";
+
 /**
  * パスコードが数字のみで構成されているかどうかを検証します
  */
@@ -11,7 +13,7 @@ const isNumericOnly = (input: string): boolean => {
  * 入力時のチェックとして使用するため、6文字以下の場合のみOK
  */
 export const validatePasscodeInput = (inputValue: string): boolean => {
-  return isNumericOnly(inputValue) && inputValue.length <= 6;
+  return isNumericOnly(inputValue) && inputValue.length <= passcodeLength;
 }
 
 /**
@@ -20,7 +22,7 @@ export const validatePasscodeInput = (inputValue: string): boolean => {
  * 送信時のチェックとして使用するため、6文字の場合のみOK
  */
 export const validatePasscode = (passcode: string): boolean => {
-  return isNumericOnly(passcode) && passcode.length === 6;
+  return isNumericOnly(passcode) && passcode.length === passcodeLength;
 }
 
 /**

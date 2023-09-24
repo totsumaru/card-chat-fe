@@ -10,8 +10,7 @@ import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import { PostStartChat } from "@/utils/api/postStartChat";
 import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
-
-const displayNameMaxLength = 20
+import { displayNameMaxLength, passcodeLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
@@ -39,7 +38,9 @@ export default function StartChatModal(props: Props) {
 
   // パスコードが変更された時の処理です
   const handlePasscodeChange = (value: string) => {
-    validatePasscodeInput(value) && setPasscode(value)
+    if (validatePasscodeInput(value)) {
+      setPasscode(value)
+    }
     setPasscodeErrMsg("")
   }
 
@@ -76,7 +77,6 @@ export default function StartChatModal(props: Props) {
       setModalOpen(false)
     } catch (e) {
       setError(true)
-    } finally {
       setPasscode("")
     }
   }
@@ -92,9 +92,7 @@ export default function StartChatModal(props: Props) {
         <input
           type="text"
           maxLength={displayNameMaxLength}
-          className="block w-full rounded-md border-0 mt-0.5 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
-           ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
-           focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className={inputClassName}
           placeholder="鈴木 様"
           onChange={(e) => handleDisplayNameChange(e.target.value)}
           value={displayName}
@@ -111,13 +109,9 @@ export default function StartChatModal(props: Props) {
         </p>
         <input
           type="text"
-          maxLength={6}
+          maxLength={passcodeLength}
           pattern="[0-9]*" // 追加: 0-9の数字のみ許可
-          name="passcode"
-          id="passcode"
-          className="block w-full rounded-md border-0 mt-0.5 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
-           ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
-           focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
+          className={`${inputClassName} tracking-widest`}
           placeholder="123456"
           onChange={(e) => handlePasscodeChange(e.target.value)}
           value={passcode}
@@ -162,3 +156,10 @@ export default function StartChatModal(props: Props) {
     />
   )
 }
+
+// inputのクラス名です
+const inputClassName = `
+block w-full rounded-md border-0 mt-0.5 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
+ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
+focus:ring-indigo-600 sm:text-sm sm:leading-6
+`

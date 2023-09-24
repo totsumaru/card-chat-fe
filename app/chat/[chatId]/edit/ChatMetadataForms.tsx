@@ -21,6 +21,8 @@ export default function ChatMetadataForms(props: Props) {
   const [memo, setMemo] = useState<string>(props.memo)
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
+  // TODO: フォームの内容をcheck!!!
+
   // 保存ボタンをクリックした時の挙動です
   // ボタンコンポーネント側で、エラーメッセージを表示します
   const handleSave = async () => {

@@ -29,7 +29,7 @@ export default function LoadingButton({
   return (
     <button
       type="button"
-      className={buttonClassName(isWhite, widthFull)}
+      className={buttonClassName(isWhite, widthFull, disabled)}
       onClick={handler}
       disabled={loading || disabled}
     >

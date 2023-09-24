@@ -1,4 +1,4 @@
-import { passcodeLength } from "@/utils/variable";
+import { displayNameMaxLength, memoMaxLength, passcodeLength } from "@/utils/variable";
 
 /**
  * パスコードが数字のみで構成されているかどうかを検証します
@@ -31,4 +31,18 @@ export const validatePasscode = (passcode: string): boolean => {
 export const validateEmail = (email: string): boolean => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return regex.test(email)
+}
+
+/**
+ * 表示名の文字数を検証します
+ */
+export const validateDisplayName = (displayName: string): boolean => {
+  return !(displayName.length > displayNameMaxLength)
+}
+
+/**
+ * メモの文字数を検証します
+ */
+export const validateMemo = (memo: string): boolean => {
+  return !(memo.length > memoMaxLength)
 }

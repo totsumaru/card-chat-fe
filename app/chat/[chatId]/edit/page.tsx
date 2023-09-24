@@ -32,6 +32,12 @@ export default async function Index({
       <Container>
         {/* 戻るボタン */}
         <ReturnToChatLink textWhite={false}/>
+
+        <h1 className="text-lg font-bold mt-3">チャット情報の編集</h1>
+        <p className="text-gray-600 text-sm mt-2 ml-0.5">
+          ※この内容は、相手に表示されません。
+        </p>
+
         {/* フォーム */}
         <ChatMetadataForms
           chatId={res?.chat?.id || ""}

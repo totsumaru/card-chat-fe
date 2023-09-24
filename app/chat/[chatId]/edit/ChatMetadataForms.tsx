@@ -5,7 +5,9 @@ import LoadingButton from "@/components/button/LoadingButton";
 import { PostChatInfo } from "@/utils/api/postChatInfo";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
-import Info from "@/components/alert/Info";
+import { validateDisplayName, validateMemo } from "@/utils/validate";
+import InputErrMsg from "@/components/text/InputErrMsg";
+import { displayNameMaxLength, memoMaxLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
@@ -20,6 +22,8 @@ type Props = {
 export default function ChatMetadataForms(props: Props) {
   const [displayName, setDisplayName] = useState<string>(props.displayName)
   const [memo, setMemo] = useState<string>(props.memo)
+  const [displayNameErrMsg, setDisplayNameErrMsg] = useState<string>("")
+  const [memoErrMsg, setMemoErrMsg] = useState<string>("")
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
   // TODO: フォームの内容をcheck!!!
@@ -39,11 +43,6 @@ export default function ChatMetadataForms(props: Props) {
 
   return (
     <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
-      {/* Info */}
-      <div className="mt-2">
-        <Info text={"この内容は、相手には表示されません。"}/>
-      </div>
-
       <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
         {/* id */}
         <div className="sm:col-span-4">
@@ -62,9 +61,16 @@ export default function ChatMetadataForms(props: Props) {
                shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
+              onChange={(e) => {
+                validateDisplayName(e.target.value)
+                  ? setDisplayNameErrMsg("")
+                  : setDisplayNameErrMsg(`上限は${displayNameMaxLength}文字です`)
+                setDisplayName(e.target.value)
+                setSuccess(undefined) // エラー表示を削除
+              }}
             />
           </div>
+          <InputErrMsg errMsg={displayNameErrMsg}/>
         </div>
 
         {/*　メモ */}
@@ -78,9 +84,16 @@ export default function ChatMetadataForms(props: Props) {
                shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               value={memo}
-              onChange={(e) => setMemo(e.target.value)}
+              onChange={(e) => {
+                validateMemo(e.target.value)
+                  ? setMemoErrMsg("")
+                  : setMemoErrMsg(`上限は${memoMaxLength}文字です`)
+                setMemo(e.target.value)
+                setSuccess(undefined) // エラー表示を削除
+              }}
             />
           </div>
+          <InputErrMsg errMsg={memoErrMsg}/>
         </div>
 
       </div>
@@ -90,6 +103,7 @@ export default function ChatMetadataForms(props: Props) {
         <LoadingButton
           clickHandler={handleSave}
           label={"保存する"}
+          disabled={!!displayNameErrMsg || !!memoErrMsg}
         />
         {success === true ? (
           <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>

@@ -8,6 +8,7 @@ import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
+import { passcodeLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
@@ -75,10 +76,8 @@ export default function PasscodeModal(props: Props) {
         <div className="mt-3">
           <input
             type="text"
-            maxLength={6}
+            maxLength={passcodeLength}
             pattern="[0-9]*" // 追加: 0-9の数字のみ許可
-            name="passcode"
-            id="passcode"
             className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset
                       ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                       focus:ring-indigo-600 sm:text-sm sm:leading-6 tracking-widest"
@@ -92,22 +91,22 @@ export default function PasscodeModal(props: Props) {
         </div>
       )}
 
-        {/* ボタン */}
-        <div className="mt-2 sm:mt-3">
-          {success ? (
-            <LoadingButton
-              clickHandler={async () => setModalOpen(false)}
-              label={"OK"}
-              widthFull
-            />
-          ) : (
-            <LoadingButton
-              clickHandler={handlePasscodeSend}
-              label={"送信"}
-              widthFull
-            />
-          )}
-        </div>
+      {/* ボタン */}
+      <div className="mt-2 sm:mt-3">
+        {success ? (
+          <LoadingButton
+            clickHandler={async () => setModalOpen(false)}
+            label={"OK"}
+            widthFull
+          />
+        ) : (
+          <LoadingButton
+            clickHandler={handlePasscodeSend}
+            label={"送信"}
+            widthFull
+          />
+        )}
+      </div>
     </>
   )
 

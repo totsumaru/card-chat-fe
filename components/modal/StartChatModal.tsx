@@ -9,7 +9,7 @@ import { currentUserSession } from "@/utils/sample/Sample";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import { PostStartChat } from "@/utils/api/postStartChat";
-import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
+import { validateDisplayName, validatePasscode, validatePasscodeInput } from "@/utils/validate";
 import { passcodeLength } from "@/utils/variable";
 
 type Props = {
@@ -46,9 +46,9 @@ export default function StartChatModal(props: Props) {
 
   // 表示名が変更された時の処理です
   const handleDisplayNameChange = (value: string) => {
-    value.length > 20
-      ? setDisplayNameErrMsg("※上限は20文字です")
-      : setDisplayNameErrMsg("")
+    validateDisplayName(value)
+      ? setDisplayNameErrMsg("")
+      : setDisplayNameErrMsg("※上限は20文字です")
     setDisplayName(value)
   }
 

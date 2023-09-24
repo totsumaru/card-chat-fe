@@ -1,4 +1,4 @@
-import { avatarUrl1, avatarUrl2, userId1, userId2 } from "@/utils/sample/Sample";
+import { avatarUrl1, avatarUrl2, userId1, userId2, userId3 } from "@/utils/sample/Sample";
 
 export type User = {
   id: string
@@ -45,6 +45,20 @@ export const usersDB: User[] = [
       tel: "053-455-2255",
       email: "totsuka.ast@entetsu.co.jp",
       website: "https://entetsu.jp",
+    },
+  },
+  {
+    id: userId3,
+    name: "Stephan Creed",
+    avatarUrl: "",
+    headline: "",
+    introduction: "",
+    company: {
+      name: "",
+      position: "",
+      tel: "",
+      email: "",
+      website: "",
     },
   },
 ]

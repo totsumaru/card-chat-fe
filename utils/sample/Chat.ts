@@ -1,15 +1,4 @@
-import {
-  chatId1,
-  chatId2,
-  chatId3,
-  chatId4,
-  chatId5,
-  chatId6,
-  email1,
-  email2,
-  userId1,
-  userId2
-} from "@/utils/sample/Sample";
+import { chatId1, chatId2, chatId3, email1, email2, userId1, userId2, userId3 } from "@/utils/sample/Sample";
 
 export type ChatInfo = {
   id: string
@@ -90,82 +79,13 @@ export const chatsDB: Chat[] = [
   {
     id: chatId3,
     passcode: "345678",
-    hostId: "",
+    hostId: userId3,
     guest: {
       displayName: "",
       memo: "",
-      noticeEmail: "",
+      noticeEmail: email2,
     },
     isRead: false,
     messages: []
-  },
-  // チャット4
-  {
-    id: chatId4,
-    passcode: "456789",
-    hostId: userId2,
-    guest: {
-      displayName: "",
-      memo: "本日お伺い済み",
-      noticeEmail: email2,
-    },
-    isRead: true,
-    messages: [
-      {
-        from: userId1,
-        content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
-        date: "2023-02-23 11:23",
-      }, {
-        from: chatId4,
-        content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
-        date: "2023-02-23 11:25",
-      }
-    ]
-  },
-  // チャット5
-  {
-    id: chatId5,
-    passcode: "567890",
-    hostId: userId1,
-    guest: {
-      displayName: "チャット5 様",
-      memo: "本日お伺い済み",
-      noticeEmail: email1,
-    },
-    isRead: true,
-    messages: [
-      {
-        from: userId1,
-        content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
-        date: "2023-02-23 11:23",
-      }, {
-        from: chatId5,
-        content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
-        date: "2023-02-23 11:25",
-      }
-    ]
-  },
-  // チャット6
-  {
-    id: chatId6,
-    passcode: "678901",
-    hostId: userId2,
-    guest: {
-      displayName: "チャット6 様",
-      memo: "本日お伺い済み",
-      noticeEmail: email2,
-    },
-    isRead: true,
-    messages: [
-      {
-        from: userId1,
-        content: "今日はお忙しい中お時間をいただきありがとうございました。またよろしくお願いします。",
-        date: "2023-02-23 11:23",
-      }, {
-        from: chatId6,
-        content: "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れ",
-        date: "2023-02-23 11:25",
-      }
-    ]
   },
 ]

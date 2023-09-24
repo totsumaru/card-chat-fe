@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { paramChatId, pathChat } from "@/utils/path";
 
 type Props = {
-  textWhite: boolean
+  textWhite?: boolean
 }
 
 /**

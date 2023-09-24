@@ -4,7 +4,7 @@ import Link from "next/link";
 type Props = {
   text: string
   url: string
-  textWhite: boolean
+  textWhite?: boolean
 }
 
 /**
@@ -19,12 +19,11 @@ export default function ReturnLink({ text, url, textWhite }: Props) {
   )
 
   return (
-    <>
-      {textWhite ? (
-        <div className="py-1 text-white">{link}</div>
-      ) : (
-        <div className="py-1 text-blue-600">{link}</div>
-      )}
-    </>
+    <div className={`py-1 w-fit ${
+      textWhite ? "text-white" : " text-blue-600"
+    }`}
+    >
+      {link}
+    </div>
   )
 }

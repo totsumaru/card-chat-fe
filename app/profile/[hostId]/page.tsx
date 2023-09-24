@@ -28,7 +28,7 @@ export default async function Index({
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
       <Header
-        left={<ReturnToChatLink textWhite={true}/>}
+        left={""}
         right={""}
         isHost={hostId === currentUserId}
       />
@@ -36,9 +36,10 @@ export default async function Index({
       {/* 本体 */}
       <div className="mx-auto max-w-7xl pt-5 px-4 sm:px-6 lg:px-8 min-h-screen">
         <section className="isolate overflow-hidden px-6 lg:px-8">
-          <div className="relative mx-auto max-w-2xl py-24 sm:py-20 lg:max-w-4xl">
+          <div className="relative mx-auto max-w-2xl py-16 sm:py-16 lg:max-w-4xl">
+            <ReturnToChatLink/>
 
-            <figure className="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
+            <figure className="grid grid-cols-1 items-center mt-5 gap-x-6 gap-y-8 lg:gap-x-10">
 
               {/*　ヘッドライン */}
               <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">

@@ -55,7 +55,6 @@ export default function StartChatModal(props: Props) {
       setModalOpen(false)
     } catch (e) {
       console.error(e)
-      return
     } finally {
       setDisplayName("")
     }
@@ -87,14 +86,14 @@ export default function StartChatModal(props: Props) {
           clickHandler={handleSaveDisplayName}
           label={"設定して開始"}
           successMessage={""}
-          failureMessage={""}
+          failureMessage={"エラー: チャットを開始できません"}
           widthFull
         />
         <LoadingButton
           clickHandler={async () => setModalOpen(false)}
           label={"スキップ"}
           successMessage={""}
-          failureMessage={""}
+          failureMessage={"エラー: チャットを開始できません"}
           widthFull
           isWhite
         />

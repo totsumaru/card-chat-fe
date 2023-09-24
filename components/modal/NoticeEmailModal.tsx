@@ -61,7 +61,6 @@ export default function NoticeEmailModal({
       setEmail("")
     } catch (e) {
       console.error(e)
-      setErrMsg("エラー: 画面を更新して、再度お試しください。")
     }
   }
 
@@ -117,9 +116,9 @@ export default function NoticeEmailModal({
       <div className="flex flex-col mt-4 gap-2">
         <LoadingButton
           clickHandler={handleRegister}
-          label={registeredEmail ? "更新" : "送信"}
+          label={registeredEmail ? "更新" : "登録"}
           successMessage={""}
-          failureMessage={""}
+          failureMessage={registeredEmail ? "更新できません" : "登録できません"}
           disabled={success}
         />
         <LoadingButton

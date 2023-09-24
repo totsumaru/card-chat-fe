@@ -45,7 +45,12 @@ export default function EditForms({ host }: Props) {
         website: website,
       }
     }
-    await PostProfileEdit(currentUserSession, req)
+
+    try {
+      await PostProfileEdit(currentUserSession, req)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Client from "@/app/chat/[chatId]/Client";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { GetChat } from "@/utils/api/getChat";
+import { PostChangeToRead } from "@/utils/api/postChangeToRead";
 
 export const dynamic = 'force-dynamic'
 
@@ -21,16 +22,23 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
+  const userId = currentUserId
+
   let res
   try {
     res = await GetChat(chatId, currentUserSession)
+    // 自分がhostの場合、既読処理を行います
+    const isHost = res.host?.id && userId === res.host?.id
+    if (isHost) {
+      PostChangeToRead(currentUserSession, chatId)
+    }
   } catch (e) {
     console.error(e)
   }
 
   return (
     <Client
-      userId={currentUserId}
+      userId={userId}
       chatId={chatId}
       session={session}
       chat={res?.chat}

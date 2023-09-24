@@ -33,8 +33,6 @@ type Res = {
 
 /**
  * チャットを取得します
- *
- * 自分がホストとなっていない場合はエラーを返します。
  */
 export const GetChat = async (
   chatId: string,

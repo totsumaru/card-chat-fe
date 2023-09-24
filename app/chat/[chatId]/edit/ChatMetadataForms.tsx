@@ -21,11 +21,12 @@ export default function ChatMetadataForms(props: Props) {
   const [memo, setMemo] = useState<string>(props.memo)
 
   // 保存ボタンをクリックした時の挙動です
+  // ボタンコンポーネント側で、エラーメッセージを表示します
   const handleSave = async () => {
     try {
       await PostChatInfo(currentUserSession, props.chatId, displayName, memo)
     } catch (e) {
-      alert("保存に失敗しました")
+      console.error(e)
     }
   }
 

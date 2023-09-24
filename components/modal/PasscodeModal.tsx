@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { validate, validatePasscodeInput } from "@/utils/validate";
-import { sleep } from "@/utils/sample/sleep";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
@@ -38,9 +37,7 @@ export default function PasscodeModal(props: Props) {
   // パスコードを送信
   const handlePasscodeSend = async () => {
     validate(passcode) || alert("数字6桁で入力してください")
-    // statusをリセット
     setSuccess(undefined)
-    await sleep()
 
     try {
       const res = await GetChatByPasscode(props.chatId, passcode)
@@ -51,7 +48,7 @@ export default function PasscodeModal(props: Props) {
       setSuccess(true)
     } catch (e) {
       setSuccess(false)
-      return
+      console.error(e)
     } finally {
       setPasscode("")
     }
@@ -84,32 +81,29 @@ export default function PasscodeModal(props: Props) {
             onChange={(e) => handlePasscodeChange(e.target.value)}
             value={passcode}
           />
-          <p className="text-sm text-red-600 ml-0.5">
-            {success === false && "※ログインできません"}
-          </p>
         </div>
       )}
 
       {/* ボタン */}
-        <div className="mt-2 sm:mt-3">
-          {success ? (
-            <LoadingButton
-              clickHandler={async () => setModalOpen(false)}
-              label={"OK"}
-              successMessage={""}
-              failureMessage={""}
-              widthFull
-            />
-          ) : (
-            <LoadingButton
-              clickHandler={handlePasscodeSend}
-              label={"送信"}
-              successMessage={""}
-              failureMessage={""}
-              widthFull
-            />
-          )}
-        </div>
+      <div className="mt-2 sm:mt-3">
+        {success ? (
+          <LoadingButton
+            clickHandler={async () => setModalOpen(false)}
+            label={"OK"}
+            successMessage={""}
+            failureMessage={""}
+            widthFull
+          />
+        ) : (
+          <LoadingButton
+            clickHandler={handlePasscodeSend}
+            label={"送信"}
+            successMessage={""}
+            failureMessage={"※ログインできません"}
+            widthFull
+          />
+        )}
+      </div>
     </>
   )
 

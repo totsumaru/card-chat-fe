@@ -5,6 +5,7 @@ import Client from "@/app/chat/[chatId]/Client";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { GetChat } from "@/utils/api/getChat";
 import { PostChangeToRead } from "@/utils/api/postChangeToRead";
+import NotFound from "@/components/error/404";
 
 export const dynamic = 'force-dynamic'
 
@@ -34,6 +35,7 @@ export default async function Index({
     }
   } catch (e) {
     console.error(e)
+    return <NotFound/>
   }
 
   return (

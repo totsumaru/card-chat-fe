@@ -33,6 +33,10 @@ type Res = {
 
 /**
  * チャットを取得します
+ *
+ * host/guestともにこの関数を使用します。
+ *
+ * sessionが空の場合はcookieのパスコードで認証します。
  */
 export const GetChat = async (
   chatId: string,
@@ -49,20 +53,28 @@ const backend = async (
   const isLogin: boolean = !!session?.id
 
   const chat = chatsDB.find(chat => chat.id === chatId)
-  const host = usersDB.find(user => user.id === chat?.hostId)
+
+  if (!chat) {
+    throw new Error("チャットを取得できません")
+  }
 
   let status: ChatStatus
 
-  const isHost = chat?.hostId === session?.id
-  const isGuest = chat?.passcode === passcodeFromCookie // cookieのパスコードで認証済み
+  const isHost = chat.hostId === session?.id
+  const isGuest = chat.passcode === passcodeFromCookie // cookieのパスコードで認証済み
 
-  if (!chat?.hostId) {
+  if (!chat.hostId) {
     // hostIDが存在しない = first
     isLogin
       ? status = "first-is-login"
       : status = "first-not-login"
   } else {
-    // 自分がホスト/ゲストの場合 = success
+    const host = usersDB.find(user => user.id === chat?.hostId)
+    if (!host) {
+      throw new Error("ホストを取得できません")
+    }
+
+    // 自分がホストorゲストの場合 = success
     if (isHost || isGuest) {
       return {
         chat: chat,

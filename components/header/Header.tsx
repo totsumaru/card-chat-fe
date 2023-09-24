@@ -28,7 +28,7 @@ export default function Header({ left, right, isHost }: Props) {
      text-white px-5 py-3 z-10 min-h-[30px]"
     >
       {/* 左側 */}
-      <div>
+      <div className="mr-3">
         {left || <a href="/" className="text-lg">ChatCard</a>}
       </div>
       {/* 右側 */}

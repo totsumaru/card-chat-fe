@@ -5,6 +5,7 @@ import LoadingButton from "@/components/button/LoadingButton";
 import { PostChatInfo } from "@/utils/api/postChatInfo";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
+import Info from "@/components/alert/Info";
 
 type Props = {
   chatId: string
@@ -37,9 +38,13 @@ export default function ChatMetadataForms(props: Props) {
   }
 
   return (
-    <>
-      <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+    <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
+      {/* Info */}
+      <div className="mt-2">
+        <Info text={"この内容は、相手には表示されません。"}/>
+      </div>
 
+      <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
         {/* id */}
         <div className="sm:col-span-4">
           <Label text={"id"}/>
@@ -94,7 +99,7 @@ export default function ChatMetadataForms(props: Props) {
           )
         )}
       </div>
-    </>
+    </div>
   )
 }
 

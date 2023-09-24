@@ -2,7 +2,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import React from "react";
 import Container from "@/components/container/Container";
-import Info from "@/components/alert/Info";
 import ChatMetadataForms from "@/app/chat/[chatId]/edit/ChatMetadataForms";
 import Header from "@/components/header/Header";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
@@ -33,21 +32,13 @@ export default async function Index({
       <Container>
         {/* 戻るボタン */}
         <ReturnToChatLink textWhite={false}/>
-        <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full">
-          <div className="mx-auto">
-            {/* Info */}
-            <div className="mt-2">
-              <Info text={"この内容は、相手には表示されません。"}/>
-            </div>
-            {/* フォーム */}
-            <ChatMetadataForms
-              chatId={res?.chat?.id || ""}
-              session={session}
-              displayName={res?.chat?.guest.displayName || ""}
-              memo={res?.chat?.guest.memo || ""}
-            />
-          </div>
-        </div>
+        {/* フォーム */}
+        <ChatMetadataForms
+          chatId={res?.chat?.id || ""}
+          session={session}
+          displayName={res?.chat?.guest.displayName || ""}
+          memo={res?.chat?.guest.memo || ""}
+        />
       </Container>
     </>
   )

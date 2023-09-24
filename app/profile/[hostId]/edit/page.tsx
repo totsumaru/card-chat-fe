@@ -29,7 +29,7 @@ export default async function Index({
         {/* 戻るリンク */}
         <ReturnLink text={"ダッシュボード"} url={pathDashboard()} textWhite={false}/>
 
-        <h1 className="text-lg font-bold mt-2">プロフィールの編集</h1>
+        <h1 className="text-lg font-bold mt-3">プロフィールの編集</h1>
 
         <EditForms session={session} host={host}/>
       </Container>

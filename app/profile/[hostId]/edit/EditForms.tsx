@@ -60,8 +60,8 @@ export default function EditForms({ host }: Props) {
   }
 
   return (
-    <>
-      <div className="mt-5">
+    <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
+      <div className="mt-5 ml-2">
         <InputImage image={avatarImageByte} setImage={setAvatarImageByte}/>
       </div>
 
@@ -201,7 +201,7 @@ export default function EditForms({ host }: Props) {
         </div>
 
       </div>
-    </>
+    </div>
   )
 }
 

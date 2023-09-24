@@ -22,7 +22,7 @@ type Props = {
  */
 export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) {
   const chatId = chat?.id || ""
-  const hostId = chat?.id || ""
+  const hostId = host?.id || ""
 
   // 左側のリンクです
   const headerLink = isHost

@@ -36,6 +36,7 @@ export default function NoticeEmailModal({
     setModalOpen(false)
     await sleep()
     setSuccess(false)
+    setIsRemove(false)
     setErrMsg("")
   }
 
@@ -74,7 +75,7 @@ export default function NoticeEmailModal({
           </span>
         ) : (
           <span>
-            登録したアドレスにメールを送信しました。<br/>
+            <b>登録したアドレスにメールを送信しました。</b><br/>
             <span className="block mt-1">
               ※届いていない場合は、迷惑メールフォルダや登録したアドレスを確認してください。
             </span>

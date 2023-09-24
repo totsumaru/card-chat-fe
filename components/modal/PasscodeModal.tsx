@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
-import { validatePasscode, validatePasscodeInput } from "@/utils/validatePasscode";
+import { validate, validatePasscodeInput } from "@/utils/validate";
 import { sleep } from "@/utils/sample/sleep";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import { Chat, Message } from "@/utils/sample/Chat";
@@ -37,7 +37,7 @@ export default function PasscodeModal(props: Props) {
 
   // パスコードを送信
   const handlePasscodeSend = async () => {
-    validatePasscode(passcode) || alert("数字6桁で入力してください")
+    validate(passcode) || alert("数字6桁で入力してください")
     // statusをリセット
     setSuccess(undefined)
     await sleep()

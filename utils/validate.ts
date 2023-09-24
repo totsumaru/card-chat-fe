@@ -19,6 +19,14 @@ export const validatePasscodeInput = (inputValue: string): boolean => {
  *
  * 送信時のチェックとして使用するため、6文字の場合のみOK
  */
-export const validatePasscode = (passcode: string): boolean => {
+export const validate = (passcode: string): boolean => {
   return isNumericOnly(passcode) && passcode.length === 6;
+}
+
+/**
+ * Emailを検証します
+ */
+export const validateEmail = (email: string): boolean => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email)
 }

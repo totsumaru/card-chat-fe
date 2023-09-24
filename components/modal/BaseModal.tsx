@@ -12,9 +12,13 @@ type Props = {
 
 /**
  * Modalの基礎です
+ *
+ * @setModalOpen
+ * onCloseで使用しますが、現在はonClose機能を止めているため、このPropsは使用していません。
+ * 今後使用する時のために、Propsには含めています。
  */
 export default function BaseModal({
-  modalOpen, setModalOpen, icon, title, description, body
+  modalOpen, icon, title, description, body
 }: Props) {
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
@@ -44,7 +48,10 @@ export default function BaseModal({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel
-                className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                className="relative transform overflow-hidden rounded-lg bg-white
+                 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full
+                 sm:max-w-sm sm:p-6"
+              >
                 <div>
                   {/* アイコン */}
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -57,9 +64,9 @@ export default function BaseModal({
                     </Dialog.Title>
                     {/* 説明 */}
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500 text-left">
+                      <div className="text-sm text-gray-500 text-left">
                         {description}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>

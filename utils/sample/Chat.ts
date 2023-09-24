@@ -70,7 +70,7 @@ export const chatsDB: Chat[] = [
     guest: {
       displayName: "あいうえおかきくけこさしすせそたちつてと",
       memo: "本日お伺い済み",
-      noticeEmail: email2,
+      noticeEmail: email1,
     },
     isRead: true,
     messages: [

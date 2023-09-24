@@ -102,8 +102,9 @@ export default function Client(props: Props) {
 
       {/* 通知Modal */}
       <NoticeEmailModal
-        openModal={noticeModalOpen}
-        setOpenModal={setNoticeModalOpen}
+        chatId={props.chatId}
+        modalOpen={noticeModalOpen}
+        setModalOpen={setNoticeModalOpen}
         registeredEmail={chat?.guest.noticeEmail}
       />
 

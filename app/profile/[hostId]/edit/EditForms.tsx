@@ -59,7 +59,7 @@ export default function EditForms({ host }: Props) {
 
           {/* 名前 */}
           <div className="sm:col-span-4">
-            <Label text={"表示名"}/>
+            <Label text={"名前"}/>
             <div className="mt-2">
               <input
                 type="text"

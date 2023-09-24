@@ -21,7 +21,7 @@ export default function MustLoginModal({ open }: Props) {
 
   return (
     <BaseModal
-      modalOpen={open}
+      modalOpen={modalOpen}
       setModalOpen={setModalOpen}
       icon={<NoSymbolIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>}
       title={"チャットが公開されていません"}

@@ -1,7 +1,10 @@
 /**
  * ボタンのクラス名です
  */
-export const buttonClassName = (isWhite?: boolean, widthFull?: boolean) => {
+export const buttonClassName = (
+  isWhite?: boolean,
+  widthFull?: boolean,
+) => {
   let colorClassName: string
   if (isWhite) {
     colorClassName = `bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50`

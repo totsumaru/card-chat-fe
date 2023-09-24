@@ -120,9 +120,7 @@ function BackgroundSVG() {
 
 // Gridのアイテムです
 function InfoGrid({
-  icon,
-  kind,
-  value
+  icon, kind, value
 }: {
   icon: React.ReactNode,
   kind: "電話番号" | "メールアドレス" | "Webサイト",
@@ -136,7 +134,7 @@ function InfoGrid({
       link = undefined; // メールはリンクもクリックでコピーも無し
       break;
     case "電話番号":
-      link = `tel:${value}`;
+      link = value && `tel:${value}`;
       break;
     case "Webサイト":
       link = value;
@@ -161,7 +159,7 @@ function InfoGrid({
         ) : (
           <>
             <p className="text-sm font-medium text-gray-900">{kind}</p>
-            <p className="truncate text-gray-500">{value}</p>
+            <p className="truncate text-gray-500">{value || "-"}</p>
           </>
         )}
       </div>

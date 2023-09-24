@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { pathDashboard } from "@/utils/path";
 import LinkButton from "@/components/button/LinkButton";
+import { ListBulletIcon } from "@heroicons/react/24/outline";
 
 type Props = {
   left: ReactNode
@@ -33,7 +34,12 @@ export default function Header({ left, right, isHost }: Props) {
       {/* 右側 */}
       <div>
         {dashboardUrl ? (
-          <LinkButton label={"ダッシュボード"} href={dashboardUrl} isWhite/>
+          <LinkButton
+            label={"ダッシュボード"}
+            href={dashboardUrl}
+            isWhite
+            icon={<ListBulletIcon className="h-5 w-5 mr-1"/>}
+          />
         ) : right}
       </div>
     </div>

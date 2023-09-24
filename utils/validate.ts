@@ -19,7 +19,7 @@ export const validatePasscodeInput = (inputValue: string): boolean => {
  *
  * 送信時のチェックとして使用するため、6文字の場合のみOK
  */
-export const validate = (passcode: string): boolean => {
+export const validatePasscode = (passcode: string): boolean => {
   return isNumericOnly(passcode) && passcode.length === 6;
 }
 

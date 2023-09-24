@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
-import { validate, validatePasscodeInput } from "@/utils/validate";
+import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
@@ -38,7 +38,7 @@ export default function PasscodeModal(props: Props) {
 
   // パスコードを送信
   const handlePasscodeSend = async () => {
-    if (!validate(passcode)) {
+    if (!validatePasscode(passcode)) {
       setErrMsg("数字6桁で入力してください")
       return
     }
@@ -92,22 +92,22 @@ export default function PasscodeModal(props: Props) {
         </div>
       )}
 
-      {/* ボタン */}
-      <div className="mt-2 sm:mt-3">
-        {success ? (
-          <LoadingButton
-            clickHandler={async () => setModalOpen(false)}
-            label={"OK"}
-            widthFull
-          />
-        ) : (
-          <LoadingButton
-            clickHandler={handlePasscodeSend}
-            label={"送信"}
-            widthFull
-          />
-        )}
-      </div>
+        {/* ボタン */}
+        <div className="mt-2 sm:mt-3">
+          {success ? (
+            <LoadingButton
+              clickHandler={async () => setModalOpen(false)}
+              label={"OK"}
+              widthFull
+            />
+          ) : (
+            <LoadingButton
+              clickHandler={handlePasscodeSend}
+              label={"送信"}
+              widthFull
+            />
+          )}
+        </div>
     </>
   )
 

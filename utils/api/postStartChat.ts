@@ -15,8 +15,9 @@ export const PostStartChat = async (
   chatId: string,
   session: TestSession,
   displayName: string,
+  passcode: string,
 ): Promise<Res> => {
-  return await backend(chatId, session, displayName)
+  return await backend(chatId, session, displayName, passcode)
 }
 
 // バックエンドの処理です
@@ -24,7 +25,10 @@ const backend = async (
   chatId: string,
   session: TestSession,
   displayName: string,
+  passcode: string,
 ): Promise<Res> => {
+  await sleep()
+
   // チャットを取得
   const chat = chatsDB.find(chat => chat.id === chatId)
   if (!chat) {
@@ -34,6 +38,10 @@ const backend = async (
   // ホストIDが設定されていないことを確認
   if (chat.hostId) {
     throw new Error("ホストIDがすでに設定されています")
+  }
+
+  if (chat.passcode !== passcode) {
+    throw new Error("パスコードが一致しません")
   }
 
   // ホストIDに自分のuserIdを設定します
@@ -46,7 +54,6 @@ const backend = async (
   }
 
   // 表示名を設定します
-  await sleep()
 
   return {
     chat: chat,

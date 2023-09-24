@@ -41,6 +41,8 @@ export default function StartChatModal(props: Props) {
 
   // 表示名を保存してチャットを開始
   const handleSaveDisplayName = async () => {
+    setErrMsg("")
+
     if (!displayName) {
       setErrMsg("表示名が入力されていません。")
       return
@@ -54,7 +56,7 @@ export default function StartChatModal(props: Props) {
       props.setMyId(props.chatId)
       setModalOpen(false)
     } catch (e) {
-      console.error(e)
+      setErrMsg("エラーが発生しました")
     } finally {
       setDisplayName("")
     }
@@ -88,8 +90,6 @@ export default function StartChatModal(props: Props) {
         <LoadingButton
           clickHandler={handleSaveDisplayName}
           label={"開始"}
-          successMessage={""}
-          failureMessage={"エラー: チャットを開始できません"}
           widthFull
         />
       </div>

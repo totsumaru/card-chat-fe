@@ -42,15 +42,16 @@ export default function PasscodeModal(props: Props) {
       setErrMsg("数字6桁で入力してください")
       return
     }
-    setSuccess(false)
 
     try {
       const res = await GetChatByPasscode(props.chatId, passcode)
+
       props.setChat(res.chat)
       props.setMessages(res.chat.messages)
       props.setHost(res.host)
       props.setMyId(props.chatId)
       setSuccess(true)
+      setErrMsg("")
     } catch (e) {
       setErrMsg("ログインできません")
     } finally {
@@ -85,7 +86,9 @@ export default function PasscodeModal(props: Props) {
             onChange={(e) => handlePasscodeChange(e.target.value)}
             value={passcode}
           />
-          <p className="text-red-500 text-sm ml-0.5">{errMsg}</p>
+          {errMsg && (
+            <p className="text-red-500 text-sm ml-0.5">{errMsg}</p>
+          )}
         </div>
       )}
 

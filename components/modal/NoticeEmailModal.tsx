@@ -31,6 +31,12 @@ export default function NoticeEmailModal({
   const [isRemove, setIsRemove] = useState<boolean>(false)
   const [errMsg, setErrMsg] = useState<string>("")
 
+  // Emailの入力が変更された時の処理です
+  const inputOnChange = (value: string) => {
+    setErrMsg("")
+    setEmail(value)
+  }
+
   // Modalを閉じるボタンの処理です
   const handleClose = async () => {
     setModalOpen(false)
@@ -42,6 +48,8 @@ export default function NoticeEmailModal({
 
   // メールアドレスを送信します
   const handleRegister = async () => {
+    setErrMsg("")
+
     if (!email) {
       const userConfirmed = confirm("通知を解除しますか？");
       if (!userConfirmed) {
@@ -60,7 +68,7 @@ export default function NoticeEmailModal({
       setSuccess(true)
       setEmail("")
     } catch (e) {
-      console.error(e)
+      setErrMsg("エラーが発生しました")
     }
   }
 
@@ -103,7 +111,7 @@ export default function NoticeEmailModal({
            ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
            focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder="メールアドレス"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => inputOnChange(e.target.value)}
         />
 
         {/* エラーメッセージ */}
@@ -117,15 +125,11 @@ export default function NoticeEmailModal({
         <LoadingButton
           clickHandler={handleRegister}
           label={registeredEmail ? "更新" : "登録"}
-          successMessage={""}
-          failureMessage={registeredEmail ? "更新できません" : "登録できません"}
           disabled={success}
         />
         <LoadingButton
           clickHandler={handleClose}
           label={"キャンセル"}
-          successMessage={""}
-          failureMessage={""}
           isWhite
         />
       </div>
@@ -138,8 +142,6 @@ export default function NoticeEmailModal({
       <LoadingButton
         clickHandler={handleClose}
         label={"OK"}
-        successMessage={""}
-        failureMessage={""}
         widthFull
       />
     </div>

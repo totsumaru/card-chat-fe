@@ -19,14 +19,18 @@ type Props = {
 export default function ChatMetadataForms(props: Props) {
   const [displayName, setDisplayName] = useState<string>(props.displayName)
   const [memo, setMemo] = useState<string>(props.memo)
+  const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
   // 保存ボタンをクリックした時の挙動です
   // ボタンコンポーネント側で、エラーメッセージを表示します
   const handleSave = async () => {
+    setSuccess(undefined)
+
     try {
       await PostChatInfo(currentUserSession, props.chatId, displayName, memo)
+      setSuccess(true)
     } catch (e) {
-      console.error(e)
+      setSuccess(false)
     }
   }
 
@@ -79,9 +83,14 @@ export default function ChatMetadataForms(props: Props) {
         <LoadingButton
           clickHandler={handleSave}
           label={"保存する"}
-          successMessage={"保存しました"}
-          failureMessage={"保存に失敗しました"}
         />
+        {success === true ? (
+          <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>
+        ) : (
+          success === false && (
+            <p className="text-red-500 text-sm mt-0.5">エラーが発生しました</p>
+          )
+        )}
       </div>
     </>
   )

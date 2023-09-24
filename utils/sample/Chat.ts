@@ -79,7 +79,7 @@ export const chatsDB: Chat[] = [
   {
     id: chatId3,
     passcode: "345678",
-    hostId: userId3,
+    hostId: "",
     guest: {
       displayName: "",
       memo: "",

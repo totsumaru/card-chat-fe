@@ -19,6 +19,7 @@ type Props = {
  * clientでの処理のためのコンポーネントです。
  */
 export default function EditForms({ host }: Props) {
+  // 入力フォームの内容
   const [avatarImageByte, setAvatarImageByte] = useState<string>(host?.avatarUrl || "")
   const [name, setName] = useState<string>(host?.name || "")
   const [headline, setHeadline] = useState<string>(host?.headline || "")
@@ -28,9 +29,13 @@ export default function EditForms({ host }: Props) {
   const [tel, setTel] = useState<string>(host?.company.tel || "")
   const [email, setEmail] = useState<string>(host?.company.email || "")
   const [website, setWebsite] = useState<string>(host?.company.website || "")
+  // 結果
+  const [success, setSuccess] = useState<boolean | undefined>(false)
 
   // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {
+    setSuccess(undefined)
+
     const req: User = {
       id: host?.id!,
       name: name,
@@ -48,8 +53,9 @@ export default function EditForms({ host }: Props) {
 
     try {
       await PostProfileEdit(currentUserSession, req)
+      setSuccess(true)
     } catch (e) {
-      console.error(e)
+      setSuccess(false)
     }
   }
 
@@ -184,9 +190,14 @@ export default function EditForms({ host }: Props) {
           <LoadingButton
             clickHandler={handleSaveButtonClick}
             label={"保存する"}
-            successMessage={"保存しました"}
-            failureMessage={"保存に失敗しました"}
           />
+          {success === true ? (
+            <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>
+          ) : (
+            success === false && (
+              <p className="text-red-500 text-sm mt-0.5">エラーが発生しました</p>
+            )
+          )}
         </div>
 
       </div>

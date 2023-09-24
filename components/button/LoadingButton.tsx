@@ -31,7 +31,7 @@ export default function LoadingButton({
       type="button"
       className={buttonClassName(isWhite, widthFull)}
       onClick={handler}
-      disabled={disabled}
+      disabled={loading || disabled}
     >
       {loading && <ButtonLoading/>}
       {label}

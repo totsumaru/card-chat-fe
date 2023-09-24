@@ -10,7 +10,7 @@ import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import { PostStartChat } from "@/utils/api/postStartChat";
 import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
-import { displayNameMaxLength, passcodeLength } from "@/utils/variable";
+import { passcodeLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
@@ -46,7 +46,7 @@ export default function StartChatModal(props: Props) {
 
   // 表示名が変更された時の処理です
   const handleDisplayNameChange = (value: string) => {
-    value.length === 20
+    value.length > 20
       ? setDisplayNameErrMsg("※上限は20文字です")
       : setDisplayNameErrMsg("")
     setDisplayName(value)
@@ -86,25 +86,28 @@ export default function StartChatModal(props: Props) {
     <>
       {/* 表示名のフォーム */}
       <div className="mt-3">
-        <p className="text-gray-500 text-xs font-semibold ml-0.5">
+        <p className="text-gray-500 text-sm font-semibold ml-0.5">
           表示名（任意）
         </p>
         <input
           type="text"
-          maxLength={displayNameMaxLength}
           className={inputClassName}
           placeholder="鈴木 様"
           onChange={(e) => handleDisplayNameChange(e.target.value)}
           value={displayName}
         />
         {displayNameErrMsg && (
-          <p className="text-xs text-red-400 ml-1 mt-1">{displayNameErrMsg}</p>
+          <p className="text-xs text-red-400 ml-1 mt-0.5">{displayNameErrMsg}</p>
         )}
+        <span className="block text-xs text-gray-500 font-thin ml-1 mt-0.5">
+          ※相手には表示されません<br/>
+          ※いつでも変更できます
+        </span>
       </div>
 
       {/* パスコードのフォーム */}
-      <div className="mt-3">
-        <p className="text-gray-500 text-xs font-semibold ml-0.5">
+      <div className="mt-2">
+        <p className="text-gray-500 text-sm font-semibold ml-0.5">
           パスコード
         </p>
         <input
@@ -126,6 +129,7 @@ export default function StartChatModal(props: Props) {
         <LoadingButton
           clickHandler={handleSaveDisplayName}
           label={"開始"}
+          disabled={!!passcodeErrMsg || !!displayNameErrMsg}
           widthFull
         />
         {error && (
@@ -146,10 +150,6 @@ export default function StartChatModal(props: Props) {
       description={
         <span>
           渡す相手が分かっている場合は、表示名を設定しておくと見やすくなります。
-          <span className="block mt-2">
-            ※ 相手には表示されません<br/>
-            ※ いつでも変更できます
-          </span>
         </span>
       }
       body={body}

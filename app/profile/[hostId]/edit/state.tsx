@@ -1,5 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
+/**
+ * フォームのStateです
+ */
 export function useInputState(initialValue: string): [
   string,
   Dispatch<SetStateAction<string>>,

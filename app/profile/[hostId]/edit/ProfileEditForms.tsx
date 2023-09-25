@@ -45,8 +45,6 @@ export default function ProfileEditForms({ session, host }: Props) {
 
   // 全ての入力値のバリデーションを行います
   const validate = (): boolean => {
-    let isValid = true
-
     const list: {
       validateFunc: (value: string) => string,
       value: string,
@@ -61,18 +59,16 @@ export default function ProfileEditForms({ session, host }: Props) {
       { validateFunc: validateEmail, value: email, setErrMsg: setEmailErr },
       { validateFunc: validateURL, value: website, setErrMsg: setWebsiteErr },
     ]
-
+    let isValid = true
     list.forEach(({ validateFunc, value, setErrMsg }) => {
       // エラーメッセージを最初に初期化します
       setErrMsg("")
-
       const err = validateFunc(value)
       if (err) {
         setErrMsg(err)
         isValid = false
       }
     })
-
     return isValid
   }
 

@@ -7,7 +7,6 @@ import { User } from "@/utils/sample/User";
 import { PostProfileEdit } from "@/utils/api/postProfileEdit";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
-import InputErrMsg from "@/components/text/InputErrMsg";
 import {
   validateCompanyName,
   validateEmail,
@@ -18,13 +17,14 @@ import {
   validateTel,
   validateURL
 } from "@/utils/validate";
+import Form from "@/app/profile/[hostId]/edit/Form";
 
 type Props = {
   session: Session | null
   host: User
 }
 
-type inputState = {
+export type InputState = {
   value: string
   errMsg?: string
 }
@@ -35,15 +35,15 @@ type inputState = {
  * clientでの処理のためのコンポーネントです。
  */
 export default function ProfileEditForms({ session, host }: Props) {
-  const [avatar, setAvatar] = useState<inputState>({ value: host.avatarUrl })
-  const [name, setName] = useState<inputState>({ value: host.name })
-  const [headline, setHeadline] = useState<inputState>({ value: host.headline })
-  const [intro, setIntro] = useState<inputState>({ value: host.introduction })
-  const [companyName, setCompanyName] = useState<inputState>({ value: host.company.name })
-  const [position, setPosition] = useState<inputState>({ value: host.company.position })
-  const [tel, setTel] = useState<inputState>({ value: host.company.tel })
-  const [email, setEmail] = useState<inputState>({ value: host.company.email })
-  const [website, setWebsite] = useState<inputState>({ value: host.company.website })
+  const [avatar, setAvatar] = useState<InputState>({ value: host.avatarUrl })
+  const [name, setName] = useState<InputState>({ value: host.name })
+  const [headline, setHeadline] = useState<InputState>({ value: host.headline })
+  const [intro, setIntro] = useState<InputState>({ value: host.introduction })
+  const [companyName, setCompanyName] = useState<InputState>({ value: host.company.name })
+  const [position, setPosition] = useState<InputState>({ value: host.company.position })
+  const [tel, setTel] = useState<InputState>({ value: host.company.tel })
+  const [email, setEmail] = useState<InputState>({ value: host.company.email })
+  const [website, setWebsite] = useState<InputState>({ value: host.company.website })
   // 結果
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
@@ -62,6 +62,9 @@ export default function ProfileEditForms({ session, host }: Props) {
     ]
 
     list.forEach(({ validateFunc, obj, setObj }) => {
+      // エラーメッセージを最初に初期化します
+      setObj(prevState => ({ ...prevState, errMsg: "" }))
+
       const err = validateFunc(obj.value)
       if (err) {
         setObj(prevState => ({ ...prevState, errMsg: err }))
@@ -116,148 +119,61 @@ export default function ProfileEditForms({ session, host }: Props) {
 
       <div className="border-b border-gray-900/10 pb-12">
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
-
           {/* 名前 */}
-          <div className="sm:col-span-4">
-            <Label text={"名前（必須）"}/>
-            <div className="mt-2">
-              <input
-                type="text"
-                placeholder="鈴木 太郎"
-                className={inputClassName}
-                value={name.value}
-                onChange={(e) => setName(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {name.errMsg && <InputErrMsg errMsg={name.errMsg}/>}
-          </div>
-
+          <Form
+            label={"名前（必須）"}
+            placeholder={"鈴木 太郎"}
+            state={name} setState={setName}
+          />
           {/* 会社名 */}
-          <div className="sm:col-span-3">
-            <Label text={"会社名"}/>
-            <div className="mt-2">
-              <input
-                type="text"
-                placeholder="株式会社ABC"
-                className={inputClassName}
-                value={companyName.value}
-                onChange={(e) => setCompanyName(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {companyName.errMsg && <InputErrMsg errMsg={companyName.errMsg}/>}
-          </div>
-
+          <Form
+            label={"会社名"}
+            placeholder={"株式会社〇〇"}
+            state={companyName} setState={setCompanyName}
+            isGridColSpan3={true}
+          />
           {/* 所属 */}
-          <div className="sm:col-span-3">
-            <Label text={"所属"}/>
-            <div className="mt-2">
-              <input
-                type="text"
-                placeholder="営業部 営業一課"
-                className={inputClassName}
-                value={position.value}
-                onChange={(e) => setPosition(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {position.errMsg && <InputErrMsg errMsg={position.errMsg}/>}
-          </div>
-
+          <Form
+            label={"所属"}
+            placeholder={"営業部 営業一課"}
+            state={position} setState={setPosition}
+            isGridColSpan3={true}
+          />
           {/*　メールアドレス */}
-          <div className="sm:col-span-4">
-            <Label text={"メールアドレス"}/>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="abc@example.com"
-                className={inputClassName}
-                value={email.value}
-                // ここでは検証せず、ボタンクリックの時に検証
-                onChange={(e) => setEmail(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {email.errMsg && <InputErrMsg errMsg={email.errMsg}/>}
-          </div>
-
+          <Form
+            label={"メールアドレス"}
+            placeholder={"mail@example.com"}
+            state={email} setState={setEmail}
+            type={"email"}
+          />
           {/*　電話番号 */}
-          <div className="sm:col-span-4">
-            <Label text={"電話番号"}/>
-            <div className="mt-2">
-              <input
-                name="tel"
-                type="tel"
-                placeholder="090-1234-5678"
-                className={inputClassName}
-                value={tel.value}
-                // ここでは検証せず、ボタンクリックの時に検証
-                onChange={(e) => setTel(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {tel.errMsg && <InputErrMsg errMsg={tel.errMsg}/>}
-          </div>
-
+          <Form
+            label={"電話番号"}
+            placeholder={"090-xxxx-xxxx"}
+            state={tel} setState={setTel}
+            type={"tel"}
+          />
           {/*　Webサイト */}
-          <div className="sm:col-span-4">
-            <Label text={"ホームページ"}/>
-            <div className="mt-2">
-              <input
-                type="url"
-                placeholder="https://example.com"
-                className={inputClassName}
-                value={website.value}
-                onChange={(e) => setWebsite(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {website.errMsg && <InputErrMsg errMsg={website.errMsg}/>}
-          </div>
-
+          <Form
+            label={"ホームページ"}
+            placeholder={"https://example.com"}
+            state={website} setState={setWebsite}
+            type={"url"}
+          />
           {/*　ヘッドライン */}
-          <div className="sm:col-span-4">
-            <Label text={"ヘッドライン"}/>
-            <div className="mt-2">
-              <textarea
-                rows={2}
-                placeholder="私たちは、お客様を笑顔にするお手伝いをしています。"
-                className={inputClassName}
-                value={headline.value}
-                onChange={(e) => setHeadline(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {headline.errMsg && <InputErrMsg errMsg={headline.errMsg}/>}
-          </div>
-
+          <Form
+            label={"ヘッドライン"}
+            placeholder={"私たちは、お客様を笑顔にするお手伝いをしています。"}
+            state={headline} setState={setHeadline}
+            textarea textareaRows={2}
+          />
           {/*　自己紹介 */}
-          <div className="sm:col-span-4">
-            <Label text={"自己紹介"}/>
-            <div className="mt-2">
-              <textarea
-                rows={7}
-                className={inputClassName}
-                value={intro.value}
-                onChange={(e) => setIntro(prevState => ({
-                  ...prevState, value: e.target.value
-                }))}
-              />
-            </div>
-            {intro.errMsg && <InputErrMsg errMsg={intro.errMsg}/>}
-          </div>
-
+          <Form
+            label={"自己紹介"}
+            placeholder={""}
+            state={intro} setState={setIntro}
+            textarea textareaRows={7}
+          />
         </div>
 
         {/* 保存ボタン */}
@@ -283,7 +199,7 @@ export default function ProfileEditForms({ session, host }: Props) {
 // ラベルです
 function Label({ text }: { text: string }) {
   return (
-    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+    <label className="block text-sm font-medium leading-6 text-gray-900">
       {text}
     </label>
   )
@@ -291,7 +207,8 @@ function Label({ text }: { text: string }) {
 
 // inputのクラス名です
 const inputClassName = `
-block w-full rounded-md border-0 px-3 py-2 text-gray-900
- shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
- focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6
+ block w-full rounded-md border-0 px-3 py-2 text-gray-900
+          shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
+          focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6
+
 `

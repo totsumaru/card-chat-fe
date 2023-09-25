@@ -8,7 +8,8 @@ import {
   nameMaxLength,
   passcodeLength,
   positionMaxLength,
-  telMaxLength
+  telMaxLength,
+  urlMaxLength
 } from "@/utils/variable";
 
 /**
@@ -164,8 +165,8 @@ export const validateURL = (url: string): string => {
     return ""
   }
 
-  if (url.length > positionMaxLength) {
-    return `最大文字数は${positionMaxLength}文字です`
+  if (url.length > urlMaxLength) {
+    return `最大文字数は${urlMaxLength}文字です`
   }
   const regex = /^(https?:\/\/)?([\da-z-]+)\.([a-z]{2,6})([\/\w -]*)*\/?$/;
   if (!regex.test(url)) {

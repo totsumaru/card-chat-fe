@@ -52,44 +52,38 @@ export default function ProfileEditForms({ host }: Props) {
   // 結果
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
+  type validateObj = {
+    validateFunc: (value: any) => string
+    setErrorFunc: (errMsg: string) => void
+    value: any
+  }
+
   // 全ての入力値のバリデーションを行います
   const isValid = (): boolean => {
-    let isvalid = false
+    const validationMapping: validateObj[] = [
+      { validateFunc: validateName, setErrorFunc: setNameErrMsg, value: name },
+      { validateFunc: validateHeadline, setErrorFunc: setHeadlineErrMsg, value: headline },
+      { validateFunc: validateIntro, setErrorFunc: setIntroErrMsg, value: intro },
+      { validateFunc: validateCompanyName, setErrorFunc: setCompanyNameErrMsg, value: companyName },
+      { validateFunc: validatePosition, setErrorFunc: setPositionErrMsg, value: position },
+      { validateFunc: validateTel, setErrorFunc: setTelErrMsg, value: tel },
+      { validateFunc: validateEmail, setErrorFunc: setEmailErrMsg, value: email },
+      { validateFunc: validateURL, setErrorFunc: setWebsiteErrMsg, value: website }
+    ];
 
-    const name_err = validateName(name)
-    setNameErrMsg(name_err)
+    let isvalid = true;
+    validationMapping.forEach(({ validateFunc, setErrorFunc, value }) => {
+      // まずはエラーメッセージをクリアします
+      setErrorFunc("")
+      const err = validateFunc(value);
+      if (err) {
+        setErrorFunc(err);
+        isvalid = false;
+      }
+    });
 
-    const headline_err = validateHeadline(headline)
-    setHeadlineErrMsg(headline_err)
-
-    const intro_err = validateIntro(intro)
-    setIntroErrMsg(intro_err)
-
-    const company_name_err = validateCompanyName(companyName)
-    setCompanyNameErrMsg(company_name_err)
-
-    const position_err = validatePosition(position)
-    setPositionErrMsg(position_err)
-
-    const tel_err = validateTel(tel)
-    setTelErrMsg(tel_err)
-
-    const email_err = validateEmail(email)
-    setEmailErrMsg(email_err)
-
-    const website_err = validateURL(website)
-    setWebsiteErrMsg(website_err)
-
-    return (
-      !name_err &&
-      !headline_err &&
-      !intro_err &&
-      !company_name_err &&
-      !position_err &&
-      !tel_err &&
-      !email_err &&
-      !website_err
-    )
+    console.log("isValid: ", isvalid)
+    return isvalid;
   }
 
   // 保存ボタンがクリックされた時の処理です

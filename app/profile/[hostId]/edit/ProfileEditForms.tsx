@@ -1,5 +1,6 @@
 "use client"
 
+import classnames from "classnames";
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
@@ -182,13 +183,13 @@ export default function ProfileEditForms({ session, host }: Props) {
             clickHandler={handleSaveButtonClick}
             label={"保存する"}
           />
-          {success === true ? (
-            <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>
-          ) : (
-            success === false && (
-              <p className="text-red-500 text-sm mt-0.5">エラーが発生しました</p>
-            )
-          )}
+          {/* 結果 */}
+          <p className={classnames("text-sm ml-0.5 mt-1", {
+            "text-gray-600": success === true,
+            "text-red-500 mt-0.5": success === false,
+          })}>
+            {success === true ? "保存しました！" : "エラーが発生しました"}
+          </p>
         </div>
 
       </div>

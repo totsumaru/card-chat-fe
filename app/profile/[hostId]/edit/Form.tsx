@@ -1,13 +1,12 @@
-import React, { Dispatch } from "react";
-import { InputState } from "@/app/profile/[hostId]/edit/ProfileEditForms";
-import classNames from 'classnames';
+import React from "react";
 import InputErrMsg from "@/components/text/InputErrMsg";
 
 type Props = {
   label: string
   placeholder: string
-  state: InputState
-  setState: Dispatch<React.SetStateAction<InputState>>
+  value: string
+  setValue: (value: string) => void
+  errMsg: string
   isGridColSpan3?: boolean
   type?: "email" | "tel" | "url"
   textarea?: boolean
@@ -17,7 +16,7 @@ type Props = {
 /**
  * プロフィール入力のフォームです
  */
-export default function Form(props: Props) {
+export default function Input(props: Props) {
   return (
     <div className={`${props.isGridColSpan3 ? "sm:col-span-3" : "sm:col-span-4"}`}>
       <Label text={props.label}/>
@@ -29,10 +28,8 @@ export default function Form(props: Props) {
             // 以下共通
             placeholder={props.placeholder}
             className={formClassName}
-            value={props.state.value}
-            onChange={(e) => props.setState(prevState => ({
-              ...prevState, value: e.target.value
-            }))}
+            value={props.value}
+            onChange={(e) => props.setValue(e.target.value)}
           />
         ) : (
           <input
@@ -41,14 +38,12 @@ export default function Form(props: Props) {
             name={props.type}
             placeholder={props.placeholder}
             className={formClassName}
-            value={props.state.value}
-            onChange={(e) => props.setState(prevState => ({
-              ...prevState, value: e.target.value
-            }))}
+            value={props.value}
+            onChange={(e) => props.setValue(e.target.value)}
           />
         )}
       </div>
-      {props.state.errMsg && <InputErrMsg errMsg={props.state.errMsg}/>}
+      {props.errMsg && <InputErrMsg errMsg={props.errMsg}/>}
     </div>
   )
 }

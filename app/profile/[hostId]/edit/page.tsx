@@ -4,7 +4,7 @@ import ReturnLink from "@/components/link/ReturnLink";
 import Container from "@/components/container/Container";
 import { pathDashboard } from "@/utils/path";
 import Header from "@/components/header/Header";
-import EditForms from "@/app/profile/[hostId]/edit/EditForms";
+import ProfileEditForms from "@/app/profile/[hostId]/edit/ProfileEditForms";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
 
@@ -31,7 +31,7 @@ export default async function Index({
 
         <h1 className="text-lg font-bold mt-3">プロフィールの編集</h1>
 
-        <EditForms session={session} host={host}/>
+        <ProfileEditForms session={session} host={host}/>
       </Container>
     </>
   )

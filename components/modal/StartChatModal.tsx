@@ -38,9 +38,12 @@ export default function StartChatModal(props: Props) {
 
   // パスコードが変更された時の処理です
   const handlePasscodeChange = (value: string) => {
-    if (validatePasscodeInput(value)) {
-      setPasscode(value)
+    const passcodeErr = validatePasscodeInput(value)
+    if (passcodeErr) {
+      setPasscodeErrMsg(passcodeErr)
+      return
     }
+    setPasscode(value)
     setPasscodeErrMsg("")
   }
 
@@ -58,8 +61,9 @@ export default function StartChatModal(props: Props) {
     setPasscodeErrMsg("")
     setError(false)
 
-    if (!validatePasscode(passcode)) {
-      setPasscodeErrMsg("数字6桁で入力してください")
+    const passcodeErr = validatePasscode(passcode)
+    if (!passcodeErr) {
+      setPasscodeErrMsg(passcodeErr)
       return
     }
 

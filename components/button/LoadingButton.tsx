@@ -3,8 +3,9 @@ import ButtonLoading from "@/components/loading/ButtonLoading";
 import { buttonClassName } from "@/components/button/buttonClassName";
 
 type Props = {
-  clickHandler: () => Promise<void>
   label: string
+  clickHandler: () => Promise<void>
+  isValid?: () => boolean
   widthFull?: boolean
   isWhite?: boolean
   disabled?: boolean
@@ -16,9 +17,13 @@ type Props = {
  * 処理時にSpinnerが表示されます
  */
 export default function LoadingButton({
-  clickHandler, label, widthFull, isWhite, disabled
+  label, clickHandler, isValid, widthFull, isWhite, disabled
 }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
+
+  if (!isValid) {
+    return
+  }
 
   const handler = async () => {
     setLoading(true)

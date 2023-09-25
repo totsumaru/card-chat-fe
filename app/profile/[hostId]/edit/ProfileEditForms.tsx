@@ -7,6 +7,17 @@ import { User } from "@/utils/sample/User";
 import { PostProfileEdit } from "@/utils/api/postProfileEdit";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
+import InputErrMsg from "@/components/text/InputErrMsg";
+import {
+  validateCompanyName,
+  validateEmail,
+  validateHeadline,
+  validateIntro,
+  validateName,
+  validatePosition,
+  validateTel,
+  validateURL
+} from "@/utils/validate";
 
 type Props = {
   session: Session | null
@@ -18,7 +29,7 @@ type Props = {
  *
  * clientでの処理のためのコンポーネントです。
  */
-export default function EditForms({ host }: Props) {
+export default function ProfileEditForms({ host }: Props) {
   // 入力フォームの内容
   const [avatarImageByte, setAvatarImageByte] = useState<string>(host?.avatarUrl || "")
   const [name, setName] = useState<string>(host?.name || "")
@@ -29,12 +40,65 @@ export default function EditForms({ host }: Props) {
   const [tel, setTel] = useState<string>(host?.company.tel || "")
   const [email, setEmail] = useState<string>(host?.company.email || "")
   const [website, setWebsite] = useState<string>(host?.company.website || "")
+  // エラーメッセージ
+  const [nameErrMsg, setNameErrMsg] = useState<string>("")
+  const [headlineErrMsg, setHeadlineErrMsg] = useState<string>("")
+  const [introErrMsg, setIntroErrMsg] = useState<string>("")
+  const [companyNameErrMsg, setCompanyNameErrMsg] = useState<string>("")
+  const [positionErrMsg, setPositionErrMsg] = useState<string>("")
+  const [telErrMsg, setTelErrMsg] = useState<string>("")
+  const [emailErrMsg, setEmailErrMsg] = useState<string>("")
+  const [websiteErrMsg, setWebsiteErrMsg] = useState<string>("")
   // 結果
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
+
+  // 全ての入力値のバリデーションを行います
+  const isValid = (): boolean => {
+    let isvalid = false
+
+    const name_err = validateName(name)
+    setNameErrMsg(name_err)
+
+    const headline_err = validateHeadline(headline)
+    setHeadlineErrMsg(headline_err)
+
+    const intro_err = validateIntro(intro)
+    setIntroErrMsg(intro_err)
+
+    const company_name_err = validateCompanyName(companyName)
+    setCompanyNameErrMsg(company_name_err)
+
+    const position_err = validatePosition(position)
+    setPositionErrMsg(position_err)
+
+    const tel_err = validateTel(tel)
+    setTelErrMsg(tel_err)
+
+    const email_err = validateEmail(email)
+    setEmailErrMsg(email_err)
+
+    const website_err = validateURL(website)
+    setWebsiteErrMsg(website_err)
+
+    return (
+      !name_err &&
+      !headline_err &&
+      !intro_err &&
+      !company_name_err &&
+      !position_err &&
+      !tel_err &&
+      !email_err &&
+      !website_err
+    )
+  }
 
   // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {
     setSuccess(undefined)
+    if (!isValid()) {
+      setSuccess(false)
+      return
+    }
 
     const req: User = {
       id: host?.id!,
@@ -70,7 +134,7 @@ export default function EditForms({ host }: Props) {
 
           {/* 名前 */}
           <div className="sm:col-span-4">
-            <Label text={"名前"}/>
+            <Label text={"名前（必須）"}/>
             <div className="mt-2">
               <input
                 type="text"
@@ -80,6 +144,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={nameErrMsg}/>
           </div>
 
           {/* 会社名 */}
@@ -94,6 +159,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={companyNameErrMsg}/>
           </div>
 
           {/* 所属 */}
@@ -108,6 +174,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setPosition(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={positionErrMsg}/>
           </div>
 
           {/*　メールアドレス */}
@@ -122,9 +189,11 @@ export default function EditForms({ host }: Props) {
                 placeholder="abc@example.com"
                 className={inputClassName}
                 value={email}
+                // ここでは検証せず、ボタンクリックの時に検証
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={emailErrMsg}/>
           </div>
 
           {/*　電話番号 */}
@@ -137,9 +206,11 @@ export default function EditForms({ host }: Props) {
                 placeholder="090-1234-5678"
                 className={inputClassName}
                 value={tel}
+                // ここでは検証せず、ボタンクリックの時に検証
                 onChange={(e) => setTel(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={telErrMsg}/>
           </div>
 
           {/*　Webサイト */}
@@ -154,6 +225,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setWebsite(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={websiteErrMsg}/>
           </div>
 
           {/*　ヘッドライン */}
@@ -168,6 +240,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setHeadline(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={headlineErrMsg}/>
           </div>
 
           {/*　自己紹介 */}
@@ -181,6 +254,7 @@ export default function EditForms({ host }: Props) {
                 onChange={(e) => setIntro(e.target.value)}
               />
             </div>
+            <InputErrMsg errMsg={introErrMsg}/>
           </div>
 
         </div>
@@ -190,6 +264,7 @@ export default function EditForms({ host }: Props) {
           <LoadingButton
             clickHandler={handleSaveButtonClick}
             label={"保存する"}
+            isValid={isValid}
           />
           {success === true ? (
             <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>

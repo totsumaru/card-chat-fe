@@ -33,14 +33,20 @@ export default function PasscodeModal(props: Props) {
 
   // Inputが入力された時の挙動です
   const handlePasscodeChange = (value: string) => {
-    validatePasscodeInput(value) && setPasscode(value)
-    setErrMsg("")
+    const passcodeInputErrMsg = validatePasscodeInput(value)
+    if (passcodeInputErrMsg) {
+      setErrMsg(passcodeInputErrMsg)
+    } else {
+      setPasscode(value)
+      setErrMsg("")
+    }
   };
 
   // パスコードを送信
   const handlePasscodeSend = async () => {
-    if (!validatePasscode(passcode)) {
-      setErrMsg("数字6桁で入力してください")
+    const passcodeErrMsg = validatePasscode(passcode)
+    if (passcodeErrMsg) {
+      setErrMsg(passcodeErrMsg)
       return
     }
 

@@ -59,7 +59,7 @@ export default function ProfileEditForms({ host }: Props) {
   }
 
   // 全ての入力値のバリデーションを行います
-  const isValid = (): boolean => {
+  const validate = (): boolean => {
     const validationMapping: validateObj[] = [
       { validateFunc: validateName, setErrorFunc: setNameErrMsg, value: name },
       { validateFunc: validateHeadline, setErrorFunc: setHeadlineErrMsg, value: headline },
@@ -73,8 +73,7 @@ export default function ProfileEditForms({ host }: Props) {
 
     let isvalid = true;
     validationMapping.forEach(({ validateFunc, setErrorFunc, value }) => {
-      // まずはエラーメッセージをクリアします
-      setErrorFunc("")
+      setErrorFunc("") // まずはエラーメッセージをクリアします
       const err = validateFunc(value);
       if (err) {
         setErrorFunc(err);
@@ -82,14 +81,13 @@ export default function ProfileEditForms({ host }: Props) {
       }
     });
 
-    console.log("isValid: ", isvalid)
     return isvalid;
   }
 
   // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {
     setSuccess(undefined)
-    if (!isValid()) {
+    if (!validate()) {
       setSuccess(false)
       return
     }
@@ -258,7 +256,6 @@ export default function ProfileEditForms({ host }: Props) {
           <LoadingButton
             clickHandler={handleSaveButtonClick}
             label={"保存する"}
-            isValid={isValid}
           />
           {success === true ? (
             <p className="text-gray-600 text-sm ml-0.5 mt-1">保存しました！</p>

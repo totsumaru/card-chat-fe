@@ -18,7 +18,7 @@ import {
   validateURL
 } from "@/utils/validate";
 import { useInputState } from "@/app/profile/[hostId]/edit/state";
-import Input from "@/app/profile/[hostId]/edit/Form";
+import { Input, Textarea } from "@/app/profile/[hostId]/edit/Form";
 
 type Props = {
   session: Session | null
@@ -123,7 +123,7 @@ export default function ProfileEditForms({ session, host }: Props) {
             label={"会社名"}
             placeholder={"株式会社〇〇"}
             value={companyName} setValue={setCompanyName}
-            isGridColSpan3={true}
+            isGridColSpan3
             errMsg={companyNameErr}
           />
           {/* 所属 */}
@@ -131,7 +131,7 @@ export default function ProfileEditForms({ session, host }: Props) {
             label={"所属"}
             placeholder={"営業部 営業一課"}
             value={position} setValue={setPosition}
-            isGridColSpan3={true}
+            isGridColSpan3
             errMsg={positionErr}
           />
           {/*　メールアドレス */}
@@ -159,19 +159,19 @@ export default function ProfileEditForms({ session, host }: Props) {
             errMsg={websiteErr}
           />
           {/*　ヘッドライン */}
-          <Input
+          <Textarea
             label={"ヘッドライン"}
             placeholder={"私たちは、お客様を笑顔にするお手伝いをしています。"}
             value={headline} setValue={setHeadline}
-            textarea textareaRows={2}
+            rows={2}
             errMsg={headlineErr}
           />
           {/*　自己紹介 */}
-          <Input
+          <Textarea
             label={"自己紹介"}
             placeholder={""}
             value={intro} setValue={setIntro}
-            textarea textareaRows={7}
+            rows={7}
             errMsg={introErr}
           />
         </div>

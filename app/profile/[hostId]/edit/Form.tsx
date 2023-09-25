@@ -1,49 +1,86 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import InputErrMsg from "@/components/text/InputErrMsg";
 
-type Props = {
+// 共通のPropsです
+type CommonProps = {
   label: string
   placeholder: string
   value: string
   setValue: (value: string) => void
   errMsg: string
   isGridColSpan3?: boolean
+}
+
+// InputのPropsです
+type InputProps = CommonProps & {
   type?: "email" | "tel" | "url"
-  textarea?: boolean
-  textareaRows?: number
+}
+
+// TextareaのPropsです
+type TextareaProps = CommonProps & {
+  rows: number
 }
 
 /**
  * プロフィール入力のフォームです
  */
-export default function Input(props: Props) {
+
+// Inputです
+export function Input(props: InputProps) {
   return (
-    <div className={`${props.isGridColSpan3 ? "sm:col-span-3" : "sm:col-span-4"}`}>
-      <Label text={props.label}/>
+    <Container
+      label={props.label}
+      errMsg={props.errMsg}
+      isGridColSpan3={props.isGridColSpan3}
+    >
+      <input
+        type={props.type || "text"}
+        // 以下共通
+        name={props.type}
+        placeholder={props.placeholder}
+        className={formClassName}
+        value={props.value}
+        onChange={(e) => props.setValue(e.target.value)}
+      />
+    </Container>
+  )
+}
+
+// Textareaです
+export const Textarea = (props: TextareaProps) => {
+  return (
+    <Container
+      label={props.label}
+      errMsg={props.errMsg}
+      isGridColSpan3={props.isGridColSpan3}
+    >
+      <textarea
+        rows={props.rows || 3}
+        // 以下共通
+        placeholder={props.placeholder}
+        className={formClassName}
+        value={props.value}
+        onChange={(e) => props.setValue(e.target.value)}
+      />
+    </Container>
+  )
+}
+
+const Container = ({
+  children, label, errMsg, isGridColSpan3,
+}: {
+  children: ReactNode
+  label: string,
+  errMsg: string,
+  isGridColSpan3?: boolean
+}) => {
+  return (
+    <div className={`${isGridColSpan3 ? "sm:col-span-3" : "sm:col-span-4"}`}>
+      <Label text={label}/>
       <div className="mt-2">
-        {props.textarea ? (
-          <textarea
-            name={props.type}
-            rows={props.textareaRows || 3}
-            // 以下共通
-            placeholder={props.placeholder}
-            className={formClassName}
-            value={props.value}
-            onChange={(e) => props.setValue(e.target.value)}
-          />
-        ) : (
-          <input
-            type={props.type || "text"}
-            // 以下共通
-            name={props.type}
-            placeholder={props.placeholder}
-            className={formClassName}
-            value={props.value}
-            onChange={(e) => props.setValue(e.target.value)}
-          />
-        )}
+        {children}
       </div>
-      {props.errMsg && <InputErrMsg errMsg={props.errMsg}/>}
+      {errMsg && <InputErrMsg errMsg={errMsg}/>}
     </div>
   )
 }

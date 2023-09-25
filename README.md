@@ -7,25 +7,19 @@
 - このページはURLを知っている全てのユーザーに公開されます
 
 ```
-/profile/[host-id]
+/profile/[user-id]
 ```
 
 送信者のプロフィールを編集します
 
 ```
-/profile/[host-id]/edit
+/profile/[user-id]/edit
 ```
 
 ダッシュボードです
 
 ```
-/dashboard/[host-id]
-```
-
-チャットの情報(ユーザー名など)を表示/編集します
-
-```
-/dashboard/[host-id]/[msg-id]
+/dashboard
 ```
 
 ログイン画面です
@@ -40,5 +34,11 @@
 - 表示にはパスコードが必要です
 
 ```
-/login
+/chat/[chat-id]
+```
+
+チャットの情報(ユーザー名など)を表示/編集します
+
+```
+/chat/[chat-id]/edit
 ```

@@ -7,6 +7,8 @@ import Header from "@/components/header/Header";
 import ProfileEditForms from "@/app/profile/[hostId]/edit/ProfileEditForms";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
+import { User } from "@/utils/sample/User";
+import NotFound from "@/components/error/404";
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +22,12 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
-  const host = await GetUserByID(currentUserId)
+  let host: User | undefined
+  try {
+    host = await GetUserByID(currentUserId)
+  } catch (e) {
+    console.error(e)
+  }
 
   return (
     <>
@@ -31,7 +38,11 @@ export default async function Index({
 
         <h1 className="text-lg font-bold mt-3">プロフィールの編集</h1>
 
-        <ProfileEditForms session={session} host={host}/>
+        {host
+          ? <ProfileEditForms session={session} host={host}/>
+          : <NotFound/>
+        }
+
       </Container>
     </>
   )

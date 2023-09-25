@@ -21,7 +21,12 @@ import {
 
 type Props = {
   session: Session | null
-  host: User | undefined
+  host: User
+}
+
+type inputState = {
+  value: string
+  errMsg?: string
 }
 
 /**
@@ -29,59 +34,42 @@ type Props = {
  *
  * clientでの処理のためのコンポーネントです。
  */
-export default function ProfileEditForms({ host }: Props) {
-  // 入力フォームの内容
-  const [avatarImageByte, setAvatarImageByte] = useState<string>(host?.avatarUrl || "")
-  const [name, setName] = useState<string>(host?.name || "")
-  const [headline, setHeadline] = useState<string>(host?.headline || "")
-  const [intro, setIntro] = useState<string>(host?.introduction || "")
-  const [companyName, setCompanyName] = useState<string>(host?.company.name || "")
-  const [position, setPosition] = useState<string>(host?.company.position || "")
-  const [tel, setTel] = useState<string>(host?.company.tel || "")
-  const [email, setEmail] = useState<string>(host?.company.email || "")
-  const [website, setWebsite] = useState<string>(host?.company.website || "")
-  // エラーメッセージ
-  const [nameErrMsg, setNameErrMsg] = useState<string>("")
-  const [headlineErrMsg, setHeadlineErrMsg] = useState<string>("")
-  const [introErrMsg, setIntroErrMsg] = useState<string>("")
-  const [companyNameErrMsg, setCompanyNameErrMsg] = useState<string>("")
-  const [positionErrMsg, setPositionErrMsg] = useState<string>("")
-  const [telErrMsg, setTelErrMsg] = useState<string>("")
-  const [emailErrMsg, setEmailErrMsg] = useState<string>("")
-  const [websiteErrMsg, setWebsiteErrMsg] = useState<string>("")
+export default function ProfileEditForms({ session, host }: Props) {
+  const [avatar, setAvatar] = useState<inputState>({ value: host.avatarUrl })
+  const [name, setName] = useState<inputState>({ value: host.name })
+  const [headline, setHeadline] = useState<inputState>({ value: host.headline })
+  const [intro, setIntro] = useState<inputState>({ value: host.introduction })
+  const [companyName, setCompanyName] = useState<inputState>({ value: host.company.name })
+  const [position, setPosition] = useState<inputState>({ value: host.company.position })
+  const [tel, setTel] = useState<inputState>({ value: host.company.tel })
+  const [email, setEmail] = useState<inputState>({ value: host.company.email })
+  const [website, setWebsite] = useState<inputState>({ value: host.company.website })
   // 結果
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
-  type validateObj = {
-    validateFunc: (value: any) => string
-    setErrorFunc: (errMsg: string) => void
-    value: any
-  }
-
   // 全ての入力値のバリデーションを行います
   const validate = (): boolean => {
-    const validationMapping: validateObj[] = [
-      { validateFunc: validateName, setErrorFunc: setNameErrMsg, value: name },
-      { validateFunc: validateHeadline, setErrorFunc: setHeadlineErrMsg, value: headline },
-      { validateFunc: validateIntro, setErrorFunc: setIntroErrMsg, value: intro },
-      { validateFunc: validateCompanyName, setErrorFunc: setCompanyNameErrMsg, value: companyName },
-      { validateFunc: validatePosition, setErrorFunc: setPositionErrMsg, value: position },
-      { validateFunc: validateTel, setErrorFunc: setTelErrMsg, value: tel },
-      { validateFunc: validateEmail, setErrorFunc: setEmailErrMsg, value: email },
-      { validateFunc: validateURL, setErrorFunc: setWebsiteErrMsg, value: website }
-    ];
+    let isValid = true
+    const list = [
+      { validateFunc: validateName, obj: name, setObj: setName },
+      { validateFunc: validateHeadline, obj: headline, setObj: setHeadline },
+      { validateFunc: validateIntro, obj: intro, setObj: setIntro },
+      { validateFunc: validateCompanyName, obj: companyName, setObj: setCompanyName },
+      { validateFunc: validatePosition, obj: position, setObj: setPosition },
+      { validateFunc: validateTel, obj: tel, setObj: setTel },
+      { validateFunc: validateEmail, obj: email, setObj: setEmail },
+      { validateFunc: validateURL, obj: website, setObj: setWebsite },
+    ]
 
-    let isvalid = true;
-    validationMapping.forEach(({ validateFunc, setErrorFunc, value }) => {
-      setErrorFunc("") // まずはエラーメッセージをクリアします
-      const err = validateFunc(value);
+    list.forEach(({ validateFunc, obj, setObj }) => {
+      const err = validateFunc(obj.value)
       if (err) {
-        setErrorFunc(err);
-        isvalid = false;
+        setObj(prevState => ({ ...prevState, errMsg: err }))
+        isValid = false
       }
-    });
+    })
 
-    return isvalid;
+    return isValid
   }
 
   // 保存ボタンがクリックされた時の処理です
@@ -94,16 +82,16 @@ export default function ProfileEditForms({ host }: Props) {
 
     const req: User = {
       id: host?.id!,
-      name: name,
-      avatarUrl: avatarImageByte,
-      headline: headline,
-      introduction: intro,
+      name: name.value,
+      avatarUrl: avatar.value,
+      headline: headline.value,
+      introduction: intro.value,
       company: {
-        name: companyName,
-        position: position,
-        tel: tel,
-        email: email,
-        website: website,
+        name: companyName.value,
+        position: position.value,
+        tel: tel.value,
+        email: email.value,
+        website: website.value,
       }
     }
 
@@ -118,7 +106,12 @@ export default function ProfileEditForms({ host }: Props) {
   return (
     <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
       <div className="mt-5 ml-2">
-        <InputImage image={avatarImageByte} setImage={setAvatarImageByte}/>
+        <InputImage
+          image={avatar.value}
+          setImage={(value) => setAvatar(prevState => ({
+            ...prevState, value: value
+          }))}
+        />
       </div>
 
       <div className="border-b border-gray-900/10 pb-12">
@@ -132,11 +125,13 @@ export default function ProfileEditForms({ host }: Props) {
                 type="text"
                 placeholder="鈴木 太郎"
                 className={inputClassName}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={name.value}
+                onChange={(e) => setName(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={nameErrMsg}/>
+            {name.errMsg && <InputErrMsg errMsg={name.errMsg}/>}
           </div>
 
           {/* 会社名 */}
@@ -147,11 +142,13 @@ export default function ProfileEditForms({ host }: Props) {
                 type="text"
                 placeholder="株式会社ABC"
                 className={inputClassName}
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                value={companyName.value}
+                onChange={(e) => setCompanyName(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={companyNameErrMsg}/>
+            {companyName.errMsg && <InputErrMsg errMsg={companyName.errMsg}/>}
           </div>
 
           {/* 所属 */}
@@ -162,11 +159,13 @@ export default function ProfileEditForms({ host }: Props) {
                 type="text"
                 placeholder="営業部 営業一課"
                 className={inputClassName}
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
+                value={position.value}
+                onChange={(e) => setPosition(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={positionErrMsg}/>
+            {position.errMsg && <InputErrMsg errMsg={position.errMsg}/>}
           </div>
 
           {/*　メールアドレス */}
@@ -180,12 +179,14 @@ export default function ProfileEditForms({ host }: Props) {
                 autoComplete="email"
                 placeholder="abc@example.com"
                 className={inputClassName}
-                value={email}
+                value={email.value}
                 // ここでは検証せず、ボタンクリックの時に検証
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={emailErrMsg}/>
+            {email.errMsg && <InputErrMsg errMsg={email.errMsg}/>}
           </div>
 
           {/*　電話番号 */}
@@ -197,12 +198,14 @@ export default function ProfileEditForms({ host }: Props) {
                 type="tel"
                 placeholder="090-1234-5678"
                 className={inputClassName}
-                value={tel}
+                value={tel.value}
                 // ここでは検証せず、ボタンクリックの時に検証
-                onChange={(e) => setTel(e.target.value)}
+                onChange={(e) => setTel(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={telErrMsg}/>
+            {tel.errMsg && <InputErrMsg errMsg={tel.errMsg}/>}
           </div>
 
           {/*　Webサイト */}
@@ -213,11 +216,13 @@ export default function ProfileEditForms({ host }: Props) {
                 type="url"
                 placeholder="https://example.com"
                 className={inputClassName}
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
+                value={website.value}
+                onChange={(e) => setWebsite(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={websiteErrMsg}/>
+            {website.errMsg && <InputErrMsg errMsg={website.errMsg}/>}
           </div>
 
           {/*　ヘッドライン */}
@@ -228,11 +233,13 @@ export default function ProfileEditForms({ host }: Props) {
                 rows={2}
                 placeholder="私たちは、お客様を笑顔にするお手伝いをしています。"
                 className={inputClassName}
-                value={headline}
-                onChange={(e) => setHeadline(e.target.value)}
+                value={headline.value}
+                onChange={(e) => setHeadline(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={headlineErrMsg}/>
+            {headline.errMsg && <InputErrMsg errMsg={headline.errMsg}/>}
           </div>
 
           {/*　自己紹介 */}
@@ -242,11 +249,13 @@ export default function ProfileEditForms({ host }: Props) {
               <textarea
                 rows={7}
                 className={inputClassName}
-                value={intro}
-                onChange={(e) => setIntro(e.target.value)}
+                value={intro.value}
+                onChange={(e) => setIntro(prevState => ({
+                  ...prevState, value: e.target.value
+                }))}
               />
             </div>
-            <InputErrMsg errMsg={introErrMsg}/>
+            {intro.errMsg && <InputErrMsg errMsg={intro.errMsg}/>}
           </div>
 
         </div>

@@ -6,7 +6,10 @@ import { User, usersDB } from "@/utils/sample/User";
  * チャットを取得した時のステータスです
  * バックエンドから送信されます。
  *
- * @success チャットが開始されていて、自分がホスト/ゲストで参加済みの状態である
+ * @host チャットが開始されていて、自分がホストで参加済みの状態である
+ * -> Modalを開かずチャット可能
+ *
+ * @guest チャットが開始されていて、自分がゲストで参加済みの状態である
  * -> Modalを開かずチャット可能
  *
  * @first-not-login チャットが開始されておらず、自分もログインしていない
@@ -19,7 +22,8 @@ import { User, usersDB } from "@/utils/sample/User";
  * -> パスコード入力ModalがOpen
  */
 export type ChatStatus =
-  "success" |
+  "host" |
+  "guest" |
   "first-not-login" |
   "first-is-login" |
   "visitor"
@@ -75,11 +79,17 @@ const backend = async (
     }
 
     // 自分がホストorゲストの場合 = success
-    if (isHost || isGuest) {
+    if (isHost) {
       return {
         chat: chat,
         host: host,
-        status: "success",
+        status: "host",
+      }
+    } else if (isGuest) {
+      return {
+        chat: chat,
+        host: host,
+        status: "guest",
       }
     }
     status = "visitor"

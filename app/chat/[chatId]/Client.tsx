@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
@@ -8,7 +8,6 @@ import PasscodeModal from "@/components/modal/PasscodeModal";
 import ChatHeader from "@/components/header/ChatHeader";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
-import { sleep } from "@/utils/sample/sleep";
 import { ChatStatus } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
 import { Session } from "@supabase/gotrue-js";
@@ -22,6 +21,7 @@ type Props = {
   host: User | undefined
   status: ChatStatus | undefined
 }
+
 
 /**
  * チャットページのClientコンポーネントです
@@ -44,6 +44,35 @@ export default function Client(props: Props) {
       ? chat.id     // cookieでチャットが取得できている場合
       : ""          // チャットが取得できていない場合
   )
+  const [ws, setWs] = useState<WebSocket | null>(null);
+
+  // WebSocket接続を作成
+  useEffect(() => {
+    const websocket = new WebSocket('ws://localhost:8080/ws');
+    websocket.onopen = () => {
+      console.log('WebSocket connected');
+    };
+    websocket.onmessage = (event) => {
+      // TODO: ここでWebSocketから受信したメッセージを処理
+      console.log('Received:', event.data);
+      // Example: Adding received message to the messages state
+      const receivedMessage = JSON.parse(event.data);
+      setMessages(prevMessages => {
+        if (!prevMessages) {
+          return [receivedMessage];
+        }
+        return [...prevMessages, receivedMessage];
+      });
+    };
+    websocket.onclose = () => {
+      console.log('WebSocket closed');
+    };
+    setWs(websocket);
+    // 接続をクリーンアップ
+    return () => {
+      websocket.close();
+    };
+  }, []);
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -84,11 +113,9 @@ export default function Client(props: Props) {
     });
 
     setNewMessage("");
-
-    // 自動返信
-    await sleep()
-    autoReply()
   };
+
+  // TODO: 定期的にバックエンドに情報を取得しに行く
 
   return (
     <div className="relative h-screen overflow-hidden">
@@ -103,6 +130,7 @@ export default function Client(props: Props) {
       {/* 通知Modal */}
       <NoticeEmailModal
         chatId={props.chatId}
+        passcode={chat?.passcode}
         modalOpen={noticeModalOpen}
         setModalOpen={setNoticeModalOpen}
         registeredEmail={chat?.guest.noticeEmail}

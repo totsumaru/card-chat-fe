@@ -10,7 +10,7 @@ type Res = {
 /**
  * パスコードでチャットを取得します
  */
-export const GetChatByPasscode = async (
+export const GetChatWithPasscode = async (
   chatId: string,
   passcode: string
 ): Promise<Res> => {

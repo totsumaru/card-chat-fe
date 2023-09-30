@@ -8,6 +8,7 @@ import { PostNoticeEmail } from "@/utils/api/postNoticeEmail";
 
 type Props = {
   chatId: string
+  passcode: string | undefined
   modalOpen: boolean
   setModalOpen: (open: boolean) => void
   registeredEmail?: string
@@ -24,7 +25,7 @@ type Props = {
  *  いずれも、送信が完了した時は`success`のフラグによって表示が変更されます。
  */
 export default function NoticeEmailModal({
-  chatId, modalOpen, setModalOpen, registeredEmail
+  chatId, passcode, modalOpen, setModalOpen, registeredEmail
 }: Props) {
   const [email, setEmail] = useState<string>("")
   const [success, setSuccess] = useState<boolean>(false)
@@ -49,6 +50,10 @@ export default function NoticeEmailModal({
   // メールアドレスを送信します
   const handleRegister = async () => {
     setErrMsg("")
+    if (!passcode) {
+      setErrMsg("エラーが発生しました。画面を再度読み込んでください。")
+      return
+    }
 
     if (!email) {
       const userConfirmed = confirm("通知を解除しますか？");
@@ -64,7 +69,7 @@ export default function NoticeEmailModal({
     }
 
     try {
-      await PostNoticeEmail(chatId, email)
+      await PostNoticeEmail(chatId, email, passcode)
       setSuccess(true)
       setEmail("")
     } catch (e) {

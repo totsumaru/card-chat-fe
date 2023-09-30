@@ -1,13 +1,12 @@
 "use client"
 
-// ログイン画面です
-import { useEffect, useState } from "react";
-import Link from "next/link";
+// 新規作成画面です
+import { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 /**
- * ログインページです
+ * 新規登録ページです
  */
 export default function Index() {
   const supabase = createClientComponentClient()
@@ -15,21 +14,13 @@ export default function Index() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<boolean>(false)
 
-  useEffect(() => {
-    const a = async () => {
-      await supabase.auth.refreshSession()
-      const session = await supabase.auth.getSession()
-      const user = await supabase.auth.getUser()
-      console.log("--- user ---")
-      console.log(user)
-    }
-    a()
-  }, [])
-
   const handleClick = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        emailRedirectTo: "http://localhost:3000/login"
+      }
     })
     if (error) {
       setError(true)
@@ -48,11 +39,11 @@ export default function Index() {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          ログイン
+          アカウントの作成
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-7">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-5">
 
         {/* メールアドレス */}
         <div>
@@ -80,11 +71,6 @@ export default function Index() {
             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
               パスワード
             </label>
-            <div className="text-sm">
-              <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                パスワードを忘れた方
-              </Link>
-            </div>
           </div>
           <div className="mt-2">
             <input
@@ -101,8 +87,10 @@ export default function Index() {
           </div>
         </div>
 
-        {/* ログインボタン */}
-        <LoadingButton label={"ログイン"} clickHandler={handleClick} widthFull/>
+        {/* 新規作成ボタン */}
+        <div className="mt-20">
+          <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
+        </div>
 
       </div>
     </div>

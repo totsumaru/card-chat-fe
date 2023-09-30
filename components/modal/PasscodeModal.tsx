@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
-import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
+import { GetChatWithPasscode } from "@/utils/api/getChatWithPasscode";
 import { Chat, Message } from "@/utils/sample/Chat";
 import { User } from "@/utils/sample/User";
 import LoadingButton from "@/components/button/LoadingButton";
@@ -51,7 +51,7 @@ export default function PasscodeModal(props: Props) {
     }
 
     try {
-      const res = await GetChatByPasscode(props.chatId, passcode)
+      const res = await GetChatWithPasscode(props.chatId, passcode)
 
       props.setChat(res.chat)
       props.setMessages(res.chat.messages)

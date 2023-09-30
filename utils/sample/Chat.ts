@@ -1,4 +1,4 @@
-import { chatId1, chatId2, chatId3, email1, email2, userId1, userId2, userId3 } from "@/utils/sample/Sample";
+import { chatId1, chatId2, chatId3, email1, email2, userId1, userId2 } from "@/utils/sample/Sample";
 
 export type ChatInfo = {
   id: string
@@ -49,7 +49,7 @@ export const chatsDB: Chat[] = [
         content: "こちらこそありがとうございました。大変勉強になりました。\nところで、来週またお話を聞きたいんですが、よろしいでしょうか？",
         date: "2023-01-23 11:25",
       }
-    ]
+    ],
   },
   // チャット2
   {

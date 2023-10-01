@@ -4,6 +4,13 @@ export const paramChatId = "chat-id"
 // パスを作成します
 
 /**
+ * SignUp時のEmailに記載するURLです
+ */
+export function signUpEmailRedirectTo(): string {
+  return `${process.env.NEXT_PUBLIC_FE_URL}/auth/callback`
+}
+
+/**
  * ログイン
  */
 export function pathLogin(): string {

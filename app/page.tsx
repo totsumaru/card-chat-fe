@@ -5,13 +5,17 @@ export const dynamic = 'force-dynamic'
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
-  const user = await supabase.auth.getUser()
-  const session = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
-  console.log(user)
-  console.log(session)
+  console.log("user: ", user)
+  console.log("session: ", session)
 
   return (
-    <>hello</>
+    <>
+      hello
+      <p>userID: {user?.id}</p>
+      <p>token: {session?.access_token}</p>
+    </>
   )
 }

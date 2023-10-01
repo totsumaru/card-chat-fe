@@ -1,9 +1,12 @@
 "use client"
 
+// TODO: sessionが切れたら更新してBEにリクエストを投げるようにすること。
+
 // 新規作成画面です
 import { useEffect, useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { signUpEmailRedirectTo } from "@/utils/path";
 
 /**
  * 新規登録ページです
@@ -15,23 +18,24 @@ export default function Index() {
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
-    const a = async () => {
+    const printWhenLoading = async () => {
       await supabase.auth.refreshSession()
       const session = await supabase.auth.getSession()
       const user = await supabase.auth.getUser()
-      console.log(user)
-      console.log(session)
+      console.log("user: ", user)
+      console.log("session: ", session)
     }
-    a()
+    printWhenLoading().then()
   }, [])
 
+  console.log("callback: ", signUpEmailRedirectTo())
+
   const handleClick = async () => {
-    console.log(`${process.env.NEXT_PUBLIC_FE_URL}/auth/callback`)
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_FE_URL}`
+        emailRedirectTo: signUpEmailRedirectTo()
       }
     })
     if (error) {

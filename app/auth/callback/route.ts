@@ -7,20 +7,20 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
-  const supabase = createRouteHandlerClient({ cookies })
-  const { data: { session } } = await supabase.auth.getSession()
+  const code = requestUrl.searchParams.get('code')
 
-  // バックエンドでホストを作成します
-  if (!session?.access_token) {
-    console.error("アクストークンが取得できません");
-    return new Response("Access token not available", { status: 401 });
-  }
+  if (code) {
+    const supabase = createRouteHandlerClient({ cookies })
+    await supabase.auth.exchangeCodeForSession(code)
+    const { data: { session } } = await supabase.auth.getSession()
 
-  try {
-    await PostCreateHost(session.access_token)
-  } catch (error) {
-    console.error("エラーが発生しました");
-    return new Response("Error occurred", { status: 500 })
+    try {
+      // ホストを作成します
+      await PostCreateHost(session?.access_token || "")
+    } catch (error) {
+      console.error("エラーが発生しました", error);
+      return new Response("Error occurred", { status: 500 })
+    }
   }
 
   return NextResponse.redirect(`${requestUrl.origin}/dashboard`)

@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
-import { GetChatWithPasscode } from "@/utils/api/getChatWithPasscode";
-import { Chat, Message } from "@/utils/sample/Chat";
-import { User } from "@/utils/sample/User";
+import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
+import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
+import { User_x } from "@/utils/sample/User_x";
 import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
 import { passcodeLength } from "@/utils/variable";
@@ -14,9 +14,9 @@ type Props = {
   chatId: string
   open: boolean
   // setter
-  setChat: (chat: Chat | undefined) => void
-  setMessages: (messages: Message[] | undefined) => void
-  setHost: (host: User | undefined) => void
+  setChat: (chat: Chat_x | undefined) => void
+  setMessages: (messages: Message_x[] | undefined) => void
+  setHost: (host: User_x | undefined) => void
   setMyId: (myId: string) => void
 }
 
@@ -51,7 +51,7 @@ export default function PasscodeModal(props: Props) {
     }
 
     try {
-      const res = await GetChatWithPasscode(props.chatId, passcode)
+      const res = await GetChatByPasscode(props.chatId, passcode)
 
       props.setChat(res.chat)
       props.setMessages(res.chat.messages)

@@ -1,6 +1,6 @@
-import { Chat, chatsDB } from "@/utils/sample/Chat";
+import { Chat_x, chatsDB } from "@/utils/sample/Chat_x";
 import { passcodeFromCookie, TestSession } from "@/utils/sample/Sample";
-import { User, usersDB } from "@/utils/sample/User";
+import { User_x, usersDB } from "@/utils/sample/User_x";
 
 /**
  * チャットを取得した時のステータスです
@@ -30,8 +30,8 @@ export type ChatStatus =
 
 // レスポンスです
 type Res = {
-  chat: Chat | undefined
-  host: User | undefined
+  chat: Chat_x | undefined
+  host: User_x | undefined
   status: ChatStatus
 }
 

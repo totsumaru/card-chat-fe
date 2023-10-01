@@ -6,8 +6,8 @@ import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
-import { Chat, Message } from "@/utils/sample/Chat";
-import { User } from "@/utils/sample/User";
+import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
+import { User_x } from "@/utils/sample/User_x";
 import { PostStartChat } from "@/utils/api/postStartChat";
 import { validateDisplayName, validatePasscode, validatePasscodeInput } from "@/utils/validate";
 import { passcodeLength } from "@/utils/variable";
@@ -17,9 +17,9 @@ type Props = {
   session: Session | null
   open: boolean
   // setter
-  setChat: (chat: Chat | undefined) => void
-  setMessages: (messages: Message[] | undefined) => void
-  setHost: (host: User | undefined) => void
+  setChat: (chat: Chat_x | undefined) => void
+  setMessages: (messages: Message_x[] | undefined) => void
+  setHost: (host: User_x | undefined) => void
   setMyId: (myId: string) => void
 }
 

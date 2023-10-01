@@ -1,5 +1,5 @@
 import { TestSession } from "@/utils/sample/Sample";
-import { chatsDB } from "@/utils/sample/Chat";
+import { chatsDB } from "@/utils/sample/Chat_x";
 
 /**
  * チャットを既読にします

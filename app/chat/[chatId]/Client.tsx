@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Chat, Message } from "@/utils/sample/Chat";
-import { User } from "@/utils/sample/User";
+import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
+import { User_x } from "@/utils/sample/User_x";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal from "@/components/modal/PasscodeModal";
 import ChatHeader from "@/components/header/ChatHeader";
@@ -17,8 +17,8 @@ type Props = {
   userId: string
   chatId: string
   session: Session | null
-  chat: Chat | undefined
-  host: User | undefined
+  chat: Chat_x | undefined
+  host: User_x | undefined
   status: ChatStatus | undefined
 }
 
@@ -32,10 +32,10 @@ export default function Client(props: Props) {
   // 通知Modal
   const [noticeModalOpen, setNoticeModalOpen] = useState<boolean>(false)
   // チャット
-  const [chat, setChat] = useState<Chat | undefined>(props.chat) // ここはInfo用に使用します
-  const [messages, setMessages] = useState<Message[] | undefined>(props.chat?.messages)
+  const [chat, setChat] = useState<Chat_x | undefined>(props.chat) // ここはInfo用に使用します
+  const [messages, setMessages] = useState<Message_x[] | undefined>(props.chat?.messages)
   const [newMessage, setNewMessage] = useState<string>("")
-  const [host, setHost] = useState<User | undefined>(props.host)
+  const [host, setHost] = useState<User_x | undefined>(props.host)
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
@@ -84,7 +84,7 @@ export default function Client(props: Props) {
   // 自動返信を送信します
   const autoReply = () => {
     setMessages(prevMessages => {
-      const msg: Message = {
+      const msg: Message_x = {
         content: "これは自動返信です",
         from: myId === props.userId ? props.chatId : props.userId,
       }
@@ -105,7 +105,7 @@ export default function Client(props: Props) {
     if (!newMessage) return
     // 自分のメッセージを追加
     setMessages(prevMessages => {
-      const msg: Message = { content: newMessage, from: myId }
+      const msg: Message_x = { content: newMessage, from: myId }
       if (!prevMessages) {
         return [msg];
       }

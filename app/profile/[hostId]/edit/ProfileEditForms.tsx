@@ -4,7 +4,7 @@ import classnames from "classnames";
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
-import { User } from "@/utils/sample/User";
+import { User_x } from "@/utils/sample/User_x";
 import { PostProfileEdit } from "@/utils/api/postProfileEdit";
 import { Session } from "@supabase/gotrue-js";
 import { currentUserSession } from "@/utils/sample/Sample";
@@ -23,7 +23,7 @@ import { Input, Textarea } from "@/app/profile/[hostId]/edit/Form";
 
 type Props = {
   session: Session | null
-  host: User
+  host: User_x
 }
 
 /**
@@ -81,7 +81,7 @@ export default function ProfileEditForms({ session, host }: Props) {
       return
     }
 
-    const req: User = {
+    const req: User_x = {
       id: host?.id!,
       name: name,
       avatarUrl: avatar,

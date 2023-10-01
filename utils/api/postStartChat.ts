@@ -1,11 +1,11 @@
-import { Chat, chatsDB } from "@/utils/sample/Chat";
-import { User, usersDB } from "@/utils/sample/User";
+import { Chat_x, chatsDB } from "@/utils/sample/Chat_x";
+import { User_x, usersDB } from "@/utils/sample/User_x";
 import { TestSession } from "@/utils/sample/Sample";
 import { sleep } from "@/utils/sample/sleep";
 
 type Res = {
-  chat: Chat
-  host: User
+  chat: Chat_x
+  host: User_x
 }
 
 /**

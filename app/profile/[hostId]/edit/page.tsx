@@ -7,7 +7,7 @@ import Header from "@/components/header/Header";
 import ProfileEditForms from "@/app/profile/[hostId]/edit/ProfileEditForms";
 import { currentUserId } from "@/utils/sample/Sample";
 import GetUserByID from "@/utils/api/getUserByID";
-import { User } from "@/utils/sample/User";
+import { User_x } from "@/utils/sample/User_x";
 import NotFound from "@/components/error/404";
 
 export const dynamic = 'force-dynamic'
@@ -22,7 +22,7 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
-  let host: User | undefined
+  let host: User_x | undefined
   try {
     host = await GetUserByID(currentUserId)
   } catch (e) {

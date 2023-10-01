@@ -1,6 +1,6 @@
 import { chatId1, chatId2, chatId3, email1, email2, userId1, userId2 } from "@/utils/sample/Sample";
 
-export type ChatInfo = {
+export type ChatInfo_x = {
   id: string
   passcode: string
   hostId: string
@@ -12,14 +12,14 @@ export type ChatInfo = {
   isRead: boolean
 }
 
-export type Message = {
+export type Message_x = {
   from: string
   content: string
   date?: string
 }
 
-export type Chat = ChatInfo & {
-  messages: Message[]
+export type Chat_x = ChatInfo_x & {
+  messages: Message_x[]
 }
 
 /**
@@ -27,7 +27,7 @@ export type Chat = ChatInfo & {
  *
  * 奇数は`host1`,偶数は`host2`のIDを指定しています
  */
-export const chatsDB: Chat[] = [
+export const chatsDB: Chat_x[] = [
   // チャット1
   {
     id: chatId1,

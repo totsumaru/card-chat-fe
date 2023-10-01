@@ -1,6 +1,6 @@
 import { avatarUrl1, avatarUrl2, userId1, userId2, userId3 } from "@/utils/sample/Sample";
 
-export type User = {
+export type User_x = {
   id: string
   name: string
   avatarUrl: string
@@ -18,7 +18,7 @@ export type User = {
 /**
  * ユーザーのモックです
  */
-export const usersDB: User[] = [
+export const usersDB: User_x[] = [
   {
     id: userId1,
     name: "戸塚 翔太",

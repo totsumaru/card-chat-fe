@@ -7,8 +7,8 @@ import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat, pathDisplayNameEdit, pathProfile, pathProfileEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { Chat, Message } from "@/utils/sample/Chat";
-import { User } from "@/utils/sample/User";
+import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
+import { User_x } from "@/utils/sample/User_x";
 import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import GetChats from "@/utils/api/getChats";
@@ -71,7 +71,7 @@ const Title = ({ text }: { text: string }) => {
 }
 
 // プロフィール
-const Profile = ({ host }: { host: User | undefined }) => {
+const Profile = ({ host }: { host: User_x | undefined }) => {
   return (
     <div className="px-5 border border-indigo-300 my-3 rounded sm:rounded-xl bg-indigo-50">
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
@@ -130,7 +130,7 @@ const ProfileLink = ({
 const ChatListContent = ({
   chat, latestMessage
 }: {
-  chat: Chat, latestMessage: Message
+  chat: Chat_x, latestMessage: Message_x
 }) => {
   return (
     <div className="w-full">

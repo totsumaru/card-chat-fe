@@ -4,15 +4,15 @@ import Avatar from "@/components/avatar/Avatar";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { urlToA } from "@/utils/urlToA";
 import { MutableRefObject } from "react";
-import { User } from "@/utils/sample/User";
-import { Message } from "@/utils/sample/Chat";
+import { User_x } from "@/utils/sample/User_x";
+import { Message_x } from "@/utils/sample/Chat_x";
 
 type Props = {
   userId: string
   chatId: string
   myId: string
-  host: User | undefined
-  messages: Message[] | undefined
+  host: User_x | undefined
+  messages: Message_x[] | undefined
   scrollBottomRes: any
 }
 

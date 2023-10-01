@@ -4,7 +4,7 @@ import BaseModal from "@/components/modal/BaseModal";
 import { validateEmail } from "@/utils/validate";
 import LoadingButton from "@/components/button/LoadingButton";
 import { sleep } from "@/utils/sample/sleep";
-import { PostNoticeEmail } from "@/utils/api/postNoticeEmail";
+import { PostUpdateNoticeEmail } from "@/utils/api/postUpdateNoticeEmail";
 
 type Props = {
   chatId: string
@@ -69,7 +69,7 @@ export default function NoticeEmailModal({
     }
 
     try {
-      await PostNoticeEmail(chatId, email, passcode)
+      await PostUpdateNoticeEmail(passcode, chatId, email)
       setSuccess(true)
       setEmail("")
     } catch (e) {

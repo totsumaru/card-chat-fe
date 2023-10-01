@@ -1,13 +1,13 @@
 import { TestSession } from "@/utils/sample/Sample";
 import { sleep } from "@/utils/sample/sleep";
-import { User } from "@/utils/sample/User";
+import { User_x } from "@/utils/sample/User_x";
 
 /**
  * プロフィールの情報を変更します
  */
 export const PostProfileEdit = async (
   session: TestSession,
-  newUser: User
+  newUser: User_x
 ) => {
   await backend(session, newUser)
 }
@@ -15,7 +15,7 @@ export const PostProfileEdit = async (
 // バックエンドの処理です
 const backend = async (
   session: TestSession,
-  newUser: User
+  newUser: User_x
 ) => {
   // ログインしているか
   if (!session.id) {

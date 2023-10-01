@@ -1,7 +1,7 @@
 "use client"
 
 // 新規作成画面です
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
@@ -14,12 +14,24 @@ export default function Index() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<boolean>(false)
 
+  useEffect(() => {
+    const a = async () => {
+      await supabase.auth.refreshSession()
+      const session = await supabase.auth.getSession()
+      const user = await supabase.auth.getUser()
+      console.log(user)
+      console.log(session)
+    }
+    a()
+  }, [])
+
   const handleClick = async () => {
+    console.log(`${process.env.NEXT_PUBLIC_FE_URL}/auth/callback`)
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
-        emailRedirectTo: "http://localhost:3000/login"
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_FE_URL}`
       }
     })
     if (error) {
@@ -90,6 +102,9 @@ export default function Index() {
         {/* 新規作成ボタン */}
         <div className="mt-20">
           <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
+          <LoadingButton label={"ログアウト"} clickHandler={async () => {
+            await supabase.auth.signOut()
+          }} widthFull isWhite/>
         </div>
 
       </div>

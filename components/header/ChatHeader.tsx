@@ -2,15 +2,15 @@ import Link from "next/link";
 import Avatar from "@/components/avatar/Avatar";
 import React from "react";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
-import { Chat } from "@/utils/sample/Chat";
-import { User } from "@/utils/sample/User";
+import { Chat_x } from "@/utils/sample/Chat_x";
+import { User_x } from "@/utils/sample/User_x";
 import Header from "@/components/header/Header";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
 
 type Props = {
   isHost: boolean
-  chat: Chat | undefined
-  host: User | undefined
+  chat: Chat_x | undefined
+  host: User_x | undefined
   setModalOpen: (open: boolean) => void
 }
 

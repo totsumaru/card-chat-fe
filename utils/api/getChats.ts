@@ -1,10 +1,10 @@
-import { Chat, chatsDB } from "@/utils/sample/Chat";
+import { Chat_x, chatsDB } from "@/utils/sample/Chat_x";
 import { TestSession } from "@/utils/sample/Sample";
-import { User, usersDB } from "@/utils/sample/User";
+import { User_x, usersDB } from "@/utils/sample/User_x";
 
 type Res = {
-  host: User | undefined
-  chats: Chat[] | undefined
+  host: User_x | undefined
+  chats: Chat_x[] | undefined
 }
 
 /**

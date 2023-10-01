@@ -4,19 +4,18 @@ import React, { useState } from 'react'
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { validatePasscode, validatePasscodeInput } from "@/utils/validate";
 import { GetChatByPasscode } from "@/utils/api/getChatByPasscode";
-import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
-import { User_x } from "@/utils/sample/User_x";
 import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
 import { passcodeLength } from "@/utils/variable";
+import { Chat, Host, Message } from "@/utils/api/res";
 
 type Props = {
   chatId: string
   open: boolean
   // setter
-  setChat: (chat: Chat_x | undefined) => void
-  setMessages: (messages: Message_x[] | undefined) => void
-  setHost: (host: User_x | undefined) => void
+  setChat: (chat: Chat) => void
+  setMessages: (messages: Message[]) => void
+  setHost: (host: Host) => void
   setMyId: (myId: string) => void
 }
 
@@ -54,7 +53,7 @@ export default function PasscodeModal(props: Props) {
       const res = await GetChatByPasscode(props.chatId, passcode)
 
       props.setChat(res.chat)
-      props.setMessages(res.chat.messages)
+      props.setMessages(res.messages)
       props.setHost(res.host)
       props.setMyId(props.chatId)
       setSuccess(true)

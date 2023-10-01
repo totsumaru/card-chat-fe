@@ -4,22 +4,15 @@ import React, { useState } from 'react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
-import { Session } from "@supabase/gotrue-js";
-import { currentUserSession } from "@/utils/sample/Sample";
-import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
-import { User_x } from "@/utils/sample/User_x";
 import { PostStartChat } from "@/utils/api/postStartChat";
 import { validateDisplayName, validatePasscode, validatePasscodeInput } from "@/utils/validate";
 import { passcodeLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
-  session: Session | null
+  token: string
   open: boolean
   // setter
-  setChat: (chat: Chat_x | undefined) => void
-  setMessages: (messages: Message_x[] | undefined) => void
-  setHost: (host: User_x | undefined) => void
   setMyId: (myId: string) => void
 }
 
@@ -68,15 +61,7 @@ export default function StartChatModal(props: Props) {
     }
 
     try {
-      const res = await PostStartChat(
-        props.chatId,
-        currentUserSession,
-        displayName,
-        passcode,
-      )
-      props.setChat(res.chat)
-      props.setMessages(res.chat.messages)
-      props.setHost(res.host)
+      await PostStartChat(props.chatId, props.token, displayName,)
       props.setMyId(props.chatId)
       setModalOpen(false)
     } catch (e) {

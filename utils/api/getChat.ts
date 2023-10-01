@@ -1,6 +1,6 @@
-import { Chat_x, chatsDB } from "@/utils/sample/Chat_x";
-import { passcodeFromCookie, TestSession } from "@/utils/sample/Sample";
-import { User_x, usersDB } from "@/utils/sample/User_x";
+import { castToChatRes, castToHost, castToMessagesRes, Chat, Host, Message } from "@/utils/api/res";
+import axios from "axios";
+import { createHeader, Endpoint } from "@/utils/api/api";
 
 /**
  * チャットを取得した時のステータスです
@@ -30,8 +30,9 @@ export type ChatStatus =
 
 // レスポンスです
 type Res = {
-  chat: Chat_x | undefined
-  host: User_x | undefined
+  chat: Chat
+  messages: Message[]
+  host: Host
   status: ChatStatus
 }
 
@@ -39,65 +40,25 @@ type Res = {
  * チャットを取得します
  *
  * host/guestともにこの関数を使用します。
- *
- * sessionが空の場合はcookieのパスコードで認証します。
  */
 export const GetChat = async (
   chatId: string,
-  session?: TestSession
+  token?: string,
 ): Promise<Res> => {
-  return await backend(chatId, session)
-}
-
-// バックエンドの処理です
-const backend = async (
-  chatId: string,
-  session?: TestSession,
-): Promise<Res> => {
-  const isLogin: boolean = !!session?.id
-
-  const chat = chatsDB.find(chat => chat.id === chatId)
-
-  if (!chat) {
-    throw new Error("チャットを取得できません")
-  }
-
-  let status: ChatStatus
-
-  const isHost = chat.hostId === session?.id
-  const isGuest = chat.passcode === passcodeFromCookie // cookieのパスコードで認証済み
-
-  if (!chat.hostId) {
-    // hostIDが存在しない = first
-    isLogin
-      ? status = "first-is-login"
-      : status = "first-not-login"
-  } else {
-    const host = usersDB.find(user => user.id === chat?.hostId)
-    if (!host) {
-      throw new Error("ホストを取得できません")
+  const { data } = await axios.post(
+    Endpoint(`/api/chat/${chatId}`), {}, {
+      headers: createHeader({ token: token }),
     }
+  );
 
-    // 自分がホストorゲストの場合 = success
-    if (isHost) {
-      return {
-        chat: chat,
-        host: host,
-        status: "host",
-      }
-    } else if (isGuest) {
-      return {
-        chat: chat,
-        host: host,
-        status: "guest",
-      }
-    }
-    status = "visitor"
-  }
+  const chatRes: Chat = castToChatRes(data.chat)
+  const messageRes: Message[] = castToMessagesRes(data.messages)
+  const hostRes: Host = castToHost(data.host)
 
   return {
-    chat: undefined,
-    host: undefined,
-    status: status,
+    chat: chatRes,
+    messages: messageRes,
+    host: hostRes,
+    status: data.status,
   }
 }

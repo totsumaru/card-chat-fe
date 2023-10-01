@@ -5,7 +5,6 @@ import { createHeader, Endpoint } from "@/utils/api/api";
  * 通知用のEmailアドレスを登録/更新します
  */
 export const PostUpdateNoticeEmail = async (
-  passcode: string,
   chatId: string,
   email: string,
 ) => {
@@ -13,6 +12,6 @@ export const PostUpdateNoticeEmail = async (
   formData.append('email', email);
 
   await axios.post(Endpoint(`/api/chat/${chatId}/email`), formData, {
-    headers: createHeader({ passcode: passcode }),
+    headers: createHeader({ contentType: "form-urlencoded" }),
   });
 }

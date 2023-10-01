@@ -7,11 +7,9 @@ import Container from "@/components/container/Container";
 import Avatar from "@/components/avatar/Avatar";
 import { pathChat, pathDisplayNameEdit, pathProfile, pathProfileEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
-import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
-import { User_x } from "@/utils/sample/User_x";
-import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import GetChats from "@/utils/api/getChats";
+import { Chat, Host, Message } from "@/utils/api/res";
 
 export const dynamic = 'force-dynamic'
 
@@ -20,10 +18,15 @@ export const dynamic = 'force-dynamic'
  */
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
   // 自分が管理する全てのチャットを取得します
-  const chatsRes = await GetChats(currentUserSession)
+  let chatsRes
+  try {
+    chatsRes = await GetChats(session?.token_type || "")
+  } catch (e) {
+    console.error(e)
+  }
 
   return (
     <div className="bg-gray-50 h-screen">
@@ -31,7 +34,7 @@ export default async function Index() {
       <Header left={""} right={""}/>
 
       <Container>
-        <Profile host={chatsRes.host}/>
+        <Profile host={chatsRes?.host!}/>
         <div className="mt-7">
           <Title text={"チャット一覧"}/>
         </div>
@@ -39,19 +42,17 @@ export default async function Index() {
             className="mt-3 divide-y divide-gray-100 overflow-hidden
              bg-white shadow ring-1 ring-gray-900/5 rounded sm:rounded-xl"
         >
-          {chatsRes.chats && chatsRes.chats.map((chat) => {
-            const latestMessage = chat.messages[chat.messages.length - 1]
-
+          {chatsRes?.chats && chatsRes.chats.map((chat) => {
             return (
-              <div className="flex hover:bg-gray-100" key={chat.id}>
-                <Link href={pathChat(chat.id)} className="flex-1">
-                  <li key={chat.id} className="flex gap-x-4 p-5 w-full">
-                    <Avatar unreadFlg={!chat.isRead}/>
-                    <ChatListContent chat={chat} latestMessage={latestMessage}/>
+              <div className="flex hover:bg-gray-100" key={chat.chat.id}>
+                <Link href={pathChat(chat.chat.id)} className="flex-1">
+                  <li key={chat.chat.id} className="flex gap-x-4 p-5 w-full">
+                    <Avatar unreadFlg={!chat.chat.isRead}/>
+                    <ChatListContent chat={chat.chat} lastMessage={chat.lastMessage}/>
                   </li>
                 </Link>
                 {/* 設定アイコン */}
-                <ConfigIcon chatId={chat.id}/>
+                <ConfigIcon chatId={chat.chat.id}/>
               </div>
             )
           })}
@@ -71,7 +72,7 @@ const Title = ({ text }: { text: string }) => {
 }
 
 // プロフィール
-const Profile = ({ host }: { host: User_x | undefined }) => {
+const Profile = ({ host }: { host: Host }) => {
   return (
     <div className="px-5 border border-indigo-300 my-3 rounded sm:rounded-xl bg-indigo-50">
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
@@ -93,11 +94,11 @@ const Profile = ({ host }: { host: User_x | undefined }) => {
         <div className="flex flex-col gap-1.5 items-end flex-shrink-0">
           <ProfileLink
             text={"プロフィール"}
-            href={pathProfile(currentUserId)}
+            href={pathProfile(host.id)}
           />
           <ProfileLink
             text={"編集"}
-            href={pathProfileEdit(currentUserId)}
+            href={pathProfileEdit(host.id)}
             icon={<PencilSquareIcon className="w-4 h-4 inline mr-1"/>}
           />
         </div>
@@ -128,9 +129,9 @@ const ProfileLink = ({
 
 // チャット一覧の中身です
 const ChatListContent = ({
-  chat, latestMessage
+  chat, lastMessage
 }: {
-  chat: Chat_x, latestMessage: Message_x
+  chat: Chat, lastMessage: Message
 }) => {
   return (
     <div className="w-full">
@@ -139,13 +140,13 @@ const ChatListContent = ({
         <p className="text-sm font-semibold leading-6 text-gray-900 line-clamp-1">
           {chat.guest.displayName || chat.id}
         </p>
-        <p className="flex-none text-xs text-gray-600">{latestMessage.date}</p>
+        <p className="flex-none text-xs text-gray-600">{lastMessage.created?.getDate()}</p>
       </div>
       {/* 下側(コメント) */}
       <p className={`mt-1 line-clamp-1 text-sm leading-6
                        ${chat.isRead ? "text-gray-400" : "text-gray-600 font-bold"}`}
       >
-        {latestMessage.content}
+        {lastMessage.content}
       </p>
     </div>
   )

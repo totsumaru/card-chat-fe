@@ -4,10 +4,7 @@ import classnames from "classnames";
 import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
-import { User_x } from "@/utils/sample/User_x";
-import { PostProfileEdit } from "@/utils/api/postProfileEdit";
-import { Session } from "@supabase/gotrue-js";
-import { currentUserSession } from "@/utils/sample/Sample";
+import { PostProfileEdit, Req } from "@/utils/api/postProfileEdit";
 import {
   validateCompanyName,
   validateEmail,
@@ -18,12 +15,13 @@ import {
   validateTel,
   validateURL
 } from "@/utils/validate";
-import { useInputState } from "@/app/profile/[hostId]/edit/state";
+import { useFileInputState, useInputState } from "@/app/profile/[hostId]/edit/state";
 import { Input, Textarea } from "@/app/profile/[hostId]/edit/Form";
+import { Host } from "@/utils/api/res";
 
 type Props = {
-  session: Session | null
-  host: User_x
+  token: string
+  host: Host
 }
 
 /**
@@ -31,8 +29,8 @@ type Props = {
  *
  * clientでの処理のためのコンポーネントです。
  */
-export default function ProfileEditForms({ session, host }: Props) {
-  const [avatar, setAvatar] = useInputState(host.avatarUrl)
+export default function ProfileEditForms({ token, host }: Props) {
+  const [avatar, setAvatar] = useFileInputState(host.avatarUrl)
   const [name, setName, nameErr, setNameErr] = useInputState(host.name)
   const [headline, setHeadline, headlineErr, setHeadlineErr] = useInputState(host.headline)
   const [intro, setIntro, introErr, setIntroErr] = useInputState(host.introduction)
@@ -81,23 +79,22 @@ export default function ProfileEditForms({ session, host }: Props) {
       return
     }
 
-    const req: User_x = {
-      id: host?.id!,
+    const req: Req = {
+      token: token,
+      hostId: host?.id!,
+      avatar: typeof avatar === "string" ? undefined : avatar,
       name: name,
-      avatarUrl: avatar,
       headline: headline,
       introduction: intro,
-      company: {
-        name: companyName,
-        position: position,
-        tel: tel,
-        email: email,
-        website: website,
-      }
+      companyName: companyName,
+      position: position,
+      tel: tel,
+      email: email,
+      website: website,
     }
 
     try {
-      await PostProfileEdit(currentUserSession, req)
+      await PostProfileEdit(req)
       setSuccess(true)
     } catch (e) {
       setSuccess(false)

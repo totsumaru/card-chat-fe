@@ -4,7 +4,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 const allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
 type Props = {
-  image: string
+  image: string | File
   setImage: (img: string) => void
 }
 
@@ -36,6 +36,7 @@ export default function InputImage({ image, setImage }: Props) {
       };
       guest.readAsDataURL(file);
     }
+    console.log(file)
   };
 
   // 画像の選択です
@@ -47,7 +48,12 @@ export default function InputImage({ image, setImage }: Props) {
           <label
             className="flex flex-col bg-cover items-center justify-center h-32 w-32
              sm:h-64 sm:w-64 border-2 ring-gray-300 rounded-full hover:bg-gray-100"
-            style={{ backgroundImage: `url(${image})` }}
+            style={{
+              backgroundImage: `url(${
+                typeof image === 'string'
+                  ? image
+                  : URL.createObjectURL(image)}`
+            }}
           >
           </label>
         </div>

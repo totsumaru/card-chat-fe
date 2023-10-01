@@ -69,7 +69,7 @@ export default function NoticeEmailModal({
     }
 
     try {
-      await PostUpdateNoticeEmail(passcode, chatId, email)
+      await PostUpdateNoticeEmail(chatId, email)
       setSuccess(true)
       setEmail("")
     } catch (e) {

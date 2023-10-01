@@ -2,15 +2,14 @@ import Link from "next/link";
 import Avatar from "@/components/avatar/Avatar";
 import React from "react";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
-import { Chat_x } from "@/utils/sample/Chat_x";
-import { User_x } from "@/utils/sample/User_x";
 import Header from "@/components/header/Header";
 import NoticeModalOpenButton from "@/components/button/NoticeModalOpenButton";
+import { Chat, Host } from "@/utils/api/res";
 
 type Props = {
   isHost: boolean
-  chat: Chat_x | undefined
-  host: User_x | undefined
+  chat: Chat
+  host: Host
   setModalOpen: (open: boolean) => void
 }
 
@@ -50,7 +49,7 @@ export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) 
   const right = (
     <NoticeModalOpenButton
       setModalOpen={setModalOpen}
-      registeredEmail={chat?.guest.noticeEmail}
+      registeredEmail={chat?.guest.email}
     />
   )
 

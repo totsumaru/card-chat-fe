@@ -1,8 +1,6 @@
 "use client"
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Chat_x, Message_x } from "@/utils/sample/Chat_x";
-import { User_x } from "@/utils/sample/User_x";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal from "@/components/modal/PasscodeModal";
 import ChatHeader from "@/components/header/ChatHeader";
@@ -10,32 +8,32 @@ import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
 import { ChatStatus } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
-import { Session } from "@supabase/gotrue-js";
 import MustLoginModal from "@/components/modal/MustLoginModal";
+import { Chat, Host, Message } from "@/utils/api/res";
+import { PostSendMessage } from "@/utils/api/postSendMessage";
 
 type Props = {
   userId: string
   chatId: string
-  session: Session | null
-  chat: Chat_x | undefined
-  host: User_x | undefined
+  token: string
+  chat: Chat
+  messages: Message[]
+  host: Host
   status: ChatStatus | undefined
 }
 
 
 /**
  * チャットページのClientコンポーネントです
- *
- * TODO: ゲストは、memoや表示名を取得できないようにする
  */
 export default function Client(props: Props) {
   // 通知Modal
   const [noticeModalOpen, setNoticeModalOpen] = useState<boolean>(false)
   // チャット
-  const [chat, setChat] = useState<Chat_x | undefined>(props.chat) // ここはInfo用に使用します
-  const [messages, setMessages] = useState<Message_x[] | undefined>(props.chat?.messages)
+  const [chat, setChat] = useState<Chat>(props.chat) // ここはInfo用に使用します
+  const [messages, setMessages] = useState<Message[]>(props.messages)
   const [newMessage, setNewMessage] = useState<string>("")
-  const [host, setHost] = useState<User_x | undefined>(props.host)
+  const [host, setHost] = useState<Host>(props.host)
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
@@ -44,35 +42,6 @@ export default function Client(props: Props) {
       ? chat.id     // cookieでチャットが取得できている場合
       : ""          // チャットが取得できていない場合
   )
-  const [ws, setWs] = useState<WebSocket | null>(null);
-
-  // WebSocket接続を作成
-  useEffect(() => {
-    const websocket = new WebSocket('ws://localhost:8080/ws');
-    websocket.onopen = () => {
-      console.log('WebSocket connected');
-    };
-    websocket.onmessage = (event) => {
-      // TODO: ここでWebSocketから受信したメッセージを処理
-      console.log('Received:', event.data);
-      // Example: Adding received message to the messages state
-      const receivedMessage = JSON.parse(event.data);
-      setMessages(prevMessages => {
-        if (!prevMessages) {
-          return [receivedMessage];
-        }
-        return [...prevMessages, receivedMessage];
-      });
-    };
-    websocket.onclose = () => {
-      console.log('WebSocket closed');
-    };
-    setWs(websocket);
-    // 接続をクリーンアップ
-    return () => {
-      websocket.close();
-    };
-  }, []);
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -80,20 +49,6 @@ export default function Client(props: Props) {
       scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
     }
   }, [messages]);
-
-  // 自動返信を送信します
-  const autoReply = () => {
-    setMessages(prevMessages => {
-      const msg: Message_x = {
-        content: "これは自動返信です",
-        from: myId === props.userId ? props.chatId : props.userId,
-      }
-      if (!prevMessages) {
-        return [msg];
-      }
-      return [...prevMessages, msg];
-    });
-  }
 
   // メッセージ送信フォームにに入力された時の挙動です
   const handleInputChange = (inputValue: string) => {
@@ -103,14 +58,31 @@ export default function Client(props: Props) {
   // メッセージを送信
   const handleMessageSend = async () => {
     if (!newMessage) return
-    // 自分のメッセージを追加
+    // stateに追加
     setMessages(prevMessages => {
-      const msg: Message_x = { content: newMessage, from: myId }
+      const msg: Message = {
+        id: "",
+        chatId: chat.id,
+        fromId: myId,
+        content: newMessage,
+        created: new Date(),
+      }
       if (!prevMessages) {
         return [msg];
       }
-      return [...prevMessages, msg];
+      return [msg, ...prevMessages];
     });
+
+    // バックエンドに送信
+    try {
+      await PostSendMessage({
+        token: props.token,
+        chatId: chat.id,
+        content: newMessage,
+      })
+    } catch (e) {
+      console.error(e)
+    }
 
     setNewMessage("");
   };
@@ -133,17 +105,14 @@ export default function Client(props: Props) {
         passcode={chat?.passcode}
         modalOpen={noticeModalOpen}
         setModalOpen={setNoticeModalOpen}
-        registeredEmail={chat?.guest.noticeEmail}
+        registeredEmail={chat?.guest.email}
       />
 
       {/* 開始Modal */}
       <StartChatModal
         chatId={props.chatId}
-        session={props.session}
+        token={props.token}
         open={props.status === "first-is-login"}
-        setChat={setChat}
-        setMessages={setMessages}
-        setHost={setHost}
         setMyId={setMyId}
       />
       {/* ログイン催促Modal */}

@@ -15,9 +15,11 @@ export const GetChatByPasscode = async (
   chatId: string,
   passcode: string
 ): Promise<Res> => {
-  const { data } = await axios.post(Endpoint(`/api/chat/${chatId}/passcode`), {}, {
-    headers: createHeader({ passcode: passcode }),
-  });
+  const { data } = await axios.post(
+    Endpoint(`/api/chat/${chatId}/passcode`), {}, {
+      headers: createHeader({ passcode: passcode }),
+    }
+  );
 
   const chatRes: Chat = castToChatRes(data.chat)
   const messageRes: Message[] = castToMessagesRes(data.messages)

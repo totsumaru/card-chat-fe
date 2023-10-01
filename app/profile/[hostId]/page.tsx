@@ -3,11 +3,10 @@ import { cookies } from "next/headers";
 import { EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
-import React from "react";
 import Header from "@/components/header/Header";
 import Avatar from "@/components/avatar/Avatar";
-import { currentUserId } from "@/utils/sample/Sample";
-import GetUserByID from "@/utils/api/getUserByID";
+import GetHost from "@/utils/api/getHost";
+import { ReactNode } from "react";
 
 export const dynamic = 'force-dynamic'
 
@@ -22,16 +21,18 @@ export default async function Index({
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  const host = await GetUserByID(hostId)
+  let host
+  try {
+    const res = await GetHost(hostId)
+    host = res.host
+  } catch (e) {
+    console.error(e)
+  }
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-violet-50">
       {/* ヘッダー */}
-      <Header
-        left={""}
-        right={""}
-        isHost={hostId === currentUserId}
-      />
+      <Header left={""} right={""} isHost={hostId === user?.id}/>
 
       {/* 本体 */}
       <div className="mx-auto max-w-7xl pt-5 px-4 sm:px-6 lg:px-8 min-h-screen">
@@ -100,7 +101,7 @@ export default async function Index({
 
 // Gridのアイテムです
 function InfoGrid({ icon, kind, value }: {
-  icon: React.ReactNode,
+  icon: ReactNode,
   kind: "電話番号" | "メールアドレス" | "Webサイト",
   value: string,
 }) {

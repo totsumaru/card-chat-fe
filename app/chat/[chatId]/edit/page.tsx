@@ -1,17 +1,15 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import React from "react";
 import Container from "@/components/container/Container";
 import ChatMetadataForms from "@/app/chat/[chatId]/edit/ChatMetadataForms";
 import Header from "@/components/header/Header";
-import { currentUserId, currentUserSession } from "@/utils/sample/Sample";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import { GetChat } from "@/utils/api/getChat";
 
 export const dynamic = 'force-dynamic'
 
 /**
- * チャットの登録情報を表示/編集する画面です
+ * チャットの登録情報を編集する画面です
  */
 export default async function Index({
   params: { chatId }
@@ -22,12 +20,17 @@ export default async function Index({
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
-  const res = await GetChat(chatId, currentUserSession)
+  let res
+  try {
+    res = await GetChat(chatId, session?.access_token)
+  } catch (e) {
+    console.error(e)
+  }
 
   return (
     <>
       {/* ヘッダー */}
-      <Header left={""} right={""} isHost={res?.host?.id === currentUserId}/>
+      <Header left={""} right={""} isHost={res?.host?.id === user?.id}/>
 
       <Container>
         {/* 戻るボタン */}
@@ -41,7 +44,7 @@ export default async function Index({
         {/* フォーム */}
         <ChatMetadataForms
           chatId={res?.chat?.id || ""}
-          session={session}
+          token={session?.access_token || ""}
           displayName={res?.chat?.guest.displayName || ""}
           memo={res?.chat?.guest.memo || ""}
         />

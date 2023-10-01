@@ -3,15 +3,13 @@
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { PostChatInfoEdit } from "@/utils/api/postChatInfoEdit";
-import { Session } from "@supabase/gotrue-js";
-import { currentUserSession } from "@/utils/sample/Sample";
 import { validateDisplayName, validateMemo } from "@/utils/validate";
 import InputErrMsg from "@/components/text/InputErrMsg";
 import { displayNameMaxLength, memoMaxLength } from "@/utils/variable";
 
 type Props = {
   chatId: string
-  session: Session | null
+  token: string
   displayName: string
   memo: string
 }
@@ -34,7 +32,7 @@ export default function ChatMetadataForms(props: Props) {
     setSuccess(undefined)
 
     try {
-      await PostChatInfoEdit(currentUserSession, props.chatId, displayName, memo)
+      await PostChatInfoEdit(props.token, props.chatId, displayName, memo)
       setSuccess(true)
     } catch (e) {
       setSuccess(false)

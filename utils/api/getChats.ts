@@ -1,37 +1,43 @@
-import { Chat_x, chatsDB } from "@/utils/sample/Chat_x";
-import { TestSession } from "@/utils/sample/Sample";
-import { User_x, usersDB } from "@/utils/sample/User_x";
+import { castToChatRes, castToHost, castToMessageRes, Chat, Host, Message } from "@/utils/api/res";
+import axios from "axios";
+import { createHeader, Endpoint } from "@/utils/api/api";
 
+// レスポンスです
 type Res = {
-  host: User_x | undefined
-  chats: Chat_x[] | undefined
+  host: Host
+  chats: ChatRes[]
+}
+
+// チャットのレスポンスです
+type ChatRes = {
+  chat: Chat
+  lastMessage: Message
 }
 
 /**
  * ログインしているユーザーの全てのチャットを取得します
  *
  * Memo: 現状は全て取得しますが、いずれlimit/offsetで指定できるようにします。
- *
- * TODO: `userId`->`session`に変更
  */
-export default async function GetChats(session: TestSession): Promise<Res> {
-  const res = await beGetChats(session)
+export default async function GetChats(
+  token: string,
+): Promise<Res> {
+  const { data } = await axios.post(
+    Endpoint(`/api/chats`), {}, {
+      headers: createHeader({ token: token }),
+    }
+  );
 
-  return res
-}
-
-// バックエンドの挙動です
-const beGetChats = async (session: TestSession): Promise<Res> => {
-  // ログインしていない場合はエラーを返します
-  if (!session.id) {
-    throw new Error("ログインしていません")
-  }
-
-  const chats = chatsDB.filter(chat => chat.hostId === session.id)
-  const user = usersDB.find(user => user.id === session.id)
+  const hostRes: Host = castToHost(data.host)
+  const chatsRes = data.chats.map((beChatRes: any) => {
+    return {
+      chat: castToChatRes(beChatRes.chat),
+      lastMessage: castToMessageRes(beChatRes.last_message),
+    }
+  })
 
   return {
-    chats: chats,
-    host: user,
+    host: hostRes,
+    chats: chatsRes,
   }
 }

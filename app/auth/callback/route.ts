@@ -13,13 +13,14 @@ export async function GET(request: Request) {
   // バックエンドでホストを作成します
   if (!session?.access_token) {
     console.error("アクストークンが取得できません");
-    return
+    return new Response("Access token not available", { status: 401 });
   }
 
   try {
     await PostCreateHost(session.access_token)
   } catch (error) {
     console.error("エラーが発生しました");
+    return new Response("Error occurred", { status: 500 })
   }
 
   return NextResponse.redirect(`${requestUrl.origin}/dashboard`)

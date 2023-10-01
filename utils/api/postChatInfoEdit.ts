@@ -15,6 +15,9 @@ export const PostChatInfoEdit = async (
   formData.append('memo', memo);
 
   await axios.post(Endpoint(`/api/chat/${chatId}/edit`), formData, {
-    headers: createHeader({ token: token }),
+    headers: createHeader({
+      token: token,
+      contentType: "form-urlencoded",
+    }),
   });
 }

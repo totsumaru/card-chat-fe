@@ -44,10 +44,14 @@ type Res = {
 export const GetChat = async (
   chatId: string,
   token?: string,
+  optionHeader?: {}, // Headerに独自で追加したい場合はここに入れます
 ): Promise<Res> => {
   const { data } = await axios.get(
     Endpoint(`/api/chat/${chatId}`), {
-      headers: createHeader({ token: token }),
+      headers: {
+        ...createHeader({ token: token }),
+        ...optionHeader,
+      },
       withCredentials: true,
     }
   );

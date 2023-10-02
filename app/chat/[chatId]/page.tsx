@@ -24,7 +24,7 @@ export default async function Index({
 
   let res
   try {
-    res = await GetChat(chatId, session?.access_token)
+    res = await GetChat(chatId, session?.access_token, { Cookie: cookies() })
     // 自分がhostの場合、既読処理を行います
     const isHost = res.host.id === user?.id
     if (isHost && session?.access_token) {

@@ -49,7 +49,6 @@ export default function Client(props: Props) {
     let res;
     try {
       res = await GetChat(props.chatId, props.token);
-      console.log(res)
       // 自分がhostの場合、既読処理を行います
       const isHost = res.host.id === props.userId;
       if (isHost && props.token) {
@@ -65,12 +64,13 @@ export default function Client(props: Props) {
     }
   };
 
-  // useEffect(() => {
-  //   // 10秒ごとにデータフェッチを設定
-  //   const intervalId = setInterval(fetchData, 10 * 1000)
-  //   // クリーンアップ関数を返す（コンポーネントのアンマウント時や、依存関係が変更された際にインターバルをクリア）
-  //   return () => clearInterval(intervalId);
-  // }, [props.chatId, props.token, props.userId]);
+  useEffect(() => {
+    // 10秒ごとにデータフェッチを設定
+    const intervalId = setInterval(fetchData, 10 * 1000)
+    // クリーンアップ関数を返す
+    // コンポーネントのアンマウント時や、依存関係が変更された際にインターバルをクリア
+    return () => clearInterval(intervalId);
+  }, [props.chatId, props.token, props.userId]);
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {

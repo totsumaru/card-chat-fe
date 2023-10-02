@@ -45,8 +45,8 @@ export const GetChat = async (
   chatId: string,
   token?: string,
 ): Promise<Res> => {
-  const { data } = await axios.post(
-    Endpoint(`/api/chat/${chatId}`), {}, {
+  const { data } = await axios.get(
+    Endpoint(`/api/chat/${chatId}`), {
       headers: createHeader({ token: token }),
     }
   );

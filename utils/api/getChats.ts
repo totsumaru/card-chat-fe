@@ -22,8 +22,8 @@ type ChatRes = {
 export default async function GetChats(
   token: string,
 ): Promise<Res> {
-  const { data } = await axios.post(
-    Endpoint(`/api/chats`), {}, {
+  const { data } = await axios.get(
+    Endpoint(`/api/chats`), {
       headers: createHeader({ token: token }),
     }
   );

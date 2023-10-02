@@ -8,9 +8,6 @@ export default async function Index() {
   const { data: { user } } = await supabase.auth.getUser()
   const { data: { session } } = await supabase.auth.getSession()
 
-  console.log("user: ", user)
-  console.log("session: ", session)
-
   return (
     <>
       hello

@@ -15,8 +15,8 @@ export const GetChatByPasscode = async (
   chatId: string,
   passcode: string
 ): Promise<Res> => {
-  const { data } = await axios.post(
-    Endpoint(`/api/chat/${chatId}/passcode`), {}, {
+  const { data } = await axios.get(
+    Endpoint(`/api/chat/${chatId}/passcode`), {
       headers: createHeader({ passcode: passcode }),
     }
   );

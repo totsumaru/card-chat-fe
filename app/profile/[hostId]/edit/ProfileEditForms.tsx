@@ -185,7 +185,10 @@ export default function ProfileEditForms({ token, host }: Props) {
             "text-gray-600": success === true,
             "text-red-500 mt-0.5": success === false,
           })}>
-            {success === true ? "保存しました！" : "エラーが発生しました"}
+            {success === true
+              ? "保存しました！" :
+              success == false && "エラーが発生しました"
+            }
           </p>
         </div>
 

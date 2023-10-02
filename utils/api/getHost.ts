@@ -12,8 +12,8 @@ type Res = {
 export default async function GetHost(
   hostId: string
 ): Promise<Res> {
-  const { data } = await axios.post(
-    Endpoint(`/api/host/${hostId}`), {}, {}
+  const { data } = await axios.get(
+    Endpoint(`/api/host/${hostId}`), {}
   );
 
   return {

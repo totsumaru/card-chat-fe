@@ -28,7 +28,7 @@ export default function Avatar({ imageUrl, href, unreadFlg, widthHeight }: Props
     <span className="relative block">
       {imageUrl ? (
         <img
-          className={`inline-block ${commonClass} aspect-[1/1] object-cover`}
+          className={`inline-block ${commonClass} aspect-[1/1] object-cover ring-1 ring-gray-300`}
           src={imageUrl}
           alt="Avatar"
         />

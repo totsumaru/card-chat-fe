@@ -23,7 +23,7 @@ export const PostProfileEdit = async (req: Req) => {
   if (req.avatar) {
     formData.append('avatar', req.avatar);
   }
-  formData.append('name',req.name);
+  formData.append('name', req.name);
   formData.append('headline', req.headline);
   formData.append('introduction', req.introduction);
   formData.append('company_name', req.companyName);

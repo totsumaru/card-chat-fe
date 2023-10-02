@@ -5,7 +5,7 @@ const allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
 type Props = {
   image: string | File
-  setImage: (img: string) => void
+  setImage: (img: File) => void
 }
 
 /**
@@ -22,7 +22,6 @@ export default function InputImage({ image, setImage }: Props) {
     setErrMsg("")
     const file = e.target.files?.[0];
     if (file) {
-      // 拡張子を確認します
       if (!allowedTypes.includes(file.type)) {
         setErrMsg("許可されていない拡張子です")
         return
@@ -30,13 +29,8 @@ export default function InputImage({ image, setImage }: Props) {
         setErrMsg("")
       }
 
-      const guest = new FileReader();
-      guest.onloadend = () => {
-        setImage(guest.result as string);
-      };
-      guest.readAsDataURL(file);
+      setImage(file);  // Here, pass the file directly to setImage
     }
-    console.log(file)
   };
 
   // 画像の選択です

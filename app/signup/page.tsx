@@ -17,19 +17,6 @@ export default function Index() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<boolean>(false)
 
-  useEffect(() => {
-    const printWhenLoading = async () => {
-      await supabase.auth.refreshSession()
-      const session = await supabase.auth.getSession()
-      const user = await supabase.auth.getUser()
-      console.log("user: ", user)
-      console.log("session: ", session)
-    }
-    printWhenLoading().then()
-  }, [])
-
-  console.log("callback: ", signUpEmailRedirectTo())
-
   const handleClick = async () => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
@@ -41,8 +28,14 @@ export default function Index() {
     if (error) {
       setError(true)
     }
-    console.log(data)
   }
+
+  // TODO: useEffect自体を削除
+  useEffect(() => {
+    supabase.auth.getSession().then((res) => {
+      console.log("sesion: ", res.data.session?.access_token)
+    })
+  }, [])
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">

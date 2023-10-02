@@ -23,7 +23,7 @@ export default async function Index() {
   // 自分が管理する全てのチャットを取得します
   let chatsRes
   try {
-    chatsRes = await GetChats(session?.token_type || "")
+    chatsRes = await GetChats(session?.access_token || "")
   } catch (e) {
     console.error(e)
   }
@@ -78,15 +78,13 @@ const Profile = ({ host }: { host: Host }) => {
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
         {/* 左側 */}
         <div className="flex min-w-0 gap-x-4">
-          <img className="h-12 w-12 flex-none rounded-full bg-gray-50"
-               src={host?.avatarUrl} alt=""
-          />
+          <Avatar imageUrl={host.avatarUrl} widthHeight={"12"}/>
           <div className="min-w-0 flex-auto">
             <p className="text-sm line-clamp-1 font-semibold leading-6 text-gray-900">
-              {host?.name}
+              {host?.name || "名前を設定して下さい"}
             </p>
             <p className="mt-1 line-clamp-1 truncate text-xs leading-5 text-gray-500">
-              {host?.company.name}
+              {host?.company.name || "会社名"}
             </p>
           </div>
         </div>

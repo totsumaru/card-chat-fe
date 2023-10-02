@@ -54,17 +54,18 @@ export default function StartChatModal(props: Props) {
     setPasscodeErrMsg("")
     setError(false)
 
-    const passcodeErr = validatePasscode(passcode)
-    if (!passcodeErr) {
-      setPasscodeErrMsg(passcodeErr)
+    const errorMessage = validatePasscode(passcode)
+    if (errorMessage) {
+      setPasscodeErrMsg(errorMessage)
       return
     }
 
     try {
-      await PostStartChat(props.chatId, props.token, displayName,)
+      await PostStartChat(props.chatId, props.token, displayName)
       props.setMyId(props.chatId)
       setModalOpen(false)
     } catch (e) {
+      console.error(e)
       setError(true)
       setPasscode("")
     }
@@ -117,7 +118,7 @@ export default function StartChatModal(props: Props) {
         <LoadingButton
           clickHandler={handleSaveDisplayName}
           label={"開始"}
-          disabled={!!passcodeErrMsg || !!displayNameErrMsg}
+          // disabled={!!passcodeErrMsg || !!displayNameErrMsg}
           widthFull
         />
         {error && (

@@ -2,7 +2,6 @@
 
 // ログイン画面です
 import { useState } from "react";
-import Link from "next/link";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
@@ -69,9 +68,9 @@ export default function Index() {
               パスワード
             </label>
             <div className="text-sm">
-              <Link href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 パスワードを忘れた方
-              </Link>
+              </a>
             </div>
           </div>
           <div className="mt-2">

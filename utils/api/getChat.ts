@@ -48,6 +48,7 @@ export const GetChat = async (
   const { data } = await axios.get(
     Endpoint(`/api/chat/${chatId}`), {
       headers: createHeader({ token: token }),
+      withCredentials: true,
     }
   );
 

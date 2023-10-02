@@ -11,7 +11,7 @@ export const PostChangeToRead = (
   token: string,
   chatId: string,
 ) => {
-  axios.post(Endpoint(`/api/chat/${chatId}/message`), {}, {
+  axios.post(Endpoint(`/api/chat/${chatId}/read`), {}, {
     headers: createHeader({ token: token }),
   });
 }

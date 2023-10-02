@@ -1,16 +1,17 @@
 "use client"
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import NoticeEmailModal from "@/components/modal/NoticeEmailModal";
 import PasscodeModal from "@/components/modal/PasscodeModal";
 import ChatHeader from "@/components/header/ChatHeader";
 import MessageArea from "@/app/chat/[chatId]/MessageArea";
 import InputArea from "@/app/chat/[chatId]/InputArea";
-import { ChatStatus } from "@/utils/api/getChat";
+import { ChatStatus, GetChat } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
 import MustLoginModal from "@/components/modal/MustLoginModal";
 import { Chat, Host, Message } from "@/utils/api/res";
 import { PostSendMessage } from "@/utils/api/postSendMessage";
+import { PostChangeToRead } from "@/utils/api/postChangeToRead";
 
 type Props = {
   userId: string
@@ -42,6 +43,34 @@ export default function Client(props: Props) {
       ? chat.id     // cookieでチャットが取得できている場合
       : ""          // チャットが取得できていない場合
   )
+
+  // バックエンドから情報を取得し、stateを更新します
+  const fetchData = async () => {
+    let res;
+    try {
+      res = await GetChat(props.chatId, props.token);
+      console.log(res)
+      // 自分がhostの場合、既読処理を行います
+      const isHost = res.host.id === props.userId;
+      if (isHost && props.token) {
+        await PostChangeToRead(props.token, props.chatId);
+      }
+
+      // stateを更新します
+      setChat(res.chat);
+      setMessages(res.messages);
+      setHost(res.host);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // useEffect(() => {
+  //   // 10秒ごとにデータフェッチを設定
+  //   const intervalId = setInterval(fetchData, 10 * 1000)
+  //   // クリーンアップ関数を返す（コンポーネントのアンマウント時や、依存関係が変更された際にインターバルをクリア）
+  //   return () => clearInterval(intervalId);
+  // }, [props.chatId, props.token, props.userId]);
 
   // メッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
@@ -86,8 +115,6 @@ export default function Client(props: Props) {
 
     setNewMessage("");
   };
-
-  // TODO: 定期的にバックエンドに情報を取得しに行く
 
   return (
     <div className="relative h-screen overflow-hidden">
@@ -138,6 +165,10 @@ export default function Client(props: Props) {
           messages={messages}
           scrollBottomRes={scrollBottomRef}
         />
+
+        <button onClick={(e) => fetchData()}>
+          一時的に更新
+        </button>
 
         {/* 入力エリア */}
         <InputArea

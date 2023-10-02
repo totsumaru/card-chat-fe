@@ -59,6 +59,7 @@ export default function PasscodeModal(props: Props) {
       setSuccess(true)
       setErrMsg("")
     } catch (e) {
+      console.error(e)
       setErrMsg("ログインできません")
     } finally {
       setPasscode("")

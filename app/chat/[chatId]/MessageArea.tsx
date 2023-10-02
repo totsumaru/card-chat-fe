@@ -22,7 +22,7 @@ export default function MessageArea({
 }: Props) {
   return (
     <div ref={scrollBottomRes} className="flex-1 overflow-y-auto px-4 pt-24 pb-3">
-      {messages && messages.map((message, index) => (
+      {messages && [...messages].reverse().map((message, index) => (
         <div key={index}
              className={`flex items-start mb-2 ${message.fromId === myId
                ? 'justify-end' : 'justify-start'}`}

@@ -1,5 +1,4 @@
 import { buttonClassName } from "@/components/button/buttonClassName";
-import Link from "next/link";
 import { ReactNode } from "react";
 
 type Props = {
@@ -17,12 +16,12 @@ export default function LinkButton({
   label, href, widthFull, isWhite, icon
 }: Props) {
   return (
-    <Link
+    <a
       href={href}
       className={buttonClassName(isWhite, widthFull)}
     >
       {icon}
       {label}
-    </Link>
+    </a>
   )
 }

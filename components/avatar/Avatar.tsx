@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 type Props = {
   imageUrl?: string
   href?: string
@@ -47,7 +45,7 @@ export default function Avatar({ imageUrl, href, unreadFlg, widthHeight }: Props
   return (
     <>
       {href ? (
-        <Link href={href}>{avatar}</Link>
+        <a href={href}>{avatar}</a>
       ) : avatar}
     </>
   )

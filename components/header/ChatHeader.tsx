@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Avatar from "@/components/avatar/Avatar";
 import React from "react";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
@@ -38,12 +37,12 @@ export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) 
     : host?.name
 
   const left = (
-    <Link href={headerLink}>
+    <a href={headerLink}>
       <div className="flex items-center flex-grow">
         <Avatar imageUrl={headerAvatarUrl}/>
         <p className="ml-2 line-clamp-1">{headerDisplayName}</p>
       </div>
-    </Link>
+    </a>
   )
 
   const right = (

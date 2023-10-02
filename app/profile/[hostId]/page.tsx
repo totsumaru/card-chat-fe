@@ -1,7 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import Header from "@/components/header/Header";
 import Avatar from "@/components/avatar/Avatar";
@@ -130,12 +129,12 @@ function InfoGrid({ icon, kind, value }: {
       </div>
       <div className="min-w-0 flex-1">
         {link ? (
-          <Link href={link} className="focus:outline-none" target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}>
+          <a href={link} className="focus:outline-none" target={isExternal ? "_blank" : undefined}
+             rel={isExternal ? "noopener noreferrer" : undefined}>
             <span className="absolute inset-0" aria-hidden="true"/>
             <p className="text-sm font-medium text-gray-900">{kind}</p>
             <p className="truncate text-gray-500">{value}</p>
-          </Link>
+          </a>
         ) : (
           <>
             <p className="text-sm font-medium text-gray-900">{kind}</p>

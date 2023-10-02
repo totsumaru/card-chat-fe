@@ -39,7 +39,7 @@ export default async function Index({
     <Client
       userId={user?.id || ""}
       chatId={chatId}
-      token={session?.token_type || ""}
+      token={session?.access_token || ""}
       chat={res.chat}
       messages={res.messages}
       host={res.host}

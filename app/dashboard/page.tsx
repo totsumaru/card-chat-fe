@@ -1,6 +1,5 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Link from "next/link";
 import React, { ReactNode } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Container from "@/components/container/Container";
@@ -45,12 +44,12 @@ export default async function Index() {
           {chatsRes?.chats && chatsRes.chats.map((chat) => {
             return (
               <div className="flex hover:bg-gray-100" key={chat.chat.id}>
-                <Link href={pathChat(chat.chat.id)} className="flex-1">
+                <a href={pathChat(chat.chat.id)} className="flex-1">
                   <li key={chat.chat.id} className="flex gap-x-4 p-5 w-full">
                     <Avatar unreadFlg={!chat.chat.isRead}/>
                     <ChatListContent chat={chat.chat} lastMessage={chat.lastMessage}/>
                   </li>
-                </Link>
+                </a>
                 {/* 設定アイコン */}
                 <ConfigIcon chatId={chat.chat.id}/>
               </div>
@@ -113,14 +112,14 @@ const ProfileLink = ({
 }) => {
   return (
     <div>
-      <Link
+      <a
         href={href}
         className="flex items-center rounded-full bg-white px-2.5 py-1.5
          text-xs text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300
          hover:bg-gray-50"
       >
         {icon}{text}
-      </Link>
+      </a>
     </div>
   )
 }
@@ -154,13 +153,13 @@ const ChatListContent = ({
 const ConfigIcon = ({ chatId }: { chatId: string }) => {
   return (
     <div className="flex items-center">
-      <Link
+      <a
         href={pathDisplayNameEdit(chatId)}
         type="button"
         className="p-2 text-gray-900 hover:text-blue-600"
       >
         <Cog6ToothIcon className="w-5 h-5"/>
-      </Link>
+      </a>
     </div>
   )
 }

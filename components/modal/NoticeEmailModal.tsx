@@ -3,8 +3,8 @@ import { BellIcon } from '@heroicons/react/24/outline'
 import BaseModal from "@/components/modal/BaseModal";
 import { validateEmail } from "@/utils/validate";
 import LoadingButton from "@/components/button/LoadingButton";
-import { sleep } from "@/utils/sample/sleep";
 import { PostUpdateNoticeEmail } from "@/utils/api/postUpdateNoticeEmail";
+import { Chat } from "@/utils/api/res";
 
 type Props = {
   chatId: string
@@ -12,6 +12,7 @@ type Props = {
   modalOpen: boolean
   setModalOpen: (open: boolean) => void
   registeredEmail?: string
+  setChat: (chat: Chat) => void
 }
 
 /**
@@ -25,7 +26,7 @@ type Props = {
  *  いずれも、送信が完了した時は`success`のフラグによって表示が変更されます。
  */
 export default function NoticeEmailModal({
-  chatId, passcode, modalOpen, setModalOpen, registeredEmail
+  chatId, passcode, modalOpen, setModalOpen, registeredEmail, setChat,
 }: Props) {
   const [email, setEmail] = useState<string>("")
   const [success, setSuccess] = useState<boolean>(false)
@@ -41,7 +42,8 @@ export default function NoticeEmailModal({
   // Modalを閉じるボタンの処理です
   const handleClose = async () => {
     setModalOpen(false)
-    await sleep()
+    // 2秒のsleepを入れて表示を遅らせます
+    await sleep(2000)
     setSuccess(false)
     setIsRemove(false)
     setErrMsg("")
@@ -55,6 +57,7 @@ export default function NoticeEmailModal({
       return
     }
 
+    // メールアドレスが空の場合->通知を解除
     if (!email) {
       const userConfirmed = confirm("通知を解除しますか？");
       if (!userConfirmed) {
@@ -70,9 +73,10 @@ export default function NoticeEmailModal({
     }
 
     try {
-      await PostUpdateNoticeEmail(chatId, email)
+      const apiChatRes = await PostUpdateNoticeEmail(chatId, email)
       setSuccess(true)
       setEmail("")
+      setChat(apiChatRes.chat)
     } catch (e) {
       setErrMsg("エラーが発生しました")
     }
@@ -170,4 +174,8 @@ export default function NoticeEmailModal({
       />
     </>
   )
+}
+
+const sleep = (milliseconds: number) => {
+  return new Promise<void>(resolve => setTimeout(resolve, milliseconds));
 }

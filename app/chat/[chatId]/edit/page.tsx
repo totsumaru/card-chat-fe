@@ -37,9 +37,6 @@ export default async function Index({
         <ReturnToChatLink textWhite={false}/>
 
         <h1 className="text-lg font-bold mt-3">チャット情報の編集</h1>
-        <p className="text-gray-600 text-sm mt-2 ml-0.5">
-          ※この内容は、相手に表示されません。
-        </p>
 
         {/* フォーム */}
         <ChatMetadataForms
@@ -48,6 +45,10 @@ export default async function Index({
           displayName={res?.chat?.guest.displayName || ""}
           memo={res?.chat?.guest.memo || ""}
         />
+
+        <p className="text-gray-600 text-sm mt-3 ml-0.5">
+          ※この内容は、相手には表示されません。
+        </p>
       </Container>
     </>
   )

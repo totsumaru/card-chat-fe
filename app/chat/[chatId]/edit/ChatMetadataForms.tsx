@@ -24,15 +24,15 @@ export default function ChatMetadataForms(props: Props) {
   const [memoErrMsg, setMemoErrMsg] = useState<string>("")
   const [success, setSuccess] = useState<boolean | undefined>(undefined)
 
-  // TODO: フォームの内容をcheck!!!
-
   // 保存ボタンをクリックした時の挙動です
   // ボタンコンポーネント側で、エラーメッセージを表示します
   const handleSave = async () => {
     setSuccess(undefined)
 
     try {
-      await PostChatInfoEdit(props.token, props.chatId, displayName, memo)
+      const apiChatRes = await PostChatInfoEdit(props.token, props.chatId, displayName, memo)
+      setDisplayName(apiChatRes.chat.guest.displayName)
+      setMemo(apiChatRes.chat.guest.memo)
       setSuccess(true)
     } catch (e) {
       setSuccess(false)

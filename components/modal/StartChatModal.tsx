@@ -5,8 +5,8 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import LoadingButton from "@/components/button/LoadingButton";
 import BaseModal from "@/components/modal/BaseModal";
 import { PostStartChat } from "@/utils/api/postStartChat";
-import { validateDisplayName, validatePasscode, validatePasscodeInput } from "@/utils/validate";
-import { passcodeLength } from "@/utils/variable";
+import { validateDisplayName } from "@/utils/validate";
+import { Chat } from "@/utils/api/res";
 
 type Props = {
   chatId: string
@@ -14,6 +14,7 @@ type Props = {
   open: boolean
   // setter
   setMyId: (myId: string) => void
+  setChat: (chat: Chat) => void
 }
 
 /**
@@ -24,21 +25,8 @@ type Props = {
 export default function StartChatModal(props: Props) {
   const [modalOpen, setModalOpen] = useState<boolean>(props.open)
   const [displayName, setDisplayName] = useState<string>("")
-  const [passcode, setPasscode] = useState<string>("")
   const [displayNameErrMsg, setDisplayNameErrMsg] = useState<string>("")
-  const [passcodeErrMsg, setPasscodeErrMsg] = useState<string>("")
   const [error, setError] = useState<boolean>(false)
-
-  // パスコードが変更された時の処理です
-  const handlePasscodeChange = (value: string) => {
-    const passcodeErr = validatePasscodeInput(value)
-    if (passcodeErr) {
-      setPasscodeErrMsg(passcodeErr)
-      return
-    }
-    setPasscode(value)
-    setPasscodeErrMsg("")
-  }
 
   // 表示名が変更された時の処理です
   const handleDisplayNameChange = (value: string) => {
@@ -49,25 +37,18 @@ export default function StartChatModal(props: Props) {
   }
 
   // 表示名を保存してチャットを開始
-  const handleSaveDisplayName = async () => {
+  const handleStartChat = async () => {
     setDisplayNameErrMsg("")
-    setPasscodeErrMsg("")
     setError(false)
 
-    const errorMessage = validatePasscode(passcode)
-    if (errorMessage) {
-      setPasscodeErrMsg(errorMessage)
-      return
-    }
-
     try {
-      await PostStartChat(props.chatId, props.token, displayName)
+      const apiChatRes = await PostStartChat(props.chatId, props.token, displayName)
       props.setMyId(props.chatId)
+      props.setChat(apiChatRes.chat)
       setModalOpen(false)
     } catch (e) {
       console.error(e)
       setError(true)
-      setPasscode("")
     }
   }
 
@@ -94,31 +75,12 @@ export default function StartChatModal(props: Props) {
         </span>
       </div>
 
-      {/* パスコードのフォーム */}
-      <div className="mt-2">
-        <p className="text-gray-500 text-sm font-semibold ml-0.5">
-          パスコード
-        </p>
-        <input
-          type="text"
-          maxLength={passcodeLength}
-          pattern="[0-9]*" // 追加: 0-9の数字のみ許可
-          className={`${inputClassName} tracking-widest`}
-          placeholder="123456"
-          onChange={(e) => handlePasscodeChange(e.target.value)}
-          value={passcode}
-        />
-        {passcodeErrMsg && (
-          <p className="text-xs text-red-400 ml-1 mt-1">{passcodeErrMsg}</p>
-        )}
-      </div>
-
       {/* ボタン */}
       <div className="mt-5 sm:mt-3 flex flex-col gap-2">
         <LoadingButton
-          clickHandler={handleSaveDisplayName}
+          clickHandler={handleStartChat}
           label={"開始"}
-          // disabled={!!passcodeErrMsg || !!displayNameErrMsg}
+          disabled={!!displayNameErrMsg}
           widthFull
         />
         {error && (

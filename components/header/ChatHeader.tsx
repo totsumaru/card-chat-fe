@@ -7,6 +7,7 @@ import { Chat, Host } from "@/utils/api/res";
 
 type Props = {
   isHost: boolean
+  chatId: string
   chat: Chat
   host: Host
   setModalOpen: (open: boolean) => void
@@ -18,8 +19,7 @@ type Props = {
  * 自分がHostの場合、相手(Guest)の情報を表示、
  * 自分がGuestの場合、相手(Host)の情報を表示します。
  */
-export default function ChatHeader({ isHost, chat, host, setModalOpen }: Props) {
-  const chatId = chat?.id || ""
+export default function ChatHeader({ isHost, chatId, chat, host, setModalOpen }: Props) {
   const hostId = host?.id || ""
 
   // 左側のリンクです

@@ -1,5 +1,6 @@
 import { createHeader, Endpoint } from "@/utils/api/api";
 import axios from "axios";
+import { castToHost, Host } from "@/utils/api/res";
 
 export type Req = {
   token: string,
@@ -15,10 +16,14 @@ export type Req = {
   website: string
 }
 
+type Res = {
+  host: Host
+}
+
 /**
  * プロフィールの情報を変更します
  */
-export const PostProfileEdit = async (req: Req) => {
+export const PostProfileEdit = async (req: Req): Promise<Res> => {
   const formData = new FormData();
   if (req.avatar) {
     formData.append('avatar', req.avatar);
@@ -32,10 +37,14 @@ export const PostProfileEdit = async (req: Req) => {
   formData.append('email', req.email);
   formData.append('website', req.website);
 
-  await axios.post(Endpoint(`/api/host/${req.hostId}/edit`), formData, {
+  const { data } = await axios.post(Endpoint(`/api/host/${req.hostId}/edit`), formData, {
     headers: createHeader({
       token: req.token,
       contentType: "multipart-form",
     }),
   });
+
+  return {
+    host: castToHost(data.host)
+  }
 }

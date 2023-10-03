@@ -1,9 +1,7 @@
 "use client"
 
-// TODO: sessionが切れたら更新してBEにリクエストを投げるようにすること。
-
 // 新規作成画面です
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { signUpEmailRedirectTo } from "@/utils/path";
@@ -29,13 +27,6 @@ export default function Index() {
       setError(true)
     }
   }
-
-  // TODO: useEffect自体を削除
-  useEffect(() => {
-    supabase.auth.getSession().then((res) => {
-      console.log("sesion: ", res.data.session?.access_token)
-    })
-  }, [])
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">

@@ -122,17 +122,19 @@ export default function Client(props: Props) {
       <ChatHeader
         setModalOpen={setNoticeModalOpen}
         isHost={host?.id === props.userId}
+        chatId={props.chatId}
         chat={chat!}
         host={host!}
       />
 
-      {/* 通知Modal */}
+      {/* 通知メールModal */}
       <NoticeEmailModal
         chatId={props.chatId}
         passcode={chat?.passcode}
         modalOpen={noticeModalOpen}
         setModalOpen={setNoticeModalOpen}
         registeredEmail={chat?.guest.email}
+        setChat={setChat}
       />
 
       {/* 開始Modal */}
@@ -141,7 +143,9 @@ export default function Client(props: Props) {
         token={props.token}
         open={props.status === "first-is-login"}
         setMyId={setMyId}
+        setChat={setChat}
       />
+
       {/* ログイン催促Modal */}
       <MustLoginModal open={props.status === "first-not-login"}/>
 
@@ -166,7 +170,7 @@ export default function Client(props: Props) {
           scrollBottomRes={scrollBottomRef}
         />
 
-        <button onClick={(e) => fetchData()}>
+        <button onClick={() => fetchData()}>
           一時的に更新
         </button>
 

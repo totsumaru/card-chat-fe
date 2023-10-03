@@ -37,6 +37,7 @@ export default function Client(props: Props) {
   const [host, setHost] = useState<Host>(props.host)
   // その他
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
+  const [isScroll, setIsScroll] = useState<boolean>(false)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
     ? props.userId  // 自分がhostの場合
     : chat?.id
@@ -65,6 +66,7 @@ export default function Client(props: Props) {
   };
 
   useEffect(() => {
+    // TODO: コメントアウトを外す
     // 10秒ごとにデータフェッチを設定
     // const intervalId = setInterval(fetchData, 10 * 1000)
     // // クリーンアップ関数を返す
@@ -72,12 +74,22 @@ export default function Client(props: Props) {
     // return () => clearInterval(intervalId);
   }, [props.chatId, props.token, props.userId]);
 
-  // メッセージが追加されたら一番下までスクロール
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // ページリロード時に一番下までスクロール
     if (scrollBottomRef.current) {
       scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [])
+
+  // 送信者が自分のメッセージが追加されたら一番下までスクロール
+  useLayoutEffect(() => {
+    if (isScroll) {
+      if (scrollBottomRef.current) {
+        scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
+      }
+    }
+    setIsScroll(false)
+  }, [isScroll]);
 
   // メッセージ送信フォームにに入力された時の挙動です
   const handleInputChange = (inputValue: string) => {
@@ -101,6 +113,8 @@ export default function Client(props: Props) {
       }
       return [msg, ...prevMessages];
     });
+
+    setIsScroll(true)
 
     // バックエンドに送信
     try {

@@ -18,7 +18,7 @@ export const GetChatByPasscode = async (
   const { data } = await axios.get(
     Endpoint(`/api/chat/${chatId}/passcode`), {
       headers: createHeader({ passcode: passcode }),
-      withCredentials: true,
+      withCredentials: true, // ここをtrueにしないとcookieがsetされない
     }
   );
 

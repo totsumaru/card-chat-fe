@@ -13,5 +13,6 @@ export const PostUpdateNoticeEmail = async (
 
   await axios.post(Endpoint(`/api/chat/${chatId}/email`), formData, {
     headers: createHeader({ contentType: "form-urlencoded" }),
+    withCredentials: true,
   });
 }

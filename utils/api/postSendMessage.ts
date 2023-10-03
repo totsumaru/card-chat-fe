@@ -21,5 +21,6 @@ export const PostSendMessage = async ({
       token: token,
       contentType: "form-urlencoded",
     }),
+    withCredentials: true,
   });
 }

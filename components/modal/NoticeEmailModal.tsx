@@ -62,8 +62,9 @@ export default function NoticeEmailModal({
       }
       setIsRemove(true)
     } else {
-      if (!validateEmail(email)) {
-        setErrMsg("メールアドレスが正しくありません")
+      const emailErr = validateEmail(email)
+      if (emailErr) {
+        setErrMsg(emailErr)
         return
       }
     }

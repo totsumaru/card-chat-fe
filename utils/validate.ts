@@ -7,6 +7,7 @@ import {
   memoMaxLength,
   nameMaxLength,
   passcodeLength,
+  passwordMinLength,
   positionMaxLength,
   telMaxLength,
   urlMaxLength
@@ -69,6 +70,21 @@ export const validateEmail = (email: string): string => {
 }
 
 /**
+ * パスワードを検証します
+ */
+export const validatePassword = (password: string): string => {
+  if (!password) {
+    return "パスワードが入力されていません"
+  }
+
+  if (password.length < passwordMinLength) {
+    return `パスワードは${passwordMinLength}文字以上で入力してください`
+  }
+
+  return ""
+}
+
+/**
  * 表示名の文字数を検証します
  */
 export const validateDisplayName = (displayName: string): boolean => {
@@ -87,11 +103,11 @@ export const validateMemo = (memo: string): boolean => {
  */
 export const validateName = (name: string): string => {
   if (!name) {
-    return "必須項目です"
+    return "名前が入力されていません"
   }
 
   if (name.length > nameMaxLength) {
-    return `最大文字数は${headlineMaxLength}文字です`
+    return `名前の最大文字数は${headlineMaxLength}文字です`
   }
   return ""
 }

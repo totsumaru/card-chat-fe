@@ -5,6 +5,7 @@ import { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { signUpEmailRedirectTo } from "@/utils/path";
+import { validateEmail, validateName, validatePassword } from "@/utils/validate";
 
 /**
  * 新規登録ページです
@@ -13,9 +14,31 @@ export default function Index() {
   const supabase = createClientComponentClient()
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [error, setError] = useState<boolean>(false)
+  const [name, setName] = useState<string>("")
+  const [error, setError] = useState<string>("")
 
   const handleClick = async () => {
+    setError("")
+    if (!email || !password || !name) {
+      setError("入力されていないフォームがあります")
+      return
+    }
+    const emailErr = validateEmail(email)
+    if (emailErr) {
+      setError(emailErr)
+      return
+    }
+    const passwordErr = validatePassword(password)
+    if (passwordErr) {
+      setError(passwordErr)
+      return
+    }
+    const nameErr = validateName(name)
+    if (nameErr) {
+      setError(nameErr)
+      return
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -24,7 +47,7 @@ export default function Index() {
       }
     })
     if (error) {
-      setError(true)
+      setError("登録できませんでした")
     }
   }
 
@@ -43,7 +66,7 @@ export default function Index() {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-5">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-3">
 
         {/* メールアドレス */}
         <div>
@@ -57,6 +80,7 @@ export default function Index() {
               type="email"
               autoComplete="email"
               required
+              placeholder="mail@patchat.jp"
               className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1
                  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -79,6 +103,7 @@ export default function Index() {
               type="password"
               autoComplete="current-password"
               required
+              placeholder="******"
               className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1
                  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -87,13 +112,38 @@ export default function Index() {
           </div>
         </div>
 
-        {/* 新規作成ボタン */}
-        <div className="mt-20">
-          <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
-          <LoadingButton label={"ログアウト"} clickHandler={async () => {
-            await supabase.auth.signOut()
-          }} widthFull isWhite/>
+        {/* 名前 */}
+        <div>
+          <div className="flex items-center justify-between">
+            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+              表示名
+            </label>
+          </div>
+          <div className="mt-2">
+            <input
+              id="name"
+              name="name"
+              required
+              placeholder="鈴木 太郎"
+              className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1
+                 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
+                 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <p className="mt-1 text-xs text-gray-600">
+              ※いつでも変更できます
+            </p>
+          </div>
         </div>
+
+        {/* 新規作成ボタン */}
+        <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
+        <p className="text-sm text-red-600">
+          {error}
+        </p>
+        <LoadingButton label={"ログアウト"} clickHandler={async () => {
+          await supabase.auth.signOut()
+        }} widthFull isWhite/>
 
       </div>
     </div>

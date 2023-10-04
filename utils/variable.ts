@@ -1,5 +1,7 @@
 // Emailの文字数です
 export const emailMaxLength = 50
+// パスワードの最小文字数です
+export const passwordMinLength = 6
 // パスコードの文字数です
 export const passcodeLength = 6
 // 表示名の最大文字数です

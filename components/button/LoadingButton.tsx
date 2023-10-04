@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import ButtonLoading from "@/components/loading/ButtonLoading";
 import { buttonClassName } from "@/components/button/buttonClassName";
 
@@ -8,6 +8,7 @@ type Props = {
   widthFull?: boolean
   isWhite?: boolean
   disabled?: boolean
+  icon?: ReactNode
 }
 
 /**
@@ -16,7 +17,7 @@ type Props = {
  * 処理時にSpinnerが表示されます
  */
 export default function LoadingButton({
-  label, clickHandler, widthFull, isWhite, disabled
+  label, clickHandler, widthFull, isWhite, disabled, icon
 }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -34,6 +35,7 @@ export default function LoadingButton({
       disabled={loading || disabled}
     >
       {loading && <ButtonLoading/>}
+      {icon}
       {label}
     </button>
   )

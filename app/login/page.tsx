@@ -4,6 +4,7 @@
 import { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 
 /**
  * ログインページです
@@ -13,6 +14,7 @@ export default function Index() {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<boolean>(false)
+  const router = useRouter()
 
   const handleClick = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -21,7 +23,9 @@ export default function Index() {
     })
     if (error) {
       setError(true)
+      return
     }
+    router.push("/dashboard")
   }
 
   return (
@@ -90,10 +94,9 @@ export default function Index() {
 
         {/* ログインボタン */}
         <LoadingButton label={"ログイン"} clickHandler={handleClick} widthFull/>
-        <LoadingButton label={"ログアウト"} clickHandler={async () => {
-          await supabase.auth.signOut()
-        }} widthFull isWhite/>
-
+        <p className="text-sm text-red-600">
+          {error}
+        </p>
       </div>
     </div>
   )

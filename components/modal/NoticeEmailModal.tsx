@@ -92,9 +92,8 @@ export default function NoticeEmailModal({
           </span>
         ) : (
           <span>
-            <b>登録したアドレスにメールを送信しました。</b><br/>
-            <span className="block mt-1">
-              ※届いていない場合は、迷惑メールフォルダや登録したアドレスを確認してください。
+            <span className="block mt-2">
+              ※届いていない場合は、<b><u>迷惑メールフォルダ</u></b>や登録したアドレスを確認してください。
             </span>
           </span>
         )
@@ -151,7 +150,7 @@ export default function NoticeEmailModal({
     <div className="mt-4">
       <LoadingButton
         clickHandler={handleClose}
-        label={"OK"}
+        label={"メールが届きました"}
         widthFull
       />
     </div>
@@ -164,7 +163,7 @@ export default function NoticeEmailModal({
         setModalOpen={setModalOpen}
         icon={<BellIcon className="h-6 w-6 text-green-600" aria-hidden="true"/>}
         title={success
-          ? "完了"
+          ? "確認メールを送信しました"
           : registeredEmail
             ? registeredEmail + " に通知中"
             : "メールで通知を受け取る"

@@ -25,7 +25,7 @@ export default function Index() {
       setError(true)
       return
     }
-    router.push("/dashboard")
+    await router.push("/dashboard")
   }
 
   return (

@@ -9,6 +9,7 @@ import Header from "@/components/header/Header";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import GetChats from "@/utils/api/getChats";
 import { Chat, Host, Message } from "@/utils/api/res";
+import LogoutButton from "@/components/button/LogoutButton";
 
 export const dynamic = 'force-dynamic'
 
@@ -30,7 +31,7 @@ export default async function Index() {
   return (
     <div className="bg-gray-50 h-screen">
       {/* ヘッダー */}
-      <Header left={""} right={""}/>
+      <Header left={""} right={<LogoutButton/>}/>
 
       <Container>
         <Profile host={chatsRes?.host!}/>

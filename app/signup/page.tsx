@@ -139,7 +139,7 @@ export default function Index() {
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setName(e.target.value)}
                 />
-                <p className="mt-1 text-xs text-gray-600">
+                <p className="mt-1 text-xs text-gray-400">
                   ※いつでも変更できます
                 </p>
               </div>

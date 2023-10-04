@@ -9,9 +9,11 @@ type Res = {
 
 // ホストを作成します
 export const PostCreateHost = async (
-  token: string
+  token: string,
+  name: string
 ): Promise<Res> => {
-  const { data } = await axios.post(Endpoint("/api/host/create"), {}, {
+  const path = `/api/host/create?name=${name}`
+  const { data } = await axios.post(Endpoint(path), {}, {
     headers: createHeader({ token: token }),
   });
 

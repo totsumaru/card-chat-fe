@@ -43,7 +43,7 @@ export default function Index() {
       email: email,
       password: password,
       options: {
-        emailRedirectTo: signUpEmailRedirectTo()
+        emailRedirectTo: signUpEmailRedirectTo(name)
       }
     })
     if (error) {

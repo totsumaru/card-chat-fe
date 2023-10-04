@@ -6,8 +6,15 @@ export const paramChatId = "chat-id"
 /**
  * SignUp時のEmailに記載するURLです
  */
-export function signUpEmailRedirectTo(): string {
-  return `${process.env.NEXT_PUBLIC_FE_URL}/auth/callback`
+export function signUpEmailRedirectTo(name: string): string {
+  return `${process.env.NEXT_PUBLIC_FE_URL}/auth/callback?name=${name}`
+}
+
+/**
+ * エラーページのURLです
+ */
+export function pathError(errorMessage: string): string {
+  return `/error?message=${errorMessage}`
 }
 
 /**

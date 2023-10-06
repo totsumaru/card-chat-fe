@@ -2,8 +2,8 @@
 
 import Avatar from "@/components/avatar/Avatar";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
-import { urlToA } from "@/utils/urlToA";
 import { Host, Message } from "@/utils/api/res";
+import { urlToA } from "@/utils/urlToA";
 
 type Props = {
   userId: string
@@ -48,13 +48,23 @@ export default function MessageArea({
           )}
 
           {/* メッセージ */}
-          <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
-            ${message.fromId === myId
-            ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
-            : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
-          }>
-            {urlToA(message.content.text)}
-          </div>
+          {message.content.kind === "text"
+            ? (
+              <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
+              ${message.fromId === myId
+                ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
+                : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
+              }>
+                {urlToA(message.content.text)}
+              </div>
+            )
+            : (
+              <img src={message.content.url} alt="画像" className={message.fromId === myId
+                ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%] rounded-2xl"
+                : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%] rounded-2xl"
+              }/>
+            )
+          }
 
           { /**
            * 自分のアバター

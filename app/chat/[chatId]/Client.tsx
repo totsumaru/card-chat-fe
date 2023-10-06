@@ -12,6 +12,7 @@ import MustLoginModal from "@/components/modal/MustLoginModal";
 import { Chat, Host, Message } from "@/utils/api/res";
 import { PostSendTextMessage } from "@/utils/api/postSendTextMessage";
 import { PostChangeToRead } from "@/utils/api/postChangeToRead";
+import { PostSendImageMessage } from "@/utils/api/postSendImageMessage";
 
 type Props = {
   userId: string
@@ -201,6 +202,35 @@ export default function Client(props: Props) {
           newMessage={newMessage}
           handleInputChange={handleInputChange}
           handleMessageSend={handleMessageSend}
+          imageSend={async (image: File) => {
+            setMessages(prevMessages => {
+              const msg: Message = {
+                id: "",
+                chatId: chat.id,
+                fromId: myId,
+                content: {
+                  kind: "image",
+                  url: URL.createObjectURL(image),
+                  text: ""
+                },
+                created: new Date(),
+              }
+              if (!prevMessages) {
+                return [msg];
+              }
+              return [msg, ...prevMessages];
+            });
+
+            try {
+              await PostSendImageMessage({
+                token: props.token,
+                chatId: props.chatId,
+                image: image,
+              })
+            } catch (e) {
+              console.error(e)
+            }
+          }}
         />
       </div>
     </div>

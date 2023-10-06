@@ -6,13 +6,14 @@ type Props = {
   newMessage: string
   handleInputChange: (inputValue: string) => void
   handleMessageSend: () => void
+  imageSend: (image: File) => void
 }
 
 /**
  * チャットの入力エリアです
  */
 export default function InputArea({
-  newMessage, handleInputChange, handleMessageSend
+  newMessage, handleInputChange, handleMessageSend, imageSend
 }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -24,7 +25,10 @@ export default function InputArea({
   return (
     <div className="flex-none bg-gray-200 px-3 py-3">
       <div className="flex items-end">
-        <ChatImageIconButton/>
+        {/* 画像選択ボタン */}
+        <ChatImageIconButton imageSend={imageSend}/>
+
+        {/* テキストエリア */}
         <textarea
           ref={textareaRef}
           className="w-full rounded ml-1 p-2 resize-none text-base"

@@ -18,7 +18,11 @@ export type Message = {
   id: string
   chatId: string
   fromId: string
-  content: string
+  content: {
+    kind: string
+    url: string
+    text: string
+  }
   created?: Date
 }
 
@@ -60,7 +64,11 @@ export const castToMessageRes = (message: any): Message => {
     id: message.id,
     chatId: message.chat_id,
     fromId: message.from_id,
-    content: message.content,
+    content: {
+      kind: message.content.kind,
+      url: message.content.url,
+      text: message.content.text,
+    },
     created: new Date(message.created),
   }
 }
@@ -74,7 +82,11 @@ export const castToMessagesRes = (messages: any[]): Message[] => {
       id: message.id,
       chatId: message.chat_id,
       fromId: message.from_id,
-      content: message.content,
+      content: {
+        kind: message.content.kind,
+        url: message.content.url,
+        text: message.content.text,
+      },
       created: new Date(message.created),
     };
     return newMessage;

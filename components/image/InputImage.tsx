@@ -29,7 +29,7 @@ export default function InputImage({ image, setImage }: Props) {
         setErrMsg("")
       }
 
-      setImage(file);  // Here, pass the file directly to setImage
+      setImage(file);
     }
   };
 

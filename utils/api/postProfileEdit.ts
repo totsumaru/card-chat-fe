@@ -40,7 +40,7 @@ export const PostProfileEdit = async (req: Req): Promise<Res> => {
   const { data } = await axios.post(Endpoint(`/api/host/${req.hostId}/edit`), formData, {
     headers: createHeader({
       token: req.token,
-      contentType: "multipart-form",
+      contentType: "multipart/form-data",
     }),
   });
 

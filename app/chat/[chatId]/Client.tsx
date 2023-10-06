@@ -10,7 +10,7 @@ import { ChatStatus, GetChat } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
 import MustLoginModal from "@/components/modal/MustLoginModal";
 import { Chat, Host, Message } from "@/utils/api/res";
-import { PostSendMessage } from "@/utils/api/postSendMessage";
+import { PostSendTextMessage } from "@/utils/api/postSendTextMessage";
 import { PostChangeToRead } from "@/utils/api/postChangeToRead";
 
 type Props = {
@@ -99,13 +99,21 @@ export default function Client(props: Props) {
   // メッセージを送信
   const handleMessageSend = async () => {
     if (!newMessage) return
+    // テキストエリアからすぐに文字を消すため、ここでキャッシュします
+    const cashedNewMessage = newMessage
+    setNewMessage("")
+
     // stateに追加
     setMessages(prevMessages => {
       const msg: Message = {
         id: "",
         chatId: chat.id,
         fromId: myId,
-        content: newMessage,
+        content: {
+          kind: "text",
+          url: "",
+          text: cashedNewMessage
+        },
         created: new Date(),
       }
       if (!prevMessages) {
@@ -118,16 +126,16 @@ export default function Client(props: Props) {
 
     // バックエンドに送信
     try {
-      await PostSendMessage({
+      await PostSendTextMessage({
         token: props.token,
         chatId: chat.id,
-        content: newMessage,
+        text: cashedNewMessage,
       })
     } catch (e) {
       console.error(e)
+      alert("エラーが発生しました")
+      setNewMessage(cashedNewMessage)
     }
-
-    setNewMessage("");
   };
 
   return (

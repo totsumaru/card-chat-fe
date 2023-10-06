@@ -144,7 +144,7 @@ const ChatListContent = ({
       <p className={`mt-1 line-clamp-1 text-sm leading-6
                        ${chat.isRead ? "text-gray-400" : "text-gray-600 font-bold"}`}
       >
-        {lastMessage.content}
+        {lastMessage.text}
       </p>
     </div>
   )

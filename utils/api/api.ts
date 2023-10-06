@@ -12,7 +12,7 @@ export const createHeader = ({
 }: {
   token?: string;
   passcode?: string;
-  contentType?: "json" | "multipart-form" | "form-urlencoded"
+  contentType?: "json" | "multipart/form-data" | "form-urlencoded"
   cookieHello?: string
 }): Header => {
   let res: Header = {};
@@ -30,7 +30,7 @@ export const createHeader = ({
     case "json":
       res["Content-Type"] = "application/json"
       break
-    case "multipart-form":
+    case "multipart/form-data":
       res["Content-Type"] = "multipart/form-data"
       break
     case "form-urlencoded":

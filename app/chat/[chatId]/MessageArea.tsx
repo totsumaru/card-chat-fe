@@ -53,7 +53,7 @@ export default function MessageArea({
             ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
             : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
           }>
-            {urlToA(message.content)}
+            {urlToA(message.content.text)}
           </div>
 
           { /**

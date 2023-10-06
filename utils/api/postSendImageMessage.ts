@@ -4,19 +4,19 @@ import { createHeader, Endpoint } from "@/utils/api/api";
 type Req = {
   token?: string
   chatId: string
-  content: string
+  image: File
 }
 
 /**
- * チャットの情報を変更します
+ * 画像メッセージを送信します
  */
-export const PostSendMessage = async ({
-  token, chatId, content
+export const PostSendImageMessage = async ({
+  token, chatId, image
 }: Req) => {
   const formData = new FormData();
-  formData.append('content', content);
+  formData.append('image', image);
 
-  await axios.post(Endpoint(`/api/chat/${chatId}/message`), formData, {
+  await axios.post(Endpoint(`/api/chat/${chatId}/message?kind=image`), formData, {
     headers: createHeader({
       token: token,
       contentType: "form-urlencoded",

@@ -1,7 +1,6 @@
 "use client"
 
 import classnames from "classnames";
-import InputImage from "@/components/image/InputImage";
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { PostProfileEdit, Req } from "@/utils/api/postProfileEdit";
@@ -18,6 +17,8 @@ import {
 import { useFileInputState, useInputState } from "@/app/profile/[hostId]/edit/state";
 import { Input, Textarea } from "@/app/profile/[hostId]/edit/Form";
 import { Host } from "@/utils/api/res";
+import Avatar from "@/components/image/Avatar";
+import AvatarSelectButton from "@/components/button/AvatarSelectButton";
 
 type Props = {
   token: string
@@ -103,8 +104,16 @@ export default function ProfileEditForms({ token, host }: Props) {
 
   return (
     <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
-      <div className="mt-5 ml-2">
-        <InputImage image={avatar} setImage={setAvatar}/>
+      <div className="mt-5 ml-2 flex">
+        {/* アバター */}
+        <Avatar
+          imageUrl={typeof avatar === 'string'
+            ? avatar : URL.createObjectURL(avatar)
+          }
+          widthHeight="32"
+        />
+        {/* 画像選択ボタン */}
+        <AvatarSelectButton setImage={setAvatar}/>
       </div>
 
       <div className="border-b border-gray-900/10 pb-12">

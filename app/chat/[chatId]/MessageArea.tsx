@@ -1,6 +1,6 @@
 "use client"
 
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/image/Avatar";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import { Host, Message } from "@/utils/api/res";
 import { urlToA } from "@/utils/urlToA";

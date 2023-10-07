@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import React, { ReactNode } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Container from "@/components/container/Container";
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/image/Avatar";
 import { pathChat, pathDisplayNameEdit, pathProfile, pathProfileEdit } from "@/utils/path";
 import Header from "@/components/header/Header";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";

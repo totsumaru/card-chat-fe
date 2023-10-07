@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { EnvelopeIcon, GlobeAsiaAustraliaIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import ReturnToChatLink from "@/components/link/ReturnToChatLink";
 import Header from "@/components/header/Header";
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/image/Avatar";
 import GetHost from "@/utils/api/getHost";
 import { ReactNode } from "react";
 

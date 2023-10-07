@@ -26,7 +26,7 @@ export default function InputArea({
     <div className="flex-none bg-gray-200 px-3 py-3">
       <div className="flex items-end">
         {/* 画像選択ボタン */}
-        <ChatImageIconButton imageSend={imageSend}/>
+        <ChatImageIconButton setImage={imageSend}/>
 
         {/* テキストエリア */}
         <textarea

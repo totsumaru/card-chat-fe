@@ -1,4 +1,4 @@
-import Avatar from "@/components/avatar/Avatar";
+import Avatar from "@/components/image/Avatar";
 import React from "react";
 import { pathDisplayNameEdit, pathProfile } from "@/utils/path";
 import Header from "@/components/header/Header";

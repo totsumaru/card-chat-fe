@@ -24,7 +24,6 @@ type Props = {
   status: ChatStatus | undefined
 }
 
-
 /**
  * チャットページのClientコンポーネントです
  */
@@ -40,10 +39,8 @@ export default function Client(props: Props) {
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
-    ? props.userId  // 自分がhostの場合
-    : chat?.id
-      ? chat.id     // cookieでチャットが取得できている場合
-      : ""          // チャットが取得できていない場合
+    ? props.userId
+    : chat?.id || ""
   )
 
   // バックエンドから情報を取得し、stateを更新します
@@ -54,7 +51,7 @@ export default function Client(props: Props) {
       // 自分がhostの場合、既読処理を行います
       const isHost = res.host.id === props.userId;
       if (isHost && props.token) {
-        await PostChangeToRead(props.token, props.chatId);
+        PostChangeToRead(props.token, props.chatId);
       }
 
       // stateを更新します
@@ -193,10 +190,6 @@ export default function Client(props: Props) {
           scrollBottomRes={scrollBottomRef}
         />
 
-        <button onClick={() => fetchData()}>
-          一時的に更新
-        </button>
-
         {/* 入力エリア */}
         <InputArea
           newMessage={newMessage}
@@ -220,6 +213,8 @@ export default function Client(props: Props) {
               }
               return [msg, ...prevMessages];
             });
+
+            setIsScroll(true)
 
             try {
               await PostSendImageMessage({

@@ -1,39 +1,25 @@
-import { useRef } from "react";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import InputImageBase from "@/components/image/InputImageBase";
 
 type Props = {
-  imageSend: (image: File) => void
+  setImage: (image: File) => void
 }
 
 // 画像選択&送信ボタンです
-export default function ChatImageIconButton({ imageSend }: Props) {
-  // input要素への参照を作成
-  const fileInputRef = useRef(null);
-
-  const handleFileChange = async (event: any) => {
-    const file = event.target.files[0];
-    if (file) {
-      imageSend(file)
-    }
-  };
+export default function ChatImageIconButton({ setImage }: Props) {
+  const id_html_for = "image-input"
 
   return (
     <div>
-      <label htmlFor={"image-input"}>
+      <label htmlFor={id_html_for}>
+        {/* 画像アイコン */}
         <PhotoIcon
           className="w-8 h-8 p-1 bg-gray-50 text-gray-500 rounded-full
-         hover:bg-gray-100 hover:cursor-pointer"
+          hover:bg-gray-100 hover:cursor-pointer"
         />
-        <input
-          id="image-input"
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          ref={fileInputRef}
-          onChange={handleFileChange}
-        />
+        {/* 画像選択のinput(hidden) */}
+        <InputImageBase id_html_for={id_html_for} setImage={setImage}/>
       </label>
-
     </div>
   );
 }

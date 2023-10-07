@@ -1,6 +1,5 @@
 "use client"
 
-import classnames from "classnames";
 import React, { useState } from "react";
 import LoadingButton from "@/components/button/LoadingButton";
 import { PostProfileEdit, Req } from "@/utils/api/postProfileEdit";
@@ -74,11 +73,12 @@ export default function ProfileEditForms({ token, host }: Props) {
 
   // 保存ボタンがクリックされた時の処理です
   const handleSaveButtonClick = async () => {
-    setSuccess(undefined)
     if (!validate()) {
       setSuccess(false)
       return
     }
+
+    setSuccess(undefined)
 
     const req: Req = {
       token: token,
@@ -104,16 +104,22 @@ export default function ProfileEditForms({ token, host }: Props) {
 
   return (
     <div className="bg-white p-3 sm:p-7 mt-5 shadow-md rounded-md w-full mx-auto">
-      <div className="mt-5 ml-2 flex">
-        {/* アバター */}
-        <Avatar
-          imageUrl={typeof avatar === 'string'
-            ? avatar : URL.createObjectURL(avatar)
-          }
-          widthHeight="32" ring
-        />
+      {/* アバター */}
+      <div className="flex">
+        {/* 画像 */}
+        <div className="mt-5 ml-2 col-span-full bg-cover items-center justify-center h-32 w-32
+             sm:h-64 sm:w-64 border-2 ring-gray-300 rounded-full hover:bg-gray-100">
+          <Avatar
+            imageUrl={typeof avatar === 'string'
+              ? avatar : URL.createObjectURL(avatar)
+            }
+            widthHeight={`20`}
+          />
+        </div>
         {/* 画像選択ボタン */}
-        <AvatarSelectButton setImage={setAvatar}/>
+        <div className="flex items-center">
+          <AvatarSelectButton setImage={setAvatar}/>
+        </div>
       </div>
 
       <div className="border-b border-gray-900/10 pb-12">
@@ -190,15 +196,16 @@ export default function ProfileEditForms({ token, host }: Props) {
             label={"保存する"}
           />
           {/* 結果 */}
-          <p className={classnames("text-sm ml-0.5 mt-1", {
-            "text-gray-600": success === true,
-            "text-red-500 mt-0.5": success === false,
-          })}>
-            {success === true
-              ? "保存しました！" :
-              success == false && "エラーが発生しました"
-            }
-          </p>
+          {success && (
+            <p className="text-sm ml-0.5 mt-1 text-gray-600">
+              保存しました！
+            </p>
+          )}
+          {success === false && (
+            <p className="text-sm ml-0.5 mt-1 text-red-500">
+              エラーが発生しました
+            </p>
+          )}
         </div>
 
       </div>

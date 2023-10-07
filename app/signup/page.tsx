@@ -6,6 +6,7 @@ import LoadingButton from "@/components/button/LoadingButton";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { validateEmail, validateName, validatePassword } from "@/utils/validate";
 import { signUpEmailRedirectTo } from "@/utils/path";
+import Link from "next/link";
 
 /**
  * 新規登録ページです
@@ -39,6 +40,8 @@ export default function Index() {
       setError(nameErr)
       return
     }
+
+    console.log(signUpEmailRedirectTo(name))
 
     const { data, error } = await supabase.auth.signUp({
       email: email,
@@ -89,7 +92,6 @@ export default function Index() {
                   type="email"
                   autoComplete="email"
                   required
-                  placeholder="mail@patchat.jp"
                   className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1
                  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -112,7 +114,6 @@ export default function Index() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  placeholder="******"
                   className="block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1
                  ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -125,7 +126,7 @@ export default function Index() {
             <div>
               <div className="flex items-center justify-between">
                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                  表示名
+                  表示名 <span className="text-xs text-gray-400 ml-1">※いつでも変更できます</span>
                 </label>
               </div>
               <div className="mt-2">
@@ -139,14 +140,16 @@ export default function Index() {
                  focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => setName(e.target.value)}
                 />
-                <p className="mt-1 text-xs text-gray-400">
-                  ※いつでも変更できます
-                </p>
               </div>
             </div>
 
             {/* 新規作成ボタン */}
-            <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
+            <div className="pt-3">
+              <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
+            </div>
+            <Link href={"/signup"} className="block text-center text-sm text-indigo-600">
+              すでにアカウントを持っている方
+            </Link>
             <p className="text-sm text-red-600">
               {error}
             </p>

@@ -48,23 +48,22 @@ export default function MessageArea({
           )}
 
           {/* メッセージ */}
-          {message.content.kind === "text"
-            ? (
-              <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
+          {message.content.kind === "text" ? (
+            // Text
+            <div className={`rounded-3xl text-sm px-4 py-3 mb-2 inline-block whitespace-pre-line
               ${message.fromId === myId
-                ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
-                : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
-              }>
-                {urlToA(message.content.text)}
-              </div>
-            )
-            : (
-              <img src={message.content.url} alt="画像" className={message.fromId === myId
-                ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%] rounded-2xl"
-                : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%] rounded-2xl"
-              }/>
-            )
-          }
+              ? "bg-lineGreen max-w-[70%] md:ml-8 md:max-w-[60%]"
+              : "bg-gray-100 max-w-[70%] md:mr-8 md:max-w-[60%]"}`
+            }>
+              {urlToA(message.content.text)}
+            </div>
+          ) : (
+            // 画像
+            <img src={message.content.url} alt="画像" className={message.fromId === myId
+              ? "bg-lineGreen max-w-[60%] md:ml-8 md:max-w-[30%] rounded-2xl"
+              : "bg-gray-100 max-w-[60%] md:mr-8 md:max-w-[30%] rounded-2xl"
+            }/>
+          )}
 
           { /**
            * 自分のアバター

@@ -3,12 +3,13 @@ type Props = {
   href?: string
   unreadFlg?: boolean
   widthHeight?: string // e.g. 1,2,full
+  ring?: boolean
 }
 
 /**
  * アバターです
  */
-export default function Avatar({ imageUrl, href, unreadFlg, widthHeight }: Props) {
+export default function Avatar({ imageUrl, href, unreadFlg, widthHeight, ring }: Props) {
   // 未読時の赤い丸です
   const noticeIcon = (
     <span className="absolute right-0 top-0 block h-2.5 w-2.5 rounded-full bg-red-400 ring-2 ring-white"/>
@@ -26,9 +27,8 @@ export default function Avatar({ imageUrl, href, unreadFlg, widthHeight }: Props
     <span className="relative block">
       {imageUrl ? (
         <img
-          className={`inline-block ${commonClass} aspect-[1/1] object-cover ring-1 ring-gray-300`}
-          src={imageUrl}
-          alt="Avatar"
+          className={`inline-block ${commonClass} aspect-[1/1] object-cover ${ring && "ring-1"} ring-gray-300`}
+          src={imageUrl} alt="Avatar"
         />
       ) : (
         <span className={`block ${commonClass} overflow-hidden bg-gray-100`}>

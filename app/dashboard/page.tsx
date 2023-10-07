@@ -46,10 +46,10 @@ export default async function Index() {
             return (
               <div className="flex hover:bg-gray-100" key={chat.chat.id}>
                 <a href={pathChat(chat.chat.id)} className="flex-1">
-                  <li key={chat.chat.id} className="flex gap-x-4 p-5 w-full">
-                    <Avatar unreadFlg={!chat.chat.isRead}/>
+                  <div className="flex gap-x-4 p-5 w-full">
+                    <Avatar unreadFlg={!chat.chat.isRead} ring/>
                     <ChatListContent chat={chat.chat} lastMessage={chat.lastMessage}/>
-                  </li>
+                  </div>
                 </a>
                 {/* 設定アイコン */}
                 <ConfigIcon chatId={chat.chat.id}/>
@@ -78,7 +78,7 @@ const Profile = ({ host }: { host: Host }) => {
       <div key={1} className="flex items-center justify-between gap-x-6 py-3">
         {/* 左側 */}
         <div className="flex min-w-0 gap-x-4">
-          <Avatar imageUrl={host.avatarUrl} widthHeight={"12"}/>
+          <Avatar imageUrl={host.avatarUrl} widthHeight={"12"} ring/>
           <div className="min-w-0 flex-auto">
             <p className="text-sm line-clamp-1 font-semibold leading-6 text-gray-900">
               {host?.name || "名前を設定して下さい"}
@@ -126,9 +126,7 @@ const ProfileLink = ({
 }
 
 // チャット一覧の中身です
-const ChatListContent = ({
-  chat, lastMessage
-}: {
+const ChatListContent = ({ chat, lastMessage }: {
   chat: Chat, lastMessage: Message
 }) => {
   return (
@@ -138,13 +136,13 @@ const ChatListContent = ({
         <p className="text-sm font-semibold leading-6 text-gray-900 line-clamp-1">
           {chat.guest.displayName || chat.id}
         </p>
-        <p className="flex-none text-xs text-gray-600">{lastMessage.created?.getDate()}</p>
+        <p className="flex-none text-xs text-gray-600">{formatDate(lastMessage.created)}</p>
       </div>
       {/* 下側(コメント) */}
       <p className={`mt-1 line-clamp-1 text-sm leading-6
                        ${chat.isRead ? "text-gray-400" : "text-gray-600 font-bold"}`}
       >
-        {lastMessage.text}
+        {lastMessage.content.kind == "text" ? lastMessage.content.text : "画像が送信されました"}
       </p>
     </div>
   )
@@ -164,3 +162,12 @@ const ConfigIcon = ({ chatId }: { chatId: string }) => {
     </div>
   )
 }
+
+// 日付のフォーマットを取得します
+const formatDate = (date: Date | undefined): string => {
+  if (!date) return ''; // date が undefined または null の場合、空の文字列を返します
+
+  const month = date.getMonth() + 1;  // getMonth() は 0 から始まるので +1 します
+  const day = date.getDate();
+  return `${month}月${day}日`;
+};

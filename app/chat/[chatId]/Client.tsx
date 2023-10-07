@@ -39,8 +39,7 @@ export default function Client(props: Props) {
   const scrollBottomRef = useRef<HTMLDivElement | null>(null)
   const [isScroll, setIsScroll] = useState<boolean>(false)
   const [myId, setMyId] = useState<string>(props.userId === host?.id
-    ? props.userId
-    : chat?.id || ""
+    ? props.userId : chat?.id || ""
   )
 
   // バックエンドから情報を取得し、stateを更新します
@@ -81,10 +80,8 @@ export default function Client(props: Props) {
 
   // 送信者が自分のメッセージが追加されたら一番下までスクロール
   useLayoutEffect(() => {
-    if (isScroll) {
-      if (scrollBottomRef.current) {
-        scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
-      }
+    if (isScroll && scrollBottomRef.current) {
+      scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
     }
     setIsScroll(false)
   }, [isScroll]);

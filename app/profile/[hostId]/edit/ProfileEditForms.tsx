@@ -110,7 +110,7 @@ export default function ProfileEditForms({ token, host }: Props) {
           imageUrl={typeof avatar === 'string'
             ? avatar : URL.createObjectURL(avatar)
           }
-          widthHeight="32"
+          widthHeight="32" ring
         />
         {/* 画像選択ボタン */}
         <AvatarSelectButton setImage={setAvatar}/>

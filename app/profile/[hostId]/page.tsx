@@ -50,9 +50,9 @@ export default async function Index({
               {/*　PFP画像(SP表示の順番のため、タイトルの下に記述) */}
               <div className="col-end-1 w-16 lg:row-span-4 lg:w-52">
                 {host?.avatarUrl ? (
-                  <Avatar widthHeight={"full"} imageUrl={host.avatarUrl}/>
+                  <Avatar widthHeight={"full"} imageUrl={host.avatarUrl} ring/>
                 ) : (
-                  <Avatar widthHeight={"full"}/>
+                  <Avatar widthHeight={"full"} ring/>
                 )}
               </div>
 

@@ -9,7 +9,7 @@ import InputArea from "@/app/chat/[chatId]/InputArea";
 import { ChatStatus, GetChat } from "@/utils/api/getChat";
 import StartChatModal from "@/components/modal/StartChatModal";
 import MustLoginModal from "@/components/modal/MustLoginModal";
-import { Chat, Host, Message } from "@/utils/api/res";
+import { Chat, Host, Kind, Message } from "@/utils/api/res";
 import { PostSendTextMessage } from "@/utils/api/postSendTextMessage";
 import { PostChangeToRead } from "@/utils/api/postChangeToRead";
 import { PostSendImageMessage } from "@/utils/api/postSendImageMessage";
@@ -31,7 +31,7 @@ export default function Client(props: Props) {
   // 通知Modal
   const [noticeModalOpen, setNoticeModalOpen] = useState<boolean>(false)
   // チャット
-  const [chat, setChat] = useState<Chat>(props.chat) // ここはInfo用に使用します
+  const [chat, setChat] = useState<Chat>(props.chat)
   const [messages, setMessages] = useState<Message[]>(props.messages)
   const [newMessage, setNewMessage] = useState<string>("")
   const [host, setHost] = useState<Host>(props.host)
@@ -63,12 +63,11 @@ export default function Client(props: Props) {
   };
 
   useEffect(() => {
-    // TODO: コメントアウトを外す
     // 10秒ごとにデータフェッチを設定
-    // const intervalId = setInterval(fetchData, 10 * 1000)
+    const intervalId = setInterval(fetchData, 10 * 1000)
     // // クリーンアップ関数を返す
     // // コンポーネントのアンマウント時や、依存関係が変更された際にインターバルをクリア
-    // return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId);
   }, [props.chatId, props.token, props.userId]);
 
   useEffect(() => {
@@ -78,7 +77,8 @@ export default function Client(props: Props) {
     }
   }, [])
 
-  // 送信者が自分のメッセージが追加されたら一番下までスクロール
+  // 一番下までスクロールします
+  // 送信者&自分のメッセージが追加された場合のみ
   useLayoutEffect(() => {
     if (isScroll && scrollBottomRef.current) {
       scrollBottomRef.current.scrollTop = scrollBottomRef.current.scrollHeight;
@@ -91,12 +91,20 @@ export default function Client(props: Props) {
     setNewMessage(inputValue);
   };
 
-  // メッセージを送信
-  const handleMessageSend = async () => {
-    if (!newMessage) return
-    // テキストエリアからすぐに文字を消すため、ここでキャッシュします
-    const cashedNewMessage = newMessage
-    setNewMessage("")
+  // メッセージを送信します
+  //
+  // "text"と"image"で処理が分かれます
+  const handleMessageSend = async ({ kind, image }: {
+    kind: Kind
+    image?: File
+  }) => {
+    let cashedNewMessage = ""
+    if (kind === "text") {
+      if (!newMessage) return
+      // テキストエリアからすぐに文字を消すため、ここでキャッシュします
+      cashedNewMessage = newMessage
+      setNewMessage("")
+    }
 
     // stateに追加
     setMessages(prevMessages => {
@@ -105,8 +113,8 @@ export default function Client(props: Props) {
         chatId: chat.id,
         fromId: myId,
         content: {
-          kind: "text",
-          url: "",
+          kind: kind,
+          url: kind === "image" ? URL.createObjectURL(image!) : "",
           text: cashedNewMessage
         },
         created: new Date(),
@@ -121,10 +129,12 @@ export default function Client(props: Props) {
 
     // バックエンドに送信
     try {
-      await PostSendTextMessage({
+      await callSendMessageByKind({
+        kind: kind,
         token: props.token,
-        chatId: chat.id,
+        chatID: props.chatId,
         text: cashedNewMessage,
+        image: image,
       })
     } catch (e) {
       console.error(e)
@@ -191,40 +201,35 @@ export default function Client(props: Props) {
         <InputArea
           newMessage={newMessage}
           handleInputChange={handleInputChange}
-          handleMessageSend={handleMessageSend}
-          imageSend={async (image: File) => {
-            setMessages(prevMessages => {
-              const msg: Message = {
-                id: "",
-                chatId: chat.id,
-                fromId: myId,
-                content: {
-                  kind: "image",
-                  url: URL.createObjectURL(image),
-                  text: ""
-                },
-                created: new Date(),
-              }
-              if (!prevMessages) {
-                return [msg];
-              }
-              return [msg, ...prevMessages];
-            });
-
-            setIsScroll(true)
-
-            try {
-              await PostSendImageMessage({
-                token: props.token,
-                chatId: props.chatId,
-                image: image,
-              })
-            } catch (e) {
-              console.error(e)
-            }
-          }}
+          handleMessageSend={() => handleMessageSend({ kind: "text" })}
+          imageSend={(image: File) => handleMessageSend({ kind: "image", image: image })}
         />
       </div>
     </div>
   )
+}
+
+// text|imageによってコールするAPIを変更します
+const callSendMessageByKind = async ({ kind, token, chatID, text, image }: {
+  kind: Kind
+  token: string
+  chatID: string
+  text?: string
+  image?: File
+}) => {
+  switch (kind) {
+    case "text":
+      await PostSendTextMessage({
+        token: token,
+        chatId: chatID,
+        text: text || "",
+      })
+      break
+    case "image":
+      await PostSendImageMessage({
+        token: token,
+        chatId: chatID,
+        image: image!,
+      })
+  }
 }

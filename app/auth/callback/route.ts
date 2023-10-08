@@ -6,7 +6,7 @@ import { pathError } from "@/utils/path";
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<Response> {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
   const name = requestUrl.searchParams.get('name')
@@ -17,15 +17,12 @@ export async function GET(request: Request) {
     const { data: { session } } = await supabase.auth.getSession()
 
     if (!session?.access_token || !name) {
-      NextResponse.redirect(`${requestUrl.origin}${pathError("エラーが発生しました")}`)
-      return
+      return NextResponse.redirect(`${requestUrl.origin}${pathError("エラーが発生しました")}`)
     }
 
     try {
-      // ホストを作成します
       await PostCreateHost(session.access_token, name)
     } catch (error) {
-      console.error("エラーが発生しました", error);
       return new Response("Error occurred", { status: 500 })
     }
   }

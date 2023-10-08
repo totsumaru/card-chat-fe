@@ -13,13 +13,16 @@ export type Chat = {
   lastMessage: Date
 }
 
+// メッセージの種類です
+export type Kind = "text" | "image"
+
 // メッセージのレスポンスです
 export type Message = {
   id: string
   chatId: string
   fromId: string
   content: {
-    kind: string
+    kind: Kind
     url: string
     text: string
   }

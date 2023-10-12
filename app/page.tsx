@@ -1,5 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import LogoutButton from "@/components/button/LogoutButton";
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +14,7 @@ export default async function Index() {
       hello
       <p>userID: {user?.id}</p>
       <p>token: {session?.access_token}</p>
+      <LogoutButton/>
     </>
   )
 }

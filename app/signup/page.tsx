@@ -41,7 +41,7 @@ export default function Index() {
       return
     }
 
-    console.log(signUpEmailRedirectTo(name))
+    console.log("リダイレクトURL: ", signUpEmailRedirectTo(name))
 
     const { data, error } = await supabase.auth.signUp({
       email: email,
@@ -147,7 +147,7 @@ export default function Index() {
             <div className="pt-3">
               <LoadingButton label={"新規作成"} clickHandler={handleClick} widthFull/>
             </div>
-            <Link href={"/signup"} className="block text-center text-sm text-indigo-600">
+            <Link href={"/login"} className="block text-center text-sm text-indigo-600">
               すでにアカウントを持っている方
             </Link>
             <p className="text-sm text-red-600">

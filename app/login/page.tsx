@@ -75,11 +75,11 @@ export default function Index() {
             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
               パスワード
             </label>
-            <div className="text-sm">
-              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                パスワードを忘れた方
-              </a>
-            </div>
+            {/*<div className="text-sm">*/}
+            {/*  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">*/}
+            {/*    パスワードを忘れた方*/}
+            {/*  </a>*/}
+            {/*</div>*/}
           </div>
           <div className="mt-2">
             <input

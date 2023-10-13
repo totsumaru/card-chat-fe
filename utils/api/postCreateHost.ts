@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createHeader, Endpoint } from "@/utils/api/api";
+import { createHeader, Endpoint } from "./api";
 import { castToHost, Host } from "@/utils/api/res";
 
 // レスポンスです

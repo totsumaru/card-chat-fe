@@ -1,6 +1,6 @@
 import { castToChatRes, castToHost, castToMessagesRes, Chat, Host, Message } from "@/utils/api/res";
 import axios from "axios";
-import { createHeader, Endpoint } from "@/utils/api/api";
+import { createHeader, Endpoint } from "./api";
 
 /**
  * チャットを取得した時のステータスです
